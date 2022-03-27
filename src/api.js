@@ -1,11 +1,5 @@
 import axios from "axios";
 
-// const defaultConfig = {
-//   headers: {
-//     "Content-Type": "application/json"
-//   }
-// };
-
 function get(config) {
   return axios(config)
     .then((resp) => resp.data)

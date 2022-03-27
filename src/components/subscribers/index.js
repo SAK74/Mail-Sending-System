@@ -8,7 +8,10 @@ function Subscribers() {
   const [pending, setPending] = useState(false);
 
   useEffect(() => {
-    fetchData().then((data) => setSubscribers(data));
+    setPending(true);
+    fetchData()
+      .then((data) => setSubscribers(data))
+      .finally(() => setPending(false));
   }, []);
   console.log(subscribers);
 
@@ -37,13 +40,13 @@ function Subscribers() {
   };
 
   return (
-    <Container color="blue">
+    <Container pending = {pending}>
       {subscribers &&
         subscribers.map(({ id, fields }, num) => (
           <Subscriber
             key={id}
             handleCheck={(ev) => handleCheck(ev, id)}
-            {...{ ...fields, id, num }}
+            {...{ ...fields, id, num, pending }}
           />
         ))}
       {pending && <div>Pending</div>}
