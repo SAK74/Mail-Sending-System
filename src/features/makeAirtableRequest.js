@@ -8,16 +8,21 @@ const defaultConfig = {
   headers: { Authorization: "Bearer keyJIPhmgqhBPjHK9" }
 };
 
-function fetchData() {
+function fetchSubscribers() {
   return api.get(defaultConfig).then((data) => data.records);
 }
 
-function updateData(id, data) {
+function updateSubscriber(id, data) {
   defaultConfig.url = `/${id}`;
   return api.patch(data, defaultConfig).then((data) => console.log(data));
 }
-updateData.proptypes = {
+
+function addSubscriber(data) {
+  defaultConfig.url = "";
+  return api.post(data, defaultConfig).then((data) => console.log(data));
+}
+updateSubscriber.proptypes = {
   id: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired
 };
-export { fetchData, updateData };
+export { fetchSubscribers, updateSubscriber, addSubscriber };

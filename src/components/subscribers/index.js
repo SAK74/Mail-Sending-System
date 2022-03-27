@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchData, updateData } from "../../features/makeAirtableRequest";
+import {
+  fetchSubscribers,
+  updateSubscriber
+} from "../../features/makeAirtableRequest";
 import Subscriber from "../singleSubscriber";
 import { Container } from "./container";
 
@@ -9,7 +12,7 @@ function Subscribers() {
 
   useEffect(() => {
     setPending(true);
-    fetchData()
+    fetchSubscribers()
       .then((data) => setSubscribers(data))
       .finally(() => setPending(false));
   }, []);
@@ -18,7 +21,7 @@ function Subscribers() {
   const handleCheck = ({ target: { checked } }, id) => {
     console.log(subscribers.map((subscriber) => subscriber.fields.selected));
     setPending(true);
-    updateData(id, {
+    updateSubscriber(id, {
       fields: {
         selected: checked
       }
@@ -40,7 +43,8 @@ function Subscribers() {
   };
 
   return (
-    <Container pending = {pending}>
+    <Container pending={pending}>
+      <h2>Subscribers:</h2>
       {subscribers &&
         subscribers.map(({ id, fields }, num) => (
           <Subscriber
