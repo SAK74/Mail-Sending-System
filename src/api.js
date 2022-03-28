@@ -8,7 +8,7 @@ const defaultConfig = {
 
 function request(config) {
   config.data = config.data ? JSON.stringify(config.data) : null;
-  console.log("config: ", config);
+  // console.log("config: ", config);
   return axios(config)
     .then((resp) => resp.data)
     .catch((err) => {

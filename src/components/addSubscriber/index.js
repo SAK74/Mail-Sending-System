@@ -1,11 +1,13 @@
 // import "./addSubscriber.css";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import validator from "validator";
 import { addSubscriber } from "../../features/makeAirtableRequest";
-
+import { _addSubscriber } from "../subscribersSlice";
 import { Add } from "./styled";
 
 function AddSubscriber() {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -15,9 +17,12 @@ function AddSubscriber() {
     mode: "all"
   });
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     await addSubscriber({ fields: data })
-      .then(() => reset())
+      .then((data) => {
+        reset();
+        dispatch(_addSubscriber(data));
+      })
       .finally(() => {});
   };
   return (

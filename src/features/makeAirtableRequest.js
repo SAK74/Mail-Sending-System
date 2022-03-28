@@ -1,3 +1,4 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import PropTypes from "prop-types";
 import api from "../api";
 // const baseURL = "https://enjt82akgm9zoei.m.pipedream.net";
@@ -8,18 +9,18 @@ const defaultConfig = {
   headers: { Authorization: "Bearer keyJIPhmgqhBPjHK9" }
 };
 
-function fetchSubscribers() {
-  return api.get(defaultConfig).then((data) => data.records);
-}
+const fetchSubscribers = createAsyncThunk("fetchSubscribers", () =>
+  api.get(defaultConfig).then((data) => data.records)
+);
 
 function updateSubscriber(id, data) {
   defaultConfig.url = `/${id}`;
-  return api.patch(data, defaultConfig).then((data) => console.log(data));
+  return api.patch(data, defaultConfig).then((data) => data);
 }
 
 function addSubscriber(data) {
   defaultConfig.url = "";
-  return api.post(data, defaultConfig).then((data) => console.log(data));
+  return api.post(data, defaultConfig).then((data) => data);
 }
 updateSubscriber.proptypes = {
   id: PropTypes.string.isRequired,
