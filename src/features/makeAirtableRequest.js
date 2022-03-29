@@ -22,6 +22,11 @@ function addSubscriber(data) {
   defaultConfig.url = "";
   return api.post(data, defaultConfig).then((data) => data);
 }
+
+function deleteSubscriber(id) {
+  defaultConfig.url = `/${id}`;
+  return api._delete(defaultConfig).then((data) => data);
+}
 updateSubscriber.proptypes = {
   id: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired

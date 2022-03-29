@@ -9,7 +9,6 @@ import { selectAll, updateChecked } from "../subscribersSlice";
 import { Container } from "./container";
 
 function Subscribers() {
-  // const [subscribers, setSubscribers] = useState([]);
   const [pending, setPending] = useState(false);
   const { status } = useSelector((state) => state.subscribers);
   const dispatch = useDispatch();
@@ -35,6 +34,7 @@ function Subscribers() {
       })
       .finally(() => setPending(false));
   };
+  const deleteSelect = () => {};
 
   return (
     <Container pending={pending}>
@@ -47,6 +47,7 @@ function Subscribers() {
             {...{ ...fields, id, num, pending }}
           />
         ))}
+      <button>Delete selected</button>
       {pending && <div>Pending</div>}
     </Container>
   );

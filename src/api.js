@@ -39,5 +39,10 @@ function post(data, config) {
     data
   });
 }
-
-export default { get, patch, post };
+function _delete(config) {
+  return request({
+    ...config,
+    method: "DELETE"
+  });
+}
+export default { get, patch, post, _delete };
