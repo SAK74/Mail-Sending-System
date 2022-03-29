@@ -5,7 +5,7 @@ function Subscriber({ id, num, email, name, created, selected, handleCheck, pend
   return (
     <div className="subscriber">
       {num + 1}. {email} {name}
-      <input type="checkbox" checked={selected} onChange={handleCheck} disabled = {pending} />
+      <input type="checkbox" checked={!!selected} onChange={handleCheck} disabled={pending} />
       {date}
     </div>
   );
