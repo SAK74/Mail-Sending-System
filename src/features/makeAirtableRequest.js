@@ -23,12 +23,19 @@ function addSubscriber(data) {
   return api.post(data, defaultConfig).then((data) => data);
 }
 
-function deleteSubscriber(id) {
-  defaultConfig.url = `/${id}`;
-  return api._delete(defaultConfig).then((data) => data);
+function deleteSubscribers(data) {
+  defaultConfig.url = "";
+  return api._delete(data, defaultConfig).then((data) => data.records);
 }
 updateSubscriber.proptypes = {
   id: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired
 };
-export { fetchSubscribers, updateSubscriber, addSubscriber };
+addSubscriber.proptypes = PropTypes.shape({
+  fields: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
+  })
+});
+deleteSubscribers.proptypes = PropTypes.array.isRequired;
+export { fetchSubscribers, updateSubscriber, addSubscriber, deleteSubscribers };

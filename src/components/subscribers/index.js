@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteSubscribers,
   fetchSubscribers,
   updateSubscriber
 } from "../../features/makeAirtableRequest";
 import Subscriber from "../singleSubscriber";
-import { selectAll, updateChecked } from "../subscribersSlice";
+import {
+  selectAll,
+  updateChecked,
+  _deleteSubscribers
+} from "../subscribersSlice";
 import { Container } from "./container";
 
 function Subscribers() {
@@ -21,7 +26,6 @@ function Subscribers() {
   console.log(subscribers);
 
   const handleCheck = ({ target: { checked } }, id) => {
-    // console.log(subscribers.map((subscriber) => subscriber.fields.selected));
     setPending(true);
     updateSubscriber(id, {
       fields: {
@@ -34,7 +38,14 @@ function Subscribers() {
       })
       .finally(() => setPending(false));
   };
-  const deleteSelect = () => {};
+  const handleDelSelected = () => {
+    const subscribersToDel = subscribers
+      .filter((subsc) => subsc.fields.selected)
+      .map((subsc) => subsc.id);
+    deleteSubscribers(subscribersToDel).then((data) =>
+      dispatch(_deleteSubscribers(data.map((subsc) => subsc.id)))
+    );
+  };
 
   return (
     <Container pending={pending}>
@@ -47,7 +58,7 @@ function Subscribers() {
             {...{ ...fields, id, num, pending }}
           />
         ))}
-      <button>Delete selected</button>
+      <button onClick={handleDelSelected}>Delete selected</button>
       {pending && <div>Pending</div>}
     </Container>
   );

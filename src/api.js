@@ -1,4 +1,6 @@
 import axios from "axios";
+// import QueryString from "qs";
+import qs from "qs";
 
 const defaultConfig = {
   headers: {
@@ -7,7 +9,6 @@ const defaultConfig = {
 };
 
 function request(config) {
-  config.data = config.data ? JSON.stringify(config.data) : null;
   // console.log("config: ", config);
   return axios(config)
     .then((resp) => resp.data)
@@ -28,7 +29,7 @@ function patch(data, config) {
   return request({
     ...config,
     method: "PATCH",
-    data
+    data: JSON.stringify(data)
   });
 }
 function post(data, config) {
@@ -36,13 +37,17 @@ function post(data, config) {
   return request({
     ...config,
     method: "POST",
-    data
+    data: JSON.stringify(data)
   });
 }
-function _delete(config) {
+function _delete(data, config) {
+  config.params = data;
+  config.paramsSerializer = (params) =>
+    qs.stringify({ records: params }, { arrayFormat: "brackets" });
   return request({
     ...config,
     method: "DELETE"
   });
 }
+
 export default { get, patch, post, _delete };

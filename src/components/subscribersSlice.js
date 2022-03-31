@@ -23,7 +23,9 @@ const subscribersSlice = createSlice({
       });
     },
     _addSubscriber: (state, { payload }) =>
-      subscribersAdapter.addOne(state, payload)
+      subscribersAdapter.addOne(state, payload),
+    _deleteSubscribers: (state, { payload }) =>
+      subscribersAdapter.removeMany(state, payload)
   },
   extraReducers: {
     [fetchSubscribers.pending]: (state) => {
@@ -44,7 +46,8 @@ const subscribersSlice = createSlice({
 export const {
   resetStatus,
   updateChecked,
-  _addSubscriber
+  _addSubscriber,
+  _deleteSubscribers
 } = subscribersSlice.actions;
 export const { selectAll, selectById } = subscribersAdapter.getSelectors(
   (state) => state.subscribers

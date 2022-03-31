@@ -45,7 +45,9 @@ function AddSubscriber() {
         {errors?.email && <div className="error">{errors.email.message}</div>}
         <button type="submit">Dodaj</button>
         {isSubmitting && <div>Pending</div>}
-        {isSubmitSuccessful && !isSubmitting && <div>Subscriber added!</div>}
+        {isSubmitSuccessful && !isSubmitting && (
+          <div>Subscriber added successfully!</div>
+        )}
       </form>
     </Add>
   );
