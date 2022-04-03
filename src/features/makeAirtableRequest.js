@@ -1,12 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import PropTypes from "prop-types";
 import api from "../api";
-// const baseURL = "https://enjt82akgm9zoei.m.pipedream.net";
-const airtableURL = "https://api.airtable.com/v0/appF2X0Cfc7mAqbqX/subscribers";
+const baseURL = "https://enuxp5t0vvqu400.m.pipedream.net";
+// const airtableURL = "https://api.airtable.com/v0/appF2X0Cfc7mAqbqX/subscribers/";
 const defaultConfig = {
-  baseURL: airtableURL,
-  // url: "/recWNYFeg6RSWXsd7",
-  headers: { Authorization: "Bearer keyJIPhmgqhBPjHK9" }
+  baseURL
+  // headers: { Authorization: "Bearer ... }
 };
 
 const fetchSubscribers = createAsyncThunk("fetchSubscribers", () =>
@@ -14,8 +13,8 @@ const fetchSubscribers = createAsyncThunk("fetchSubscribers", () =>
 );
 
 function updateSubscriber(id, data) {
-  defaultConfig.url = `/${id}`;
-  return api.patch(data, defaultConfig).then((data) => data);
+  // defaultConfig.url = id;
+  return api.patch({ ...data, id }, defaultConfig).then((data) => data);
 }
 
 function addSubscriber(data) {

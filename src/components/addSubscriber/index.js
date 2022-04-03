@@ -14,7 +14,7 @@ function AddSubscriber() {
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset
   } = useForm({
-    mode: "all"
+    mode: "onChange"
   });
   const onSubmit = async (data) => {
     // console.log(data);

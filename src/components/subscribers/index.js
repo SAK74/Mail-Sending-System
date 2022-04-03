@@ -39,16 +39,18 @@ function Subscribers() {
       .finally(() => setPending(false));
   };
   const handleDelSelected = () => {
+    setPending(true);
     const subscribersToDel = subscribers
       .filter((subsc) => subsc.fields.selected)
       .map((subsc) => subsc.id);
-    deleteSubscribers(subscribersToDel).then((data) =>
-      dispatch(_deleteSubscribers(data.map((subsc) => subsc.id)))
-    );
+    deleteSubscribers(subscribersToDel)
+      .then((data) =>
+        dispatch(_deleteSubscribers(data.map((subsc) => subsc.id)))
+      )
+      .finally(() => setPending(false));
   };
-
   return (
-    <Container pending={pending}>
+    <Container pending={pending || status === "loading"}>
       <h2>Subscribers:</h2>
       {subscribers &&
         subscribers.map(({ id, fields }, num) => (
@@ -59,7 +61,7 @@ function Subscribers() {
           />
         ))}
       <button onClick={handleDelSelected}>Delete selected</button>
-      {pending && <div>Pending</div>}
+      {(pending || status === "loading") && <div>Pending</div>}
     </Container>
   );
 }

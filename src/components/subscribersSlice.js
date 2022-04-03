@@ -16,7 +16,7 @@ const subscribersSlice = createSlice({
       state.status = "iddle";
     },
     updateChecked: (state, { payload: { id, ...rest } }) => {
-      console.log(rest.fields);
+      // console.log(rest.fields);
       subscribersAdapter.updateOne(state, {
         id,
         changes: { ...rest }
@@ -36,7 +36,7 @@ const subscribersSlice = createSlice({
       subscribersAdapter.setAll(state, payload);
     },
     [fetchSubscribers.rejected]: (state, { error, payload }) => {
-      console.log(error, payload);
+      // console.log(error, payload);
       state.status = "failed";
       state.error = error.message;
     }

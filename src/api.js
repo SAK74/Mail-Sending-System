@@ -1,6 +1,6 @@
 import axios from "axios";
 // import QueryString from "qs";
-import qs from "qs";
+// import qs from "qs";
 
 const defaultConfig = {
   headers: {
@@ -9,13 +9,13 @@ const defaultConfig = {
 };
 
 function request(config) {
-  // console.log("config: ", config);
+  console.log("config: ", config);
   return axios(config)
     .then((resp) => resp.data)
     .catch((err) => {
       if (err.response) {
         console.log("err.response: ", err.response);
-        throw Error(err.response.data.error.message);
+        throw Error(err.response.data?.error?.message);
       }
       console.log(err);
       throw Error(err.message);
@@ -42,8 +42,8 @@ function post(data, config) {
 }
 function _delete(data, config) {
   config.params = data;
-  config.paramsSerializer = (params) =>
-    qs.stringify({ records: params }, { arrayFormat: "brackets" });
+  // config.paramsSerializer = (params) =>
+  //   qs.stringify({ records: params }, { arrayFormat: "brackets" });
   return request({
     ...config,
     method: "DELETE"

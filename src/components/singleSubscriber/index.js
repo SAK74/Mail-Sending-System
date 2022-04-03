@@ -11,7 +11,6 @@ function Subscriber({
   pending
 }) {
   const date = new Date(created).toLocaleDateString();
-  // console.log(id);
   return (
     <div className="subscriber">
       {num + 1}. {email} {name}
