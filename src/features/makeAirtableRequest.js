@@ -13,19 +13,23 @@ const fetchSubscribers = createAsyncThunk("fetchSubscribers", () =>
 );
 
 function updateSubscriber(id, data) {
-  // defaultConfig.url = id;
+  defaultConfig.headers = {
+    "Content-type": "application/json"
+  };
   return api.patch({ ...data, id }, defaultConfig).then((data) => data);
 }
 
 function addSubscriber(data) {
-  defaultConfig.url = "";
-  return api.post(data, defaultConfig).then((data) => data);
+  defaultConfig.headers = {
+    "Content-type": "application/json"
+  };
+  return api.post(JSON.stringify(data), defaultConfig).then((data) => data);
 }
 
 function deleteSubscribers(data) {
-  defaultConfig.url = "";
   return api._delete(data, defaultConfig).then((data) => data.records);
 }
+
 updateSubscriber.proptypes = {
   id: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired

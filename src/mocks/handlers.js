@@ -9,6 +9,7 @@ export const handlers = [
                id: "recWNYFeg6RSWXsd7",
                createdTime: "2022-03-24T18:01:48.000Z",
                fields: {
+                  selected: true,
                   email: "sergijks@gmail.com",
                   name: "Sergij",
                   created: "2022-03-24T18:01:48.000Z"
@@ -18,7 +19,6 @@ export const handlers = [
                id: "recyTJ1QV64roO1Sn",
                createdTime: "2022-03-24T18:02:27.000Z",
                fields: {
-                  selected: true,
                   email: "example@ex.com",
                   name: "Example",
                   created: "2022-03-24T18:02:27.000Z"

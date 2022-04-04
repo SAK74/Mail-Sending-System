@@ -1,0 +1,1 @@
+export const mailText = "Examply text to sending.... Examply text to sending....";

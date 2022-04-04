@@ -17,13 +17,11 @@ function AddSubscriber() {
     mode: "onChange"
   });
   const onSubmit = async (data) => {
-    // console.log(data);
     await addSubscriber({ fields: data })
       .then((data) => {
         reset();
         dispatch(_addSubscriber(data));
-      })
-      .finally(() => {});
+      });
   };
   return (
     <Add>
