@@ -45,10 +45,11 @@ function Subscribers() {
   };
   const handleSend = () => {
     setPending(true);
-    sendMail(selectedSubscr.map(subscr => subscr.fields.email))
-      .then(data => {
-        console.log(data);
-        setSent(true)
+    // const subscrForSend = selectedSubscr.map(subscr => subscr.fields);
+    sendMail(selectedSubscr.map(subscr => subscr.fields))
+      .then(resSent => {
+        setSent(selectedSubscr.filter((subs, id) => resSent[id].status === 'fulfilled')
+          .map(subs => subs.fields.name).join(", "));
       })
       .finally(() => setPending(false));
   }
@@ -65,7 +66,7 @@ function Subscribers() {
           />
         ))}
       <button className="send" onClick={handleSend}>Send mail to selected</button>
-      {sent && <span>E-mail is sent</span>}
+      {sent && <span>E-mail was sent to: {sent}</span>}
       <button onClick={handleDelSelected}>Delete selected</button>
       {(pending || status === "loading") && <div>Pending</div>}
     </Container>

@@ -28,6 +28,7 @@ export const handlers = [
                id: "recGkAGXoYvtSc0KI",
                createdTime: "2022-03-27T21:33:13.000Z",
                fields: {
+                  selected: true,
                   email: "imusia66@gmail.com",
                   name: "dddd",
                   created: "2022-03-27T21:33:13.000Z"
