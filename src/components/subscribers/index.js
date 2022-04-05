@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteSubscribers, fetchSubscribers, updateSubscriber } from "../../features/makeAirtableRequest";
 import { sendMail } from "../../features/makeMailgunRequest";
+import AddSubscriber from "../addSubscriber";
 import Subscriber from "../singleSubscriber";
 import { selectAll, updateChecked, _deleteSubscribers } from "../subscribersSlice";
 import { Container } from "./container";
@@ -72,6 +73,7 @@ function Subscribers() {
       {sent && <span>E-mail was sent to: {sent}</span>}
       <button onClick={handleDelSelected}>Delete selected</button>
       {(pending || status === "loading") && <div>Pending</div>}
+      <AddSubscriber />
     </Container>
   );
 }

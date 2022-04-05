@@ -8,6 +8,6 @@ export const Container = styled.div(({ pending }) => {
     flexDirection: "column",
     // [`& input[checkbox]`]: {width: pending ? 50 : 10}
     [`button`]: { alignSelf: "end" },
-    [`button.send`]: { alignSelf: 'start' }
+    [`button.left`]: { alignSelf: 'start' }
   };
 });
