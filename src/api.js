@@ -1,5 +1,4 @@
 import axios from "axios";
-// import QueryString from "qs";
 // import qs from "qs";
 
 const defaultConfig = {
@@ -14,10 +13,13 @@ function request(config) {
     .then((resp) => resp.data)
     .catch((err) => {
       if (err.response) {
-        console.log("err.response: ", err.response);
+        console.error("err.response: ", err.response);
+        if (err.response.data.error) {
+          throw Error(err.response.data.error.message)
+        }
         throw Error(err.response.data?.message);
       }
-      console.log(err);
+      console.error(err);
       throw Error(err.message);
     });
 }
