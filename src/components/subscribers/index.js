@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { deleteSubscribers, fetchSubscribers, updateSubscriber } from "../../features/makeAirtableRequest";
 import { sendMail } from "../../features/makeMailgunRequest";
 import Subscriber from "../singleSubscriber";
@@ -45,7 +46,6 @@ function Subscribers() {
   };
   const handleSend = () => {
     setPending(true);
-    // const subscrForSend = selectedSubscr.map(subscr => subscr.fields);
     sendMail(selectedSubscr.map(subscr => subscr.fields))
       .then(resSent => {
         setSent(selectedSubscr.filter((subs, id) => resSent[id].status === 'fulfilled')
@@ -65,7 +65,10 @@ function Subscribers() {
             {...{ ...fields, id, num, pending }}
           />
         ))}
-      <button className="send" onClick={handleSend}>Send mail to selected</button>
+      <button className="left" onClick={handleSend}>Send mail to selected</button>
+      <button className="left">
+        <Link to="/mailedit">Create/edit mail content</Link>
+      </button>
       {sent && <span>E-mail was sent to: {sent}</span>}
       <button onClick={handleDelSelected}>Delete selected</button>
       {(pending || status === "loading") && <div>Pending</div>}
