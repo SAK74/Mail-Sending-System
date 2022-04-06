@@ -14,8 +14,9 @@ export const sendMail = subscribers => {
          to: subscr.email,
          subject: "Hello",
          text: mailText.replace("<name>", subscr.name)
-      }
-      return api.post(data, defaultConfig).then((data) => data);
+      };
+      defaultConfig.data = data;
+      return api.post(defaultConfig).then((data) => data);
    });
    return Promise.allSettled(sending)
       .then(res => {

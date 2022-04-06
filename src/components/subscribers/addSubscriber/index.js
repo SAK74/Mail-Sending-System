@@ -17,7 +17,7 @@ function AddSubscriber() {
     mode: "onChange"
   });
   const onSubmit = async (data) => {
-    await addItem("subscribers")({ fields: data })
+    await addItem("subscribers")(data)
       .then((data) => {
         reset();
         dispatch(_addSubscriber(data));

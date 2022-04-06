@@ -18,9 +18,10 @@ export const update = type => (id, data) => {
     baseURL: url(type),
     headers: {
       "Content-type": "application/json"
-    }
+    },
+    data: JSON.stringify({ ...data, id })
   };
-  return api.patch({ ...data, id }, defaultConfig).then((data) => data);
+  return api.patch(defaultConfig).then((data) => data);
 }
 
 export const addItem = type => data => {
@@ -28,9 +29,10 @@ export const addItem = type => data => {
     baseURL: url(type),
     headers: {
       "Content-type": "application/json"
-    }
+    },
+    data: JSON.stringify({ fields: data })
   }
-  return api.post(JSON.stringify(data), defaultConfig).then((data) => data);
+  return api.post(defaultConfig).then((data) => data);
 }
 
 export const deleteItems = type => data => {
@@ -38,7 +40,8 @@ export const deleteItems = type => data => {
     baseURL: url(type),
     headers: {
       "Content-type": "application/json"
-    }
+    },
+    params: data
   }
-  return api._delete(data, defaultConfig).then((data) => data.records);
+  return api._delete(defaultConfig).then((data) => data.records);
 }

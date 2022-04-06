@@ -7,10 +7,8 @@ export default function CreateMail() {
       ev.preventDefault();
       console.log(ev.target.content.value);
       addItem("mails")({
-         fields: {
-            subject: "any",
-            content: ev.target.content.value
-         }
+         subject: "any",
+         content: ev.target.content.value
       }).then((data) => { console.log(data) });
    }
    return (

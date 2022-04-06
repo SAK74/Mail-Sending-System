@@ -26,24 +26,21 @@ function request(config) {
 function get(config) {
   return request(config);
 }
-function patch(data, config) {
+function patch(config) {
   config.headers = { ...config?.headers, ...defaultConfig?.headers };
   return request({
     ...config,
     method: "PATCH",
-    data: JSON.stringify(data)
   });
 }
-function post(data, config) {
+function post(config) {
   config.headers = { ...config?.headers, ...defaultConfig?.headers };
   return request({
     ...config,
     method: "POST",
-    data
   });
 }
-function _delete(data, config) {
-  config.params = data;
+function _delete(config) {
   // config.paramsSerializer = (params) =>
   //   qs.stringify({ records: params }, { arrayFormat: "brackets" });
   return request({
