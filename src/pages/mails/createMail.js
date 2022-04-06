@@ -1,15 +1,17 @@
 import { useEffect } from "react";
-import { saveMail } from "../features/makeMailRequest";
+import { addItem } from "../../features/makeAirtableRequest";
 
 export default function CreateMail() {
    useEffect(() => { })
    const handleSubmit = (ev) => {
       ev.preventDefault();
       console.log(ev.target.content.value);
-      saveMail({
-         subject: "any",
-         content: ev.target.content.value
-      }).then(() => { });
+      addItem("mails")({
+         fields: {
+            subject: "any",
+            content: ev.target.content.value
+         }
+      }).then((data) => { console.log(data) });
    }
    return (
       <form onSubmit={handleSubmit}>

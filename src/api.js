@@ -24,7 +24,7 @@ function request(config) {
     });
 }
 function get(config) {
-  return request('/subscribers');
+  return request(config);
 }
 function patch(data, config) {
   config.headers = { ...config?.headers, ...defaultConfig?.headers };

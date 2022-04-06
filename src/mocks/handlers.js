@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 
 export const handlers = [
-   rest.get("/subscribers", (req, res, ctx) => res(
+   rest.get("subscribers", (req, res, ctx) => res(
       ctx.status(200),
       ctx.json({
          records: [
@@ -32,6 +32,37 @@ export const handlers = [
                   email: "imusia66@gmail.com",
                   name: "dddd",
                   created: "2022-03-27T21:33:13.000Z"
+               }
+            }
+         ]
+      })
+   )),
+   rest.get("mails", (req, resp, ctx) => resp(
+      ctx.status(200),
+      ctx.json({
+         records: [
+            {
+               id: "recWNYFeg6RSWX",
+               createdTime: "2022-03-24T18:01:48.000Z",
+               fields: {
+                  subject: "anything",
+                  content: "ababagalamaga",
+               }
+            },
+            {
+               id: "recyTJ1QV64roO",
+               createdTime: "2022-03-24T18:02:27.000Z",
+               fields: {
+                  subject: "any2thing",
+                  content: "khgcccababagalamaga",
+               }
+            },
+            {
+               id: "recGkAGXoYvtSc0KI",
+               createdTime: "2022-03-27T21:33:13.000Z",
+               fields: {
+                  subject: "any3thing",
+                  content: "ababababalalaga",
                }
             }
          ]
