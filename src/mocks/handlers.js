@@ -42,15 +42,16 @@ export const handlers = [
       ctx.json({
          records: [
             {
-               id: "recWNYFeg6RSWX",
+               id: "recmaUpyjob1dzbmP",
                createdTime: "2022-03-24T18:01:48.000Z",
                fields: {
                   subject: "anything",
                   content: "ababagalamaga",
+                  selected: true,
                }
             },
             {
-               id: "recyTJ1QV64roO",
+               id: "rec2ZNQon7bWuQIrq",
                createdTime: "2022-03-24T18:02:27.000Z",
                fields: {
                   subject: "any2thing",
@@ -58,7 +59,7 @@ export const handlers = [
                }
             },
             {
-               id: "recGkAGXoYvtSc0KI",
+               id: "recWlGDtXQW4cUEYT",
                createdTime: "2022-03-27T21:33:13.000Z",
                fields: {
                   subject: "any3thing",

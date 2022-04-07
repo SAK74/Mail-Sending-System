@@ -8,7 +8,8 @@ export default function CreateMail() {
       console.log(ev.target.content.value);
       addItem("mails")({
          subject: "any",
-         content: ev.target.content.value
+         content: ev.target.content.value,
+         status: "working"
       }).then((data) => { console.log(data) });
    }
    return (

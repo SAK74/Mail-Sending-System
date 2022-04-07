@@ -1,4 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { rest } from "msw";
 import { fetchData } from "../../features/makeAirtableRequest";
 const fetchMails = fetchData("mails");
 
@@ -13,7 +14,11 @@ const mailsSlice = createSlice({
    name: "mails",
    initialState,
    reducers: {
-
+      updateMail: (state, { payload: { id, ...rest } }) => mailsAdapter.updateOne(state, {
+         id,
+         changes: { ...rest }
+      }),
+      deleteMails: (state, { payload }) => mailsAdapter.removeMany(state, payload)
    },
    extraReducers: {
       [fetchMails.pending]: state => { state.status = "loading" },
@@ -29,7 +34,7 @@ const mailsSlice = createSlice({
 });
 
 export default mailsSlice.reducer;
-export const { } = mailsSlice.actions;
+export const { updateMail, deleteMails } = mailsSlice.actions;
 export const {
    selectAll: selectAllMails,
    selectById: selectMailById
