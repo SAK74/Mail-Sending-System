@@ -7,6 +7,8 @@ import AddSubscriber from "../../components/subscribers/addSubscriber";
 import Subscriber from "../../components/subscribers/singleSubscriber";
 import { selectAll, updateChecked, _deleteSubscribers } from "./subscribersSlice";
 import { Container } from "./container";
+import SingleMail from "../../components/mails/singleMail";
+import { selectAllMails } from "../mails/mailsSlice";
 
 function Subscribers() {
   const [pending, setPending] = useState(false);
@@ -45,26 +47,40 @@ function Subscribers() {
       )
       .finally(() => setPending(false));
   };
+  const selectedMail = useSelector(selectAllMails).find(mail => mail.fields.selected);
+  console.log("selectedMail: ", selectedMail);
   const handleSend = () => {
+    // sendTest();
+
     setPending(true);
-    sendMail(selectedSubscr.map(subscr => subscr.fields))
+    sendMail(selectedSubscr.map(subscr => subscr.fields), selectedMail.fields)
       .then(resSent => {
         setSent(selectedSubscr.filter((subs, id) => resSent[id].status === 'fulfilled')
           .map(subs => subs.fields.name).join(", "));
+        setTimeout(() => setSent(false), 5000);
       })
       .finally(() => setPending(false));
   }
+
 
   return (
     <Container pending={pending || status === "loading"}>
       <h2>Subscribers:</h2>
       {subscribers &&
         subscribers.map(({ id, fields }, num) => (
-          <Subscriber
-            key={id}
-            handleCheck={(ev) => handleCheck(ev, id)}
-            {...{ ...fields, id, num, pending }}
-          />
+          <div className="subscriber" key={id}>
+            {num + 1}.&nbsp;
+            <Subscriber
+              handleCheck={(ev) => handleCheck(ev, id)}
+              {...{ ...fields, id, num, pending }}
+            />
+            <input
+              type="checkbox"
+              checked={!!fields.selected}
+              onChange={ev => handleCheck(ev, id)}
+              disabled={pending}
+            />
+          </div>
         ))}
       <button className="left" onClick={handleSend}>Send mail to selected</button>
       <button className="left">
@@ -73,6 +89,8 @@ function Subscribers() {
       {sent && <span>E-mail was sent to: {sent}</span>}
       <button onClick={handleDelSelected}>Delete selected</button>
       {(pending || status === "loading") && <div>Pending</div>}
+      <h3>Selected mail:</h3>
+      {selectedMail ? <SingleMail {...selectedMail.fields} /> : "Pending"}
       <AddSubscriber />
     </Container>
   );

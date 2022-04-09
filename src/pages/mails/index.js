@@ -29,13 +29,18 @@ const Mails = () => {
          .then(data => dispatch(deleteMails(data.map(el => el.id))))
          .finally(() => setPending(false));
    }
+
    return (
       <div className="mails">
-         {mails.map(({ id, fields }, num) => <SingleMail
-            key={id}
-            {...{ ...fields, id, num, pending }}
-            handleCheck={ev => handleCheck(ev, id)}
-         />)}
+         {mails.map(({ id, fields }, num) => <div key={id}>
+            {num + 1}.
+            <input type="checkbox" checked={!!fields.selected} onChange={ev => handleCheck(ev, id)} disabled={pending} />
+            <SingleMail
+               {...{ ...fields, id, num, pending }}
+               handleCheck={ev => handleCheck(ev, id)}
+            />
+         </div>
+         )}
          <button onClick={handleDelete}>Delete selected</button>
       </div>
    )
