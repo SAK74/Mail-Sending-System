@@ -19,7 +19,7 @@ export const update = type => (id, data) => {
     headers: {
       "Content-type": "application/json"
     },
-    data: JSON.stringify({ ...data, id })
+    data: JSON.stringify({ ...{ fields: data }, id })
   };
   return api.patch(defaultConfig).then((data) => data);
 }

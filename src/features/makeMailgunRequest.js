@@ -1,6 +1,6 @@
-import { connect, useSelector } from "react-redux";
+// import { connect, useSelector } from "react-redux";
 import api from "../api";
-import { selectAll } from "../pages/subscribers/subscribersSlice";
+// import { selectAll } from "../pages/subscribers/subscribersSlice";
 // import { mailText } from "./mailContent";
 
 const defaultConfig = {
