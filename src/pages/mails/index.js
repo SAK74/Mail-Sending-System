@@ -24,7 +24,7 @@ const Mails = () => {
             {num + 1}.
             <input type="checkbox"
                checked={!!fields.selected}
-               onChange={ev => handleCheck("mails", setPending)(ev, id)}
+               onChange={ev => handleCheck("mails", setPending)(!fields.selected, id)}
                disabled={pending}
             />
             <SingleMail

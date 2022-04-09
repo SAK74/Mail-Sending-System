@@ -18,10 +18,11 @@ const mailsSlice = createSlice({
          id,
          changes: { ...rest }
       }),
-      deleteMails: (state, { payload }) => mailsAdapter.removeMany(state, payload)
+      deleteMails: (state, { payload }) => mailsAdapter.removeMany(state, payload),
+      setStatusMails: (state, { payload }) => { state.status = payload }
    },
    extraReducers: {
-      [fetchMails.pending]: state => { state.status = "loading" },
+      [fetchMails.pending]: state => { state.status = "pending" },
       [fetchMails.fulfilled]: (state, { payload }) => {
          state.status = "iddle";
          mailsAdapter.setAll(state, payload);
@@ -34,7 +35,7 @@ const mailsSlice = createSlice({
 });
 
 export default mailsSlice.reducer;
-export const { updateMail, deleteMails } = mailsSlice.actions;
+export const { updateMail, deleteMails, setStatusMails } = mailsSlice.actions;
 export const {
    selectAll: selectAllMails,
    selectById: selectMailById

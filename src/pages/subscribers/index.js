@@ -5,16 +5,16 @@ import { fetchData, update } from "../../features/makeAirtableRequest";
 import { sendMail } from "../../features/makeMailgunRequest";
 import AddSubscriber from "../../components/subscribers/addSubscriber";
 import Subscriber from "../../components/subscribers/singleSubscriber";
-import { selectAll, _deleteSubscribers } from "./subscribersSlice";
+import { selectAll } from "./subscribersSlice";
 import { Container } from "./container";
 import SingleMail from "../../components/mails/singleMail";
 import { selectAllMails, updateMail } from "../mails/mailsSlice";
-import { handleCheck, handleDelSelected } from "../../handlers";
-import { List, ListItem, ListItemAvatar, ListItemText, Avatar, ListItemButton } from "@mui/material";
-import { Checkbox, Paper, Stack, Button } from "@mui/material";
+import { handleDelSelected } from "../../handlers";
+import { List, ListSubheader, Box } from "@mui/material";
+import { Paper, Stack, Button, IconButton, Menu, MenuItem } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 
 function Subscribers() {
-  const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
   const { status } = useSelector((state) => state.subscribers);
   const dispatch = useDispatch();
@@ -25,10 +25,10 @@ function Subscribers() {
   }, []); //eslint-disable-line
 
   const subscribers = useSelector(selectAll);
-  console.log(subscribers);
+  // console.log(subscribers);
   const selectedSubscr = subscribers.filter((subsc) => subsc.fields.selected);
   const selectedMail = useSelector(selectAllMails).find(mail => mail.fields.selected);
-  console.log("selectedMail: ", selectedMail);
+  // console.log("selectedMail: ", selectedMail);
 
   const handleSend = () => {
     setPending(true);
@@ -42,50 +42,38 @@ function Subscribers() {
       })
       .finally(() => setPending(false));
   }
+  const [open, setOpen] = useState(null);
+  const handleMenu = ({ currentTarget }) => {
+    setOpen(currentTarget);
+  }
 
   return (
-    <Container pending={pending || status === "loading"}>
-      <List subheader={<h2>Subscribers:</h2>} component={Paper}
-        sx={{ width: 500 }}
-      >
-        {/* <ListSubheader component="h2">Subscribers</ListSubheader> */}
-        {subscribers && subscribers.map(({ id, fields: { name, email, selected } }, num, arr) => <ListItem
-          key={id}
-          alignItems='flex-start'
-          divider={num !== arr.length - 1}
-          secondaryAction={<Checkbox edge="end" checked={!!selected} />}
-          dense
-          disablePadding
+    <Container pending={status === "loading"}>
+      <Paper>
+        <List
+          sx={{ maxWidth: 500, width: "100%" }}
         >
-          <ListItemButton>
-            <ListItemText sx={{ maxWidth: 40 }} children={<h3>{num + 1}. </h3>} />
-            <ListItemAvatar children={<Avatar>{name.at(0).toUpperCase()}</Avatar>} />
-            <ListItemText primary={name} secondary={email} />
-          </ListItemButton>
-        </ListItem>)}
-      </List>
-      <Stack direction="row" spacing={4}>
-        <Button variant="outlined" children="Send Mail to selected" size="small" />
-        <Button variant="outlined" children="Edit / create mail" size="small" />
-        <Button variant="outlined" children="Deleted selected" size="small" />
-      </Stack>
-      <h2>Subscribers:</h2>
-      {subscribers &&
-        subscribers.map(({ id, fields }, num) => (
-          <div className="subscriber" key={id}>
-            {num + 1}.&nbsp;
-            <Subscriber
-              // handleCheck={(ev) => handleCheck("subscribers", setPending)(ev, id)}
-              {...{ ...fields, id, num, pending }}
-            />
-            <input
-              type="checkbox"
-              checked={!!fields.selected}
-              onChange={ev => handleCheck("subscribers", setPending)(ev, id)}
-              disabled={pending}
-            />
-          </div>
-        ))}
+          <ListSubheader sx={{ display: "flex" }}>
+            <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
+            <IconButton children={<MenuIcon fontSize="large" />} onClick={handleMenu} />
+          </ListSubheader>
+          {subscribers && subscribers.map(({ id, fields }, num, arr) =>
+            <Subscriber key={id} {...{ ...fields, num, arr, id }} />)}
+        </List>
+      </Paper>
+      <Menu
+        open={!!open}
+        anchorEl={open}
+      >
+        <MenuItem key="delete" children="Delete selected" onClick={() => setOpen(null)} />
+        <MenuItem key="send mail" children="Send Mail to selected" onClick={() => setOpen(null)} />
+      </Menu>
+      {/* <Stack direction="row" spacing={4}> */}
+      {/* <Button variant="outlined" children="Send Mail to selected" size="small" /> */}
+      <Button variant="outlined" children="Edit / create mail" size="small" />
+      {/* <Button variant="outlined" children="Deleted selected" size="small" /> */}
+      {/* </Stack> */}
+
       <button className="left" onClick={handleSend}>Send mail to selected</button>
       <button className="left">
         <Link to="/mailedit">Create/edit mail content</Link>
@@ -94,7 +82,7 @@ function Subscribers() {
       <button onClick={() => handleDelSelected("subscribers", setPending)(selectedSubscr.map(subscr => subscr.id))}>
         Delete selected
       </button>
-      {(pending || status === "loading") && <div>Pending</div>}
+      {(status === "pending") && <div>Pending</div>}
       <h3>Selected mail:</h3>
       {selectedMail ? <SingleMail {...selectedMail.fields} /> : "Pending"}
       <AddSubscriber />

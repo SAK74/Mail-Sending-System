@@ -1,27 +1,29 @@
 import store from './store';
 import { deleteItems, update } from './features/makeAirtableRequest';
-import { deleteMails, updateMail } from './pages/mails/mailsSlice';
-import { updateChecked, _deleteSubscribers } from './pages/subscribers/subscribersSlice';
+import { deleteMails, setStatusMails, updateMail } from './pages/mails/mailsSlice';
+import { setStatusSubscr, updateChecked, _deleteSubscribers } from './pages/subscribers/subscribersSlice';
+const dispatch = store.dispatch;
 
-export const handleCheck = (type, setPending) => ({ target: { checked } }, id) => {
-   console.log("extend: ");
-   setPending(true);
-   update("subscribers")(id, { selected: checked })
+export const handleCheck = (type) => (checked, id) => {
+   // console.log("extend: ");
+   dispatch(type === "subscribers" ? setStatusSubscr("pending") : setStatusMails("pending"));
+   update(type)(id, { selected: checked })
       .then((data) => {
          console.log(data);
-         store.dispatch(type === "subscribers" ? updateChecked(data) : updateMail(data));
+         dispatch(type === "subscribers" ? updateChecked(data) : updateMail(data));
       })
-      .finally(() => setPending(false));
+      .finally(() => dispatch(type === "subscribers" ? setStatusSubscr("iddle") : setStatusMails("iddle"))
+      );
 };
 
-export const handleDelSelected = (type, setPending) => itemsID => {
+export const handleDelSelected = (type) => itemsID => {
    if (!confirm("Are You sure to delete selected items?!.")) { return undefined }
-   setPending(true);
+   dispatch(type === "subscribers" ? setStatusSubscr("pending") : setStatusMails("pending"));
    deleteItems(type)(itemsID)
       .then((data) =>
-         store.dispatch(type === "subscribers" ? _deleteSubscribers(data.map((subsc) => subsc.id))
+         dispatch(type === "subscribers" ? _deleteSubscribers(data.map((subsc) => subsc.id))
             :
             deleteMails(data.map(mail => mail.id)))
       )
-      .finally(() => setPending(false));
+      .finally(() => dispatch(type === "subscribers" ? setStatusSubscr("iddle") : setStatusMails("iddle")));
 };

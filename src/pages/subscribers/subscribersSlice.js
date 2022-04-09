@@ -1,3 +1,4 @@
+import { Satellite } from "@mui/icons-material";
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import { fetchData } from "../../features/makeAirtableRequest";
 
@@ -14,11 +15,7 @@ const subscribersSlice = createSlice({
   name: "subscribers",
   initialState,
   reducers: {
-    resetStatus: (state) => {
-      state.status = "iddle";
-    },
     updateChecked: (state, { payload: { id, ...rest } }) => {
-      // console.log(rest.fields);
       subscribersAdapter.updateOne(state, {
         id,
         changes: { ...rest }
@@ -27,11 +24,12 @@ const subscribersSlice = createSlice({
     _addSubscriber: (state, { payload }) =>
       subscribersAdapter.addOne(state, payload),
     _deleteSubscribers: (state, { payload }) =>
-      subscribersAdapter.removeMany(state, payload)
+      subscribersAdapter.removeMany(state, payload),
+    setStatusSubscr: (state, { payload }) => { state.status = payload }
   },
   extraReducers: {
     [fetchSubscribers.pending]: (state) => {
-      state.status = "loading";
+      state.status = "pending";
     },
     [fetchSubscribers.fulfilled]: (state, { payload }) => {
       state.status = "iddle";
@@ -46,7 +44,7 @@ const subscribersSlice = createSlice({
 });
 
 export const {
-  resetStatus,
+  setStatusSubscr,
   updateChecked,
   _addSubscriber,
   _deleteSubscribers
