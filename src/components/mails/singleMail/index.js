@@ -1,5 +1,6 @@
 import { ForwardToInboxOutlined, Edit } from "@mui/icons-material";
 import { Box, Checkbox, IconButton, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { memo } from 'react';
 
 
 const SingleMail = ({ subject, content, selected, id, status: mailStatus }) => {
@@ -15,10 +16,7 @@ const SingleMail = ({ subject, content, selected, id, status: mailStatus }) => {
             <ListItemText primary={subject} secondary={content} />
          </ListItemButton>
       </ListItem>
-      {/* <input type="checkbox" checked={!!selected} onChange={handleCheck} disabled={pending} /> */}
-      {/* {num + 1}.  */}
-      {/* {subject} {content} {status} */}
    </>
 }
 
-export default SingleMail;
+export default memo(SingleMail);

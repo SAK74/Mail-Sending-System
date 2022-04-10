@@ -1,4 +1,4 @@
-import { List, ListSubheader, Box, Menu, MenuItem, IconButton } from "@mui/material";
+import { List, ListSubheader, Box, Menu, MenuItem, IconButton, Paper, Stack } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +6,7 @@ import SingleMail from "../../components/mails/singleMail";
 import { fetchData } from "../../features/makeAirtableRequest";
 import { handleCheck, handleDelSelected } from "../../handlers";
 import { selectAllMails } from "./mailsSlice";
+import MailsSkeleton from "../../components/elements/mailsSkeleton";
 
 const Mails = () => {
    const dispatch = useDispatch();
@@ -31,22 +32,33 @@ const Mails = () => {
    }
    return (
       <Box>
-         <List>
-            <ListSubheader sx={{ display: "flex" }}>
-               <Box component="span" sx={{ flexGrow: 1 }}>Working directory</Box>
-               <IconButton children={<MenuIcon />} onClick={ev => setOpenWork(ev.currentTarget)} />
-            </ListSubheader>
-            {workingMails && workingMails.map(({ id, fields }) =>
-               <SingleMail key={id} {...{ ...fields }} />)}
-         </List>
-         <List>
-            <ListSubheader sx={{ display: "flex" }}>
-               <Box component="span" sx={{ flexGrow: 1 }}>Sent mails</Box>
-               <IconButton children={<MenuIcon />} onClick={ev => setOpenSent(ev.currentTarget)} />
-            </ListSubheader>
-            {sentMails && sentMails.map(({ id, fields }) =>
-               <SingleMail key={id} {...{ ...fields, id }} />)}
-         </List>
+         <Stack direction="row" spacing={5} paddingX={5}>
+            <Paper sx={{ width: "100%", maxWidth: 500 }}>
+               <List>
+                  <ListSubheader sx={{ display: "flex" }}>
+                     <IconButton children={<MenuIcon />} onClick={ev => setOpenWork(ev.currentTarget)} />
+                     <Box component="span" sx={{ flexGrow: 1 }}>Working directory</Box>
+                  </ListSubheader>
+                  {false ? workingMails.map(({ id, fields }) =>
+                     <SingleMail key={id} {...{ ...fields }} />)
+                     :
+                     <MailsSkeleton />
+                  }
+               </List>
+            </Paper>
+            <Paper sx={{ width: "100%", maxWidth: 500 }}>
+               <List>
+                  <ListSubheader sx={{ display: "flex" }}>
+                     <IconButton children={<MenuIcon />} onClick={ev => setOpenSent(ev.currentTarget)} />
+                     <Box component="span" sx={{ flexGrow: 1 }}>Sent mails</Box>
+                  </ListSubheader>
+                  {sentMails && sentMails.map(({ id, fields }) =>
+                     <SingleMail key={id} {...{ ...fields, id }} />)}
+               </List>
+            </Paper>
+         </Stack>
+
+
          <Menu open={!!openWork} anchorEl={openWork}>
             <MenuItem key="delete working" children="Delete selected" onClick={handleMenuWork} />
          </Menu>

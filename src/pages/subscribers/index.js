@@ -13,6 +13,7 @@ import { handleDelSelected } from "../../handlers";
 import { List, ListSubheader, Box } from "@mui/material";
 import { Paper, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import SubscribersSkeleton from "../../components/elements/subscribersSkeleton";
 
 function Subscribers() {
   const [sent, setSent] = useState(false);
@@ -50,13 +51,16 @@ function Subscribers() {
   return (
     <Container pending={status === "loading"} >
       <Paper sx={{ maxWidth: 500, width: "100%" }}>
-        <List component="ol">
+        <List>
           <ListSubheader sx={{ display: "flex" }}>
             <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
             <IconButton children={<MenuIcon fontSize="large" />} onClick={handleMenu} />
           </ListSubheader>
-          {subscribers && subscribers.map(({ id, fields }, num, arr) =>
-            <Subscriber key={id} {...{ ...fields, num, arr, id }} />)}
+          {false ? subscribers.map(({ id, fields }, num, arr) =>
+            <Subscriber key={id} {...{ ...fields, num, arr, id }} />)
+            :
+            <SubscribersSkeleton />
+          }
         </List>
       </Paper>
       <Menu

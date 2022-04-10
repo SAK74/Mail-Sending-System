@@ -1,9 +1,10 @@
 import {
-  ListItem, ListItemButton, ListItemAvatar, Skeleton,
+  ListItem, ListItemButton, ListItemAvatar,
   ListItemText, Checkbox, Avatar
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { handleCheck } from "../../../handlers";
+import { memo } from 'react';
 
 function Subscriber({
   id,
@@ -17,7 +18,6 @@ function Subscriber({
 
   return (
     <>
-      {/* <Skeleton></Skeleton> */}
       <ListItem
         key={id}
         alignItems='flex-start'
@@ -41,4 +41,4 @@ function Subscriber({
   );
 }
 
-export default Subscriber;
+export default memo(Subscriber);
