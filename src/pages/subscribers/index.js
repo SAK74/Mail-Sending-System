@@ -11,7 +11,7 @@ import SingleMail from "../../components/mails/singleMail";
 import { selectAllMails, updateMail } from "../mails/mailsSlice";
 import { handleDelSelected } from "../../handlers";
 import { List, ListSubheader, Box } from "@mui/material";
-import { Paper, Stack, Button, IconButton, Menu, MenuItem } from "@mui/material";
+import { Paper, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 
 function Subscribers() {
@@ -48,11 +48,9 @@ function Subscribers() {
   }
 
   return (
-    <Container pending={status === "loading"}>
-      <Paper>
-        <List
-          sx={{ maxWidth: 500, width: "100%" }}
-        >
+    <Container pending={status === "loading"} >
+      <Paper sx={{ maxWidth: 500, width: "100%" }}>
+        <List component="ol">
           <ListSubheader sx={{ display: "flex" }}>
             <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
             <IconButton children={<MenuIcon fontSize="large" />} onClick={handleMenu} />

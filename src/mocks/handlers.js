@@ -48,6 +48,7 @@ export const handlers = [
                   subject: "anything",
                   content: "ababagalamaga",
                   selected: true,
+                  status: "working"
                }
             },
             {
@@ -56,6 +57,7 @@ export const handlers = [
                fields: {
                   subject: "any2thing",
                   content: "khgcccababagalamaga",
+                  status: "working"
                }
             },
             {
@@ -64,6 +66,7 @@ export const handlers = [
                fields: {
                   subject: "any3thing",
                   content: "ababababalalaga",
+                  status: "sent"
                }
             }
          ]
