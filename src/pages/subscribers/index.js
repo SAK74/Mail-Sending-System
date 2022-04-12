@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchData, update } from "../../features/makeAirtableRequest";
@@ -6,14 +6,14 @@ import { sendMail } from "../../features/makeMailgunRequest";
 import AddSubscriber from "../../components/subscribers/addSubscriber";
 import Subscriber from "../../components/subscribers/singleSubscriber";
 import { selectAll } from "./subscribersSlice";
-import { Container } from "./container";
 import SingleMail from "../../components/mails/singleMail";
 import { selectAllMails, updateMail } from "../mails/mailsSlice";
 import { handleDelSelected } from "../../handlers";
-import { List, ListSubheader, Box } from "@mui/material";
-import { Paper, Button, IconButton, Menu, MenuItem } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
-import SubscribersSkeleton from "../../components/elements/subscribersSkeleton";
+import { List, ListSubheader, Box, IconButton, Collapse } from "@mui/material";
+import { Paper, Button } from "@mui/material";
+import SubscribersSkeleton from "../../components/subscribers/elements/subscribersSkeleton";
+import MenuSubscribers from '../../components/subscribers/elements/menuSubscribers';
+import { ExpandMore, ExpandLess } from '@mui/icons-material';
 
 function Subscribers() {
   const [sent, setSent] = useState(false);
@@ -43,38 +43,36 @@ function Subscribers() {
       })
       .finally(() => setPending(false));
   }
-  const [open, setOpen] = useState(null);
-  const handleMenu = ({ currentTarget }) => {
-    setOpen(currentTarget);
-  }
+  const [open, setOpen] = useState(false);
 
   return (
-    <Container pending={status === "loading"} >
+    <Box sx={{ display: 'flex', flexDirection: "column", alignItems: "center" }}>
+      <Box sx={{ width: "70%", my: 3 }}>
+        <Box sx={{}}>
+          <span>Enter a new subscriber</span>
+          <IconButton onClick={() => setOpen(!open)}>
+            {!open ? <ExpandMore /> : <ExpandLess />}
+          </IconButton>
+          <Collapse in={open}>
+            <AddSubscriber />
+          </Collapse>
+        </Box>
+      </Box>
       <Paper sx={{ maxWidth: 500, width: "100%" }}>
-        <List>
+        <List dense>
           <ListSubheader sx={{ display: "flex" }}>
             <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
-            <IconButton children={<MenuIcon fontSize="large" />} onClick={handleMenu} />
+            <MenuSubscribers />
           </ListSubheader>
-          {false ? subscribers.map(({ id, fields }, num, arr) =>
+          {subscribers ? subscribers.map(({ id, fields }, num, arr) =>
             <Subscriber key={id} {...{ ...fields, num, arr, id }} />)
             :
             <SubscribersSkeleton />
           }
         </List>
       </Paper>
-      <Menu
-        open={!!open}
-        anchorEl={open}
-      >
-        <MenuItem key="delete" children="Delete selected" onClick={() => setOpen(null)} />
-        <MenuItem key="send mail" children="Send Mail to selected" onClick={() => setOpen(null)} />
-      </Menu>
-      {/* <Stack direction="row" spacing={4}> */}
-      {/* <Button variant="outlined" children="Send Mail to selected" size="small" /> */}
+
       <Button variant="outlined" children="Edit / create mail" size="small" />
-      {/* <Button variant="outlined" children="Deleted selected" size="small" /> */}
-      {/* </Stack> */}
 
       <button className="left" onClick={handleSend}>Send mail to selected</button>
       <button className="left">
@@ -87,8 +85,9 @@ function Subscribers() {
       {(status === "pending") && <div>Pending</div>}
       <h3>Selected mail:</h3>
       {selectedMail ? <SingleMail {...selectedMail.fields} /> : "Pending"}
-      <AddSubscriber />
-    </Container>
+      {/* <AddSubscriber /> */}
+      {/* </Container> */}
+    </Box>
   );
 }
 
