@@ -1,12 +1,14 @@
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
+import { handleDelSelected } from '../../../handlers';
 
-export default function MenuSubscribers() {
+export default function MenuSubscribers({ selSubscr }) {
    const [open, setOpen] = useState(null);
    const handleMenu = ev => setOpen(ev.currentTarget);
    const handleDelete = () => {
       setOpen(null);
+      handleDelSelected("subscribers")(selSubscr.map(subscr => subscr.id));
    }
    const handleSend = () => {
       setOpen(null);

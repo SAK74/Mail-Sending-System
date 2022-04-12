@@ -34,7 +34,7 @@ const Mails = () => {
       <Box>
          <Stack direction="row" spacing={5} paddingX={5}>
             <Paper sx={{ width: "100%", maxWidth: 500 }}>
-               <List>
+               <List dense>
                   <ListSubheader sx={{ display: "flex" }}>
                      <Trash />
                      <Box component="span" sx={{ flexGrow: 1 }}>Working directory</Box>
@@ -47,7 +47,7 @@ const Mails = () => {
                </List>
             </Paper>
             <Paper sx={{ width: "100%", maxWidth: 500 }}>
-               <List>
+               <List dense>
                   <ListSubheader sx={{ display: "flex" }}>
                      <Trash />
                      <Box component="span" sx={{ flexGrow: 1 }}>Sent mails</Box>

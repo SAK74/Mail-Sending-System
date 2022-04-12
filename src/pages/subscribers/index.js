@@ -8,7 +8,6 @@ import Subscriber from "../../components/subscribers/singleSubscriber";
 import { selectAll } from "./subscribersSlice";
 import SingleMail from "../../components/mails/singleMail";
 import { selectAllMails, updateMail } from "../mails/mailsSlice";
-import { handleDelSelected } from "../../handlers";
 import { List, ListSubheader, Box, IconButton, Collapse } from "@mui/material";
 import { Paper, Button } from "@mui/material";
 import SubscribersSkeleton from "../../components/subscribers/elements/subscribersSkeleton";
@@ -35,7 +34,7 @@ function Subscribers() {
     setPending(true);
     sendMail(selectedSubscr.map(subscr => subscr.fields), selectedMail.fields)
       .then(resSent => {
-        setSent(selectedSubscr.filter((subs, id) => resSent[id].status === 'fulfilled')
+        setSent(selectedSubscr.filter((_, id) => resSent[id].status === 'fulfilled')
           .map(subs => subs.fields.name).join(", "));
         setTimeout(() => setSent(false), 5000);
         update("mails")(selectedMail.id, { status: "sent" })
@@ -47,22 +46,20 @@ function Subscribers() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: "column", alignItems: "center" }}>
-      <Box sx={{ width: "70%", my: 3 }}>
-        <Box sx={{}}>
-          <span>Enter a new subscriber</span>
-          <IconButton onClick={() => setOpen(!open)}>
-            {!open ? <ExpandMore /> : <ExpandLess />}
-          </IconButton>
-          <Collapse in={open}>
-            <AddSubscriber />
-          </Collapse>
-        </Box>
+      <Box sx={{ width: "70%", my: 2 }}>
+        <span>Enter a new subscriber</span>
+        <IconButton onClick={() => setOpen(!open)}>
+          {!open ? <ExpandMore /> : <ExpandLess />}
+        </IconButton>
+        <Collapse in={open}>
+          <AddSubscriber />
+        </Collapse>
       </Box>
       <Paper sx={{ maxWidth: 500, width: "100%" }}>
         <List dense>
           <ListSubheader sx={{ display: "flex" }}>
             <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
-            <MenuSubscribers />
+            <MenuSubscribers selSubscr={selectedSubscr} />
           </ListSubheader>
           {subscribers ? subscribers.map(({ id, fields }, num, arr) =>
             <Subscriber key={id} {...{ ...fields, num, arr, id }} />)
@@ -72,21 +69,22 @@ function Subscribers() {
         </List>
       </Paper>
 
-      <Button variant="outlined" children="Edit / create mail" size="small" />
+      <Button
+        variant="outlined"
+        children="Edit / create mail"
+        size="small"
+        component={Link}
+        to="/mailedit"
+      />
 
       <button className="left" onClick={handleSend}>Send mail to selected</button>
-      <button className="left">
-        <Link to="/mailedit">Create/edit mail content</Link>
-      </button>
+
       {sent && <span>E-mail was sent to: {sent}</span>}
-      <button onClick={() => handleDelSelected("subscribers", setPending)(selectedSubscr.map(subscr => subscr.id))}>
-        Delete selected
-      </button>
+
       {(status === "pending") && <div>Pending</div>}
+
       <h3>Selected mail:</h3>
       {selectedMail ? <SingleMail {...selectedMail.fields} /> : "Pending"}
-      {/* <AddSubscriber /> */}
-      {/* </Container> */}
     </Box>
   );
 }
