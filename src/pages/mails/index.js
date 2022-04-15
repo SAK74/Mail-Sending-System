@@ -39,7 +39,7 @@ const Mails = () => {
                      <Trash />
                      <Box component="span" sx={{ flexGrow: 1 }}>Working directory</Box>
                   </ListSubheader>
-                  {mails ? workingMails.map(({ id, fields }) =>
+                  {mails.length ? workingMails.map(({ id, fields }) =>
                      <SingleMail key={id} {...{ ...fields }} />)
                      :
                      <MailsSkeleton />
@@ -52,7 +52,7 @@ const Mails = () => {
                      <Trash />
                      <Box component="span" sx={{ flexGrow: 1 }}>Sent mails</Box>
                   </ListSubheader>
-                  {sentMails && sentMails.map(({ id, fields }) =>
+                  {mails.length && sentMails.map(({ id, fields }) =>
                      <SingleMail key={id} {...{ ...fields, id }} />)}
                </List>
             </Paper>

@@ -61,7 +61,7 @@ function Subscribers() {
             <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
             <MenuSubscribers selSubscr={selectedSubscr} />
           </ListSubheader>
-          {subscribers ? subscribers.map(({ id, fields }, num, arr) =>
+          {subscribers.length ? subscribers.map(({ id, fields }, num, arr) =>
             <Subscriber key={id} {...{ ...fields, num, arr, id }} />)
             :
             <SubscribersSkeleton />

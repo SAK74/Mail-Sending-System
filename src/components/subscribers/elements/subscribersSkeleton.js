@@ -1,6 +1,7 @@
 import { ListItem, Skeleton, Avatar, Box } from "@mui/material";
+import { memo } from "react";
 
-export default function SubscribersSkeleton() {
+function SubscribersSkeleton() {
    return (
       <>
          {new Array(Math.floor(Math.random() * 7 + 3)).fill(null).map((elem, index) =>
@@ -14,3 +15,5 @@ export default function SubscribersSkeleton() {
       </>
    );
 }
+
+export default memo(SubscribersSkeleton);
