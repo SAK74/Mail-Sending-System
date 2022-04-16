@@ -11,7 +11,7 @@ export const TextField = styled(({ name, control, rules, ...rest }) => {
    return <MuiTextField {...rest}
       name={name}
       value={value}
-      required
+      // required
       size="small"
       label={name}
       error={invalid}

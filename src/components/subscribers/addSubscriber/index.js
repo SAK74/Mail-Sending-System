@@ -33,10 +33,12 @@ function AddSubscriber() {
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextField
           name="name"
+          required
           control={control}
           rules={{ required: "Name is required!" }} />
         <TextField
           name="email"
+          required
           control={control}
           rules={{ required: "E-mail is required!", validate: (val) => validator.isEmail(val) || "Wrong E-mail format" }}
         />
