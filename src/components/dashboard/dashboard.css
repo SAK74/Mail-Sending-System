@@ -1,0 +1,9 @@
+/* nav a {
+   color: red
+} */
+
+a.active {
+   color: rgb(216, 98, 240);
+   font-size: large;
+   text-decoration: none;
+}
