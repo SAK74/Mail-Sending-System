@@ -1,7 +1,7 @@
 import store from './store';
-import { deleteItems, update } from './features/makeAirtableRequest';
-import { deleteMails, setStatusMails, updateMail } from './pages/mails/mailsSlice';
-import { setStatusSubscr, updateChecked, _deleteSubscribers } from './pages/subscribers/subscribersSlice';
+import { addItem, deleteItems, update } from './features/makeAirtableRequest';
+import { addMail, deleteMails, setStatusMails, updateMail } from './pages/mails/mailsSlice';
+import { setStatusSubscr, updateChecked, _addSubscriber, _deleteSubscribers } from './pages/subscribers/subscribersSlice';
 const dispatch = store.dispatch;
 
 export const handleCheck = (type) => (checked, id) => {
@@ -27,3 +27,12 @@ export const handleDelSelected = (type) => itemsID => {
       )
       .finally(() => dispatch(type === "subscribers" ? setStatusSubscr("iddle") : setStatusMails("iddle")));
 };
+
+export const handleAdd = type => data => {
+   dispatch(setStatusSubscr("pending"));
+   addItem(type)(data)
+      .then(data =>
+         dispatch(type === "subscribers" ? _addSubscriber(data) : addMail(data)))
+      .finally(() => dispatch(setStatusSubscr("iddle")));
+
+}
