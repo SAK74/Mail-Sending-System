@@ -2,30 +2,29 @@ import { Button, CircularProgress, Paper, Snackbar, } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import validator from "validator";
-import { addItem } from "../../../features/makeAirtableRequest";
 import { _addSubscriber } from "../../../pages/subscribers/subscribersSlice";
 import AddIcon from "@mui/icons-material/Send";
 import { memo, useState } from 'react';
 import { TextField } from './TextField';
+import { handleAdd } from "../../../handlers";
 
 function AddSubscriber() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const {
-    register,
+    // register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
     reset,
     control
   } = useForm({
     mode: "all"
   });
   const onSubmit = async (data) => {
-    await addItem("subscribers")(data)
-      .then((data) => {
+    await handleAdd("subscribers")(data)
+      .then(() => {
         reset();
         setOpen(true);
-        dispatch(_addSubscriber(data));
       });
   };
   return (

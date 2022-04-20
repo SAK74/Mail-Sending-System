@@ -3,7 +3,7 @@ import {
   ListItemText, Checkbox, Avatar
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { handleCheck } from "../../../handlers";
+import { handleUpdate } from "../../../handlers";
 import { memo } from 'react';
 
 function Subscriber({
@@ -26,12 +26,12 @@ function Subscriber({
           edge="end"
           checked={!!selected}
           disabled={status === "pending"}
-          onChange={() => handleCheck("subscribers")(!selected, id)}
+          onChange={() => handleUpdate("subscribers")(id, { selected: !selected })}
         />}
         dense
         disablePadding
       >
-        <ListItemButton onClick={() => handleCheck("subscribers")(!selected, id)}>
+        <ListItemButton onClick={() => handleUpdate("subscribers")(id, { selected: !selected })}>
           <ListItemText sx={{ maxWidth: 25 }} children={<h3>{num + 1}. </h3>} />
           <ListItemAvatar children={<Avatar>{name.at(0).toUpperCase()}</Avatar>} />
           <ListItemText primary={name} secondary={email} />

@@ -4,10 +4,10 @@ import { addMail, deleteMails, setStatusMails, updateMail } from './pages/mails/
 import { setStatusSubscr, updateChecked, _addSubscriber, _deleteSubscribers } from './pages/subscribers/subscribersSlice';
 const dispatch = store.dispatch;
 
-export const handleCheck = (type) => (checked, id) => {
+export const handleUpdate = (type) => (id, data) => {
    // console.log("extend: ");
    dispatch(type === "subscribers" ? setStatusSubscr("pending") : setStatusMails("pending"));
-   update(type)(id, { selected: checked })
+   update(type)(id, data)
       .then((data) => {
          console.log(data);
          dispatch(type === "subscribers" ? updateChecked(data) : updateMail(data));
@@ -30,9 +30,10 @@ export const handleDelSelected = (type) => itemsID => {
 
 export const handleAdd = type => data => {
    dispatch(setStatusSubscr("pending"));
-   addItem(type)(data)
-      .then(data =>
-         dispatch(type === "subscribers" ? _addSubscriber(data) : addMail(data)))
+   return addItem(type)(data)
+      .then(data => {
+         dispatch(type === "subscribers" ? _addSubscriber(data) : addMail(data));
+      })
       .finally(() => dispatch(setStatusSubscr("iddle")));
 
 }
