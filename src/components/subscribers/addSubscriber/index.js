@@ -1,14 +1,16 @@
-import { Button, CircularProgress, Paper, Snackbar, } from "@mui/material";
+import { Button, CircularProgress, Paper } from "@mui/material";
 import { useForm } from "react-hook-form";
 import validator from "validator";
 import { _addSubscriber } from "../../../pages/subscribers/subscribersSlice";
 import AddIcon from "@mui/icons-material/Send";
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { TextField } from '../elements/TextField';
 import { handleAdd } from "../../../handlers";
+import { useDispatch } from "react-redux";
+import { showSnack } from "../../snackBar/snackBarSlice";
 
 function AddSubscriber() {
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     formState: { isSubmitting },
@@ -21,7 +23,7 @@ function AddSubscriber() {
     await handleAdd("subscribers")(data)
       .then(() => {
         reset();
-        setOpen(true);
+        dispatch(showSnack("Subscriber has been added successfully!"));
       });
   };
   return (
@@ -45,14 +47,6 @@ function AddSubscriber() {
           endIcon={isSubmitting ? <CircularProgress size={15} /> : <AddIcon />}
           size="small"
           sx={{ ml: 8 }}
-        />
-        <Snackbar
-          open={open}
-          message="Subscriber has been added successfully!"
-          autoHideDuration={5000}
-          onClose={() => setOpen(false)}
-          anchorOrigin={{ horizontal: "center", vertical: "top" }}
-          transitionDuration={1000}
         />
       </form>
     </Paper>

@@ -3,15 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchData, update } from "../../features/makeAirtableRequest";
 import { sendMail } from "../../features/makeMailgunRequest";
 import AddSubscriber from "../../components/subscribers/addSubscriber";
-import Subscriber from "../../components/subscribers/singleSubscriber";
 import { selectAll } from "./subscribersSlice";
 import { selectAllMails, setStatusEditor, updateMail } from "../mails/mailsSlice";
-import { List, ListSubheader, Box, IconButton, Collapse } from "@mui/material";
-import { Paper, Button } from "@mui/material";
-import SubscribersSkeleton from "../../components/subscribers/elements/subscribersSkeleton";
-import MenuSubscribers from '../../components/subscribers/elements/menuSubscribers';
+import { Box, IconButton, Collapse } from "@mui/material";
+import { Button } from "@mui/material";
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import MailToSend from '../../components/mails/mailToSend';
+import SubscribersList from '../../components/subscribers/subscribersList';
 
 function Subscribers() {
   const [sent, setSent] = useState(false);
@@ -53,19 +51,7 @@ function Subscribers() {
           <AddSubscriber />
         </Collapse>
       </Box>
-      <Paper sx={{ maxWidth: 500, width: "100%" }}>
-        <List dense>
-          <ListSubheader sx={{ display: "flex" }}>
-            <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
-            <MenuSubscribers selSubscr={selectedSubscr} />
-          </ListSubheader>
-          {subscribers.length ? subscribers.map(({ id, fields }, num, arr) =>
-            <Subscriber key={id} {...{ ...fields, num, arr, id }} />)
-            :
-            <SubscribersSkeleton />
-          }
-        </List>
-      </Paper>
+      <SubscribersList subscribers={subscribers} />
       {mailToSend && <MailToSend {...{ ...mailToSend.fields, id: mailToSend.id }} />}
 
       <Button
