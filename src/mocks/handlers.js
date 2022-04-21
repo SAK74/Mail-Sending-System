@@ -57,7 +57,7 @@ export const handlers = [
                fields: {
                   subject: "any2thing",
                   content: "khgcccababagalamaga",
-                  status: "work"
+                  status: "toSend"
                }
             },
             {

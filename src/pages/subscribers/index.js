@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { fetchData, update } from "../../features/makeAirtableRequest";
 import { sendMail } from "../../features/makeMailgunRequest";
 import AddSubscriber from "../../components/subscribers/addSubscriber";
 import Subscriber from "../../components/subscribers/singleSubscriber";
 import { selectAll } from "./subscribersSlice";
-import SingleMail from "../../components/mails/singleMail";
 import { selectAllMails, setStatusEditor, updateMail } from "../mails/mailsSlice";
 import { List, ListSubheader, Box, IconButton, Collapse } from "@mui/material";
 import { Paper, Button } from "@mui/material";
 import SubscribersSkeleton from "../../components/subscribers/elements/subscribersSkeleton";
 import MenuSubscribers from '../../components/subscribers/elements/menuSubscribers';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
+import MailToSend from '../../components/mails/mailToSend';
 
 function Subscribers() {
   const [sent, setSent] = useState(false);
@@ -28,7 +27,6 @@ function Subscribers() {
   // console.log(subscribers);
   const selectedSubscr = subscribers.filter((subsc) => subsc.fields.selected);
   const mailToSend = useSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
-  // console.log("selectedMail: ", selectedMail);
 
   const handleSend = () => {
     setPending(true);
@@ -68,22 +66,19 @@ function Subscribers() {
           }
         </List>
       </Paper>
+      {mailToSend && <MailToSend {...{ ...mailToSend.fields, id: mailToSend.id }} />}
 
       <Button
         variant="outlined"
         children="Edit / create mail"
         size="small"
-        onClick={() => dispatch(setStatusEditor(true))}
+        onClick={() => dispatch(setStatusEditor({ ...mailToSend.fields, id: mailToSend.id }))}
       />
 
       <button className="left" onClick={handleSend}>Send mail to selected</button>
 
       {sent && <span>E-mail was sent to: {sent}</span>}
 
-      {(status === "pending") && <div>Pending</div>}
-
-      <h3>Selected mail:</h3>
-      {mailToSend ? <SingleMail {...{ ...selectedMail.fields, id: selectedMail.id }} /> : "Pending"}
     </Box>
   );
 }

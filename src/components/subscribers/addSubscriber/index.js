@@ -1,18 +1,15 @@
 import { Button, CircularProgress, Paper, Snackbar, } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import validator from "validator";
 import { _addSubscriber } from "../../../pages/subscribers/subscribersSlice";
 import AddIcon from "@mui/icons-material/Send";
 import { memo, useState } from 'react';
-import { TextField } from './TextField';
+import { TextField } from '../elements/TextField';
 import { handleAdd } from "../../../handlers";
 
 function AddSubscriber() {
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const {
-    // register,
     handleSubmit,
     formState: { isSubmitting },
     reset,

@@ -20,7 +20,7 @@ const Mails = () => {
    const mails = useSelector(selectAllMails);
    // console.log('mails: ', mails);
    const selectedMails = mails.filter(mail => mail.fields.selected);
-   const workingMails = mails.filter(mail => mail.fields.status === "working");
+   const workingMails = mails.filter(mail => mail.fields.status !== "sent");
    const sentMails = mails.filter(mail => mail.fields.status === "sent");
    const [openWork, setOpenWork] = useState(null);
    const [openSent, setOpenSent] = useState(null);
@@ -40,7 +40,7 @@ const Mails = () => {
                      <Box component="span" sx={{ flexGrow: 1 }}>Working directory</Box>
                   </ListSubheader>
                   {mails.length ? workingMails.map(({ id, fields }) =>
-                     <SingleMail key={id} {...{ ...fields }} />)
+                     <SingleMail key={id} {...{ ...fields, id }} />)
                      :
                      <MailsSkeleton />
                   }

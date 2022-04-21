@@ -20,7 +20,7 @@ export const TextField = styled(({ name, control, rules, ...rest }) => {
       inputProps={{ ...onBlur, onChange }}
    />
 })(({ theme }) => {
-   console.log("theme: ", theme);
+   // console.log("theme: ", theme);
    return {
       margin: theme.spacing(1)
    }
