@@ -2,10 +2,11 @@ import store from './store';
 import { addItem, deleteItems, update } from './features/makeAirtableRequest';
 import { addMail, deleteMails, setStatusMails, updateMail } from './pages/mails/mailsSlice';
 import { setStatusSubscr, updateSubscriber, _addSubscriber, _deleteSubscribers } from './pages/subscribers/subscribersSlice';
+import { sendMail } from './features/makeMailgunRequest';
+import { showSnack } from './components/snackBar/snackBarSlice';
 const dispatch = store.dispatch;
 
 export const handleUpdate = (type) => (id, data) => {
-   // console.log("extend: ");
    dispatch(type === "subscribers" ? setStatusSubscr("pending") : setStatusMails("pending"));
    update(type)(id, data)
       .then((data) => {
@@ -35,5 +36,21 @@ export const handleAdd = type => data => {
          dispatch(type === "subscribers" ? _addSubscriber(data) : addMail(data));
       })
       .finally(() => dispatch(setStatusSubscr("iddle")));
+}
 
+export const handleSend = () => {
+   const { subscribers, mails } = store.getState();
+   const selectedSubscr = Object.values(subscribers.entities).filter(subscr => subscr.fields.selected)
+      .map(subscr => subscr.fields);
+   const mailToSend = Object.values(mails.entities).find(mail => mail.fields.status === "toSend");
+   console.log(mailToSend);
+   dispatch(setStatusSubscr("pending"));
+   sendMail(selectedSubscr, mailToSend.fields)
+      .then(resSent => {
+         const sentTo = selectedSubscr.filter((_, num) => resSent[num].status === 'fulfilled')
+            .map(subscr => subscr.name).join(", ");
+         dispatch(showSnack(`E-mail was sent to: ${sentTo}`));
+         handleUpdate("mails")(mailToSend.id, { status: "sent" });
+      })
+      .finally(() => dispatch(setStatusSubscr("iddle")));
 }

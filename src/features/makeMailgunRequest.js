@@ -11,7 +11,7 @@ const defaultConfig = {
 }
 
 export const sendMail = (subscribers, mail) => {
-   const sending = subscribers.map(subscr => {
+   const sendTo = subscribers.map(subscr => {
       const data = {
          from: "exitedUser@sandbox9a593161d9ef4be5b0bb14cf2696733a.mailgun.org",
          to: subscr.email,
@@ -21,7 +21,7 @@ export const sendMail = (subscribers, mail) => {
       defaultConfig.data = data;
       return api.post(defaultConfig).then((data) => data);
    });
-   return Promise.allSettled(sending)
+   return Promise.allSettled(sendTo)
       .then(res => {
          console.log(res);
          return res;

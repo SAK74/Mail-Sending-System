@@ -5,7 +5,6 @@ import SubscribersSkeleton from './elements/subscribersSkeleton';
 
 
 const SubscribersList = ({ subscribers }) => {
-   // console.log(subscribers.filter(subscr => subscr.fields.selected));
    return (
       <Paper sx={{ maxWidth: 500, width: "100%" }}>
          <List dense>
