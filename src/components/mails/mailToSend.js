@@ -1,4 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardHeader } from "@mui/material";
+import { memo } from "react";
 
 function MailToSend({ subject, content, id }) {
    // console.log("props: ", subject, content);
@@ -15,4 +16,4 @@ function MailToSend({ subject, content, id }) {
    )
 }
 
-export default MailToSend;
+export default memo(MailToSend);

@@ -2,9 +2,20 @@ import { Paper, List, ListSubheader, Box } from '@mui/material';
 import MenuSubscribers from '../subscribers/elements/menuSubscribers';
 import Subscriber from './singleSubscriber';
 import SubscribersSkeleton from './elements/subscribersSkeleton';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData } from '../../features/makeAirtableRequest';
+import { selectAll } from "../../pages/subscribers/subscribersSlice";
 
-
-const SubscribersList = ({ subscribers }) => {
+const SubscribersList = () => {
+   const { status } = useSelector(state => state.subscribers);
+   const dispatch = useDispatch();
+   useEffect(() => {
+      if (status === "iddle") {
+         dispatch(fetchData("subscribers")());
+      }
+   }, []); //eslint-disable-line
+   const subscribers = useSelector(selectAll);
    return (
       <Paper sx={{ maxWidth: 500, width: "100%" }}>
          <List dense>
