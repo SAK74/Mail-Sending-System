@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import AddSubscriber from "../../components/subscribers/addSubscriber";
-import { selectAllMails, setStatusEditor } from "../mails/mailsSlice";
-import { Box, IconButton, Collapse, Button, Stack } from "@mui/material";
+import { selectAllMails } from "../mails/mailsSlice";
+import { Box, IconButton, Collapse, Stack } from "@mui/material";
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import MailToSend from '../../components/mails/mailToSend';
 import SubscribersList from '../../components/subscribers/subscribersList';
 
 function Subscribers() {
-  const dispatch = useDispatch();
   const mailToSend = useSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
   const [openCollapse, setOpenCollapse] = useState(false);
 
@@ -25,16 +24,10 @@ function Subscribers() {
       </Box>
       <Stack direction="row" spacing={5}>
         <SubscribersList />
-        {mailToSend && <MailToSend {...{ ...mailToSend.fields, id: mailToSend.id }} />}
+        {mailToSend ? <MailToSend {...{ ...mailToSend.fields, id: mailToSend.id }} /> :
+          <MailToSend />
+        }
       </Stack>
-
-      <Button
-        variant="outlined"
-        children="Edit / create mail"
-        size="small"
-        onClick={() => dispatch(setStatusEditor(!mailToSend ? true :
-          { ...mailToSend.fields, id: mailToSend.id }))}
-      />
     </Box>
   );
 }
