@@ -38,19 +38,24 @@ export const handleAdd = type => data => {
       .finally(() => dispatch(setStatusSubscr("iddle")));
 }
 
-export const handleSend = () => {
-   const { subscribers, mails } = store.getState();
-   const selectedSubscr = Object.values(subscribers.entities).filter(subscr => subscr.fields.selected)
-      .map(subscr => subscr.fields);
-   const mailToSend = Object.values(mails.entities).find(mail => mail.fields.status === "toSend");
-   console.log(mailToSend);
+export const handleSend = (selectedSubscr, mailToSend) => {
+   if (!selectedSubscr) {
+      const { subscribers } = store.getState();
+      selectedSubscr = Object.values(subscribers.entities).filter(subscr => subscr.fields.selected);
+   }
    dispatch(setStatusSubscr("pending"));
-   sendMail(selectedSubscr, mailToSend.fields)
+   sendMail(selectedSubscr.map(subscr => subscr.fields), mailToSend.fields)
       .then(resSent => {
          const sentTo = selectedSubscr.filter((_, num) => resSent[num].status === 'fulfilled')
-            .map(subscr => subscr.name).join(", ");
+            .map(subscr => subscr.fields.name).join(", ");
          dispatch(showSnack(`E-mail was sent to: ${sentTo}`));
          handleUpdate("mails")(mailToSend.id, { status: "sent" });
       })
       .finally(() => dispatch(setStatusSubscr("iddle")));
 }
+
+// export const resetAllMailToWork = () => {
+//    const { mails } = store.getState();
+//    const notSent = Object.values(mails.entities).filter(mail => mail.fields.status !== "sent");
+//    const makeRequests = notSent.forEach(mail => handleUpdate("mails")(mail.id, { status: "work" }));
+// }

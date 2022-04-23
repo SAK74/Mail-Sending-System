@@ -1,16 +1,36 @@
 import { ForwardToInboxOutlined, Edit } from "@mui/icons-material";
-import { Box, Checkbox, IconButton, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Box, Checkbox, IconButton, ListItem, ListItemButton, ListItemText, Tooltip } from "@mui/material";
 import { memo } from 'react';
-import { handleUpdate } from '../../../handlers';
-import { useSelector } from 'react-redux';
+import { handleUpdate, handleSend } from '../../../handlers';
+import { useDispatch, useSelector } from 'react-redux';
+import { setStatusEditor } from "../../../pages/mails/mailsSlice";
+import { useNavigate } from "react-router-dom";
 
 const SingleMail = ({ subject, content, selected, id, status: mailStatus }) => {
    const { status } = useSelector(state => state.mails);
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const handleClickSend = () => {
+      handleSend(null, { id, fields: { subject, content } });
+      navigate("/subscribers", { replace: true });
+   }
    return <>
       <ListItem
          secondaryAction={<Box>
-            <IconButton children={<ForwardToInboxOutlined />} />
-            {(mailStatus === "work") && <IconButton children={<Edit />} />}
+            {(mailStatus !== "sent") && <Tooltip
+               title="Edit mail"
+               children={<IconButton
+                  children={<Edit />}
+                  onClick={() => dispatch(setStatusEditor({ subject, content, id }))}
+               />}
+            />}
+            <Tooltip
+               title="Send to selected subscribers"
+               children={<IconButton
+                  children={<ForwardToInboxOutlined />}
+                  onClick={handleClickSend}
+               />}
+            />
          </Box>}
       >
          <ListItemButton onClick={() => handleUpdate("mails")(id, { selected: !selected })}>
