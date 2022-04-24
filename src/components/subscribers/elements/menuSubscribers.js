@@ -10,6 +10,9 @@ export default function MenuSubscribers({ selSubscr }) {
    const mailToSend = useSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
    const handleMenu = ({ currentTarget }) => setOpen(currentTarget);
    const handleDelete = () => {
+      if (!selSubscr) {
+         alert("Neither subscriber is't selected")
+      }
       setOpen(null);
       handleDelSelected("subscribers")(selSubscr.map(subscr => subscr.id));
    }

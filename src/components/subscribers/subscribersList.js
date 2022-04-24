@@ -23,10 +23,9 @@ const SubscribersList = () => {
                <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
                <MenuSubscribers selSubscr={subscribers.filter(subscr => subscr.fields.selected)} />
             </ListSubheader>
-            {subscribers.length ? subscribers.map(({ id, fields }, num, arr) =>
-               <Subscriber key={id} {...{ ...fields, num, arr, id }} />)
-               :
-               <SubscribersSkeleton />
+            {!subscribers.length && status === "pending" ? <SubscribersSkeleton /> :
+               subscribers.map(({ id, fields }, num, arr) =>
+                  <Subscriber key={id} {...{ ...fields, num, arr, id }} />)
             }
          </List>
       </Paper>
