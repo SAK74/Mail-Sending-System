@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../features/makeAirtableRequest';
 import { selectAll } from "../../pages/subscribers/subscribersSlice";
+import CheckAll from '../mails/elements/checkAll';
 
 const SubscribersList = () => {
    const { status } = useSelector(state => state.subscribers);
@@ -20,8 +21,9 @@ const SubscribersList = () => {
       <Paper sx={{ maxWidth: 500, width: "100%" }}>
          <List dense>
             <ListSubheader sx={{ display: "flex" }}>
-               <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
                <MenuSubscribers selSubscr={subscribers.filter(subscr => subscr.fields.selected)} />
+               <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
+               <CheckAll name = "subscribers" ids = {subscribers.map(subscr => subscr.id)}/>
             </ListSubheader>
             {!subscribers.length && status === "pending" ? <SubscribersSkeleton /> :
                subscribers.map(({ id, fields }, num, arr) =>

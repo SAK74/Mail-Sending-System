@@ -8,7 +8,7 @@ const dispatch = store.dispatch;
 
 export const handleUpdate = (type) => (id, data) => {
    dispatch(type === "subscribers" ? setStatusSubscr("pending") : setStatusMails("pending"));
-   update(type)(id, data)
+   return update(type)(id, data)
       .then((data) => {
          console.log(data);
          dispatch(type === "subscribers" ? updateSubscriber(data) : updateMail(data));
@@ -53,9 +53,3 @@ export const handleSend = (selectedSubscr, mailToSend) => {
       })
       .finally(() => dispatch(setStatusSubscr("iddle")));
 }
-
-// export const resetAllMailToWork = () => {
-//    const { mails } = store.getState();
-//    const notSent = Object.values(mails.entities).filter(mail => mail.fields.status !== "sent");
-//    const makeRequests = notSent.forEach(mail => handleUpdate("mails")(mail.id, { status: "work" }));
-// }
