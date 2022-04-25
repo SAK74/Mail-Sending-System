@@ -11,7 +11,7 @@ const SingleMail = ({ subject, content, selected, id, status: mailStatus }) => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const handleClickSend = () => {
-      handleSend(null, { id, fields: { subject, content } });
+      handleSend({ id, fields: { subject, content } });
       navigate("/subscribers", { replace: true });
    }
    return <>

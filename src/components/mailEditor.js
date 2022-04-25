@@ -3,12 +3,11 @@ import { useForm } from "react-hook-form";
 import { connect } from 'react-redux';
 import { TextField } from './subscribers/elements/TextField';
 import CloseIcon from '@mui/icons-material/Close';
-import { handleAdd, handleUpdate } from '../handlers';
+import { handleAdd, handleSend, handleUpdate } from '../handlers';
 import { setStatusEditor } from "../pages/mails/mailsSlice";
 import { useEffect } from "react";
 
 function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
-   // console.log("props: ", subject, content, id);
    const { control, handleSubmit, reset } = useForm({
       defaultValues: {
          subject, content
@@ -19,14 +18,12 @@ function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
 
    const onSubmit = async (data, { target: { innerText } }) => {
       console.log(data, innerText);
-      if (innerText === "SAVE") {
-         !id ? await handleAdd("mails")({ ...data, status: "toSend" }) :
-            await handleUpdate("mails")(id, { ...data, status: "toSend" })
-      } else {
-         console.log("do send");
-         // sendMail
+      id ? await handleUpdate("mails")(id, { ...data, status: "toSend" }) :
+         await handleAdd("mails")({ ...data, status: "toSend" })
+            .then(respID => id = respID);
+      if (innerText !== "SAVE") {
+         handleSend({ id, fields: data });
       }
-      console.log("done");
       setStatusEditor(false);
    }
 
@@ -73,7 +70,7 @@ function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
                   }}
                />
                <Stack direction={"row"} spacing={3}>
-                  <Button children="send & save" onClick={handleSubmit(onSubmit)} />
+                  <Button children="save & send" onClick={handleSubmit(onSubmit)} />
                   <Button children="save" onClick={handleSubmit(onSubmit)} />
                </Stack>
             </Paper>

@@ -2,26 +2,16 @@ import { IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { handleDelSelected, handleSend } from '../../../handlers';
-import { useSelector } from 'react-redux';
-import { selectAllMails } from '../../../pages/mails/mailsSlice';
-
 export default function MenuSubscribers({ selSubscr }) {
    const [open, setOpen] = useState(null);
-   const mailToSend = useSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
    const handleMenu = ({ currentTarget }) => setOpen(currentTarget);
    const handleDelete = () => {
-      if (!selSubscr) {
-         alert("Neither subscriber is't selected")
-      }
       setOpen(null);
       handleDelSelected("subscribers")(selSubscr.map(subscr => subscr.id));
    }
    const _handleSend = () => {
       setOpen(null);
-      if (!mailToSend) {
-         alert("Neither mail is't selected");
-      }
-      handleSend(selSubscr, mailToSend);
+      handleSend(null, selSubscr);
    }
    return <>
       <IconButton onClick={handleMenu}>
@@ -33,4 +23,3 @@ export default function MenuSubscribers({ selSubscr }) {
       </Menu>
    </>
 }
-
