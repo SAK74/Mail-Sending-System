@@ -1,4 +1,4 @@
-import { Edit } from "@mui/icons-material";
+import { Edit, AddCircleOutline } from "@mui/icons-material";
 import { Button, Card, CardActions, CardContent, CardHeader, IconButton, Tooltip } from "@mui/material";
 import { memo } from "react";
 import { useDispatch } from "react-redux";
@@ -31,7 +31,7 @@ function MailToSend({ subject, content, id }) {
          </CardContent>
          <CardActions>
             <Tooltip
-               title="edit"
+               title="Show / edit"
                children={<span>
                   <IconButton
                      children={<Edit color={id ? "primary" : "default"} />}
@@ -40,10 +40,14 @@ function MailToSend({ subject, content, id }) {
                   />
                </span>}
             />
-            <Button
-               size="small"
-               children="new mail"
-               onClick={() => dispatch(setStatusEditor(true))}
+            <Tooltip
+               title="Create new"
+               children={<span>
+                  <IconButton
+                     children={<AddCircleOutline color="primary" />}
+                     onClick={() => dispatch(setStatusEditor(true))}
+                  />
+               </span>}
             />
          </CardActions>
       </Card>
