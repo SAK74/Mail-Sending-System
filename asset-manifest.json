@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/SAK74.github.io/Mail-Sending-System/static/css/main.06c2d543.chunk.css",
+    "main.js": "/SAK74.github.io/Mail-Sending-System/static/js/main.05220e5b.chunk.js",
+    "main.js.map": "/SAK74.github.io/Mail-Sending-System/static/js/main.05220e5b.chunk.js.map",
+    "runtime-main.js": "/SAK74.github.io/Mail-Sending-System/static/js/runtime-main.ea47d770.js",
+    "runtime-main.js.map": "/SAK74.github.io/Mail-Sending-System/static/js/runtime-main.ea47d770.js.map",
+    "static/js/2.391e5945.chunk.js": "/SAK74.github.io/Mail-Sending-System/static/js/2.391e5945.chunk.js",
+    "static/js/2.391e5945.chunk.js.map": "/SAK74.github.io/Mail-Sending-System/static/js/2.391e5945.chunk.js.map",
+    "index.html": "/SAK74.github.io/Mail-Sending-System/index.html",
+    "static/css/main.06c2d543.chunk.css.map": "/SAK74.github.io/Mail-Sending-System/static/css/main.06c2d543.chunk.css.map",
+    "static/js/2.391e5945.chunk.js.LICENSE.txt": "/SAK74.github.io/Mail-Sending-System/static/js/2.391e5945.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ea47d770.js",
+    "static/js/2.391e5945.chunk.js",
+    "static/css/main.06c2d543.chunk.css",
+    "static/js/main.05220e5b.chunk.js"
+  ]
+}
