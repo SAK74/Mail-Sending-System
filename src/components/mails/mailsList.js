@@ -1,9 +1,7 @@
 import { Paper, List, ListSubheader, Box } from '@mui/material';
-import Trash from './elements/mailTrash';
+import { Trash, MailsSkeleton, CheckAll } from './elements';
 import SingleMail from './singleMail';
-import MailsSkeleton from './elements/mailsSkeleton';
 import { useSelector } from 'react-redux';
-import CheckAll from './elements/checkAll';
 
 const MailsList = ({ title, mails }) => {
    const { status } = useSelector(state => state.mails);

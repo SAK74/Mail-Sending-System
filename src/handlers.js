@@ -3,7 +3,7 @@ import { addItem, deleteItems, update } from './features/makeAirtableRequest';
 import { addMail, deleteMails, setStatusMails, updateMail } from './pages/mails/mailsSlice';
 import { setStatusSubscr, updateSubscriber, _addSubscriber, _deleteSubscribers } from './pages/subscribers/subscribersSlice';
 import { sendMail } from './features/makeMailgunRequest';
-import { showSnack } from './components/snackBar/snackBarSlice';
+import { showSnack } from './components/snackBars/snackBarSlice';
 const dispatch = store.dispatch;
 
 export const handleUpdate = (type) => (id, data) => {

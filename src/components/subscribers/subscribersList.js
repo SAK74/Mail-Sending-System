@@ -1,12 +1,11 @@
 import { Paper, List, ListSubheader, Box } from '@mui/material';
-import MenuSubscribers from '../subscribers/elements/menuSubscribers';
+import { MenuSubscribers, SubscribersSkeleton } from './elements';
+import { CheckAll } from '../mails/elements';
 import Subscriber from './singleSubscriber';
-import SubscribersSkeleton from './elements/subscribersSkeleton';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../features/makeAirtableRequest';
 import { selectAll } from "../../pages/subscribers/subscribersSlice";
-import CheckAll from '../mails/elements/checkAll';
 
 const SubscribersList = () => {
    const { status } = useSelector(state => state.subscribers);
@@ -23,7 +22,7 @@ const SubscribersList = () => {
             <ListSubheader sx={{ display: "flex" }}>
                <MenuSubscribers selSubscr={subscribers.filter(subscr => subscr.fields.selected)} />
                <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
-               <CheckAll name = "subscribers" ids = {subscribers.map(subscr => subscr.id)}/>
+               <CheckAll name="subscribers" ids={subscribers.map(subscr => subscr.id)} />
             </ListSubheader>
             {!subscribers.length && status === "pending" ? <SubscribersSkeleton /> :
                subscribers.map(({ id, fields }, num, arr) =>

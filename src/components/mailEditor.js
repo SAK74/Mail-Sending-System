@@ -1,7 +1,7 @@
 import { Button, IconButton, Modal, Paper, Stack, Zoom } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { connect } from 'react-redux';
-import { TextField } from './subscribers/elements/TextField';
+import { TextField } from './subscribers/elements';
 import CloseIcon from '@mui/icons-material/Close';
 import { handleAdd, handleSend, handleUpdate } from '../handlers';
 import { setStatusEditor } from "../pages/mails/mailsSlice";

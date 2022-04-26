@@ -1,5 +1,7 @@
 import axios from "axios";
+import { setError } from "./pages/subscribers/subscribersSlice";
 // import qs from "qs";
+import store from './store';
 
 const defaultConfig = {
   // headers: {
@@ -12,15 +14,23 @@ function request(config) {
   return axios(config)
     .then((resp) => resp.data)
     .catch((err) => {
+      let message;
       if (err.response) {
         console.error("err.response: ", err.response);
         if (err.response.data.error) {
-          throw Error(err.response.data.error.message)
+          message = err.response.data.error.message;
+          // throw Error(err.response.data.error.message)
+        } else {
+          message = err.response.data?.message;
+          // throw Error(err.response.data?.message);
         }
-        throw Error(err.response.data?.message);
+      } else {
+        console.error(err);
+        message = err.message;
       }
-      console.error(err);
-      throw Error(err.message);
+      console.log(message);
+      store.dispatch(setError(message));
+      throw Error(message);
     });
 }
 function get(config) {

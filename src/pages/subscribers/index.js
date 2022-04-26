@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useSelector } from "react-redux";
-import AddSubscriber from "../../components/subscribers/addSubscriber";
+import { AddSubscriber, SubscribersList } from "../../components/subscribers";
 import { selectAllMails } from "../mails/mailsSlice";
 import { Box, IconButton, Collapse, Stack } from "@mui/material";
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import MailToSend from '../../components/mails/mailToSend';
-import SubscribersList from '../../components/subscribers/subscribersList';
 
 function Subscribers() {
   const mailToSend = useSelector(selectAllMails).find(mail => mail.fields.status === "toSend");

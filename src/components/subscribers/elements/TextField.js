@@ -2,7 +2,6 @@ import { styled, TextField as MuiTextField } from '@mui/material';
 import { useController } from 'react-hook-form';
 
 export const TextField = styled(({ name, control, rules, ...rest }) => {
-   // console.log("props: ", props);
    const { field:
       { ref, onChange, onBlur, value },
       fieldState:

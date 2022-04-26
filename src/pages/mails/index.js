@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectAllMails } from "./mailsSlice";
-import MailsList from "../../components/mails/mailsList";
+import MailsList from '../../components/mails/mailsList';
 
 const Mails = () => {
    const mails = useSelector(selectAllMails);

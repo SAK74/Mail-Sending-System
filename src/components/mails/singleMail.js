@@ -1,9 +1,9 @@
 import { ForwardToInboxOutlined, Edit } from "@mui/icons-material";
 import { Box, Checkbox, IconButton, ListItem, ListItemButton, ListItemText, Tooltip } from "@mui/material";
 import { memo } from 'react';
-import { handleUpdate, handleSend } from '../../../handlers';
+import { handleUpdate, handleSend } from '../../handlers';
 import { useDispatch, useSelector } from 'react-redux';
-import { setStatusEditor } from "../../../pages/mails/mailsSlice";
+import { setStatusEditor } from "../../pages/mails/mailsSlice";
 import { useNavigate } from "react-router-dom";
 
 const SingleMail = ({ subject, content, selected, id, status: mailStatus }) => {

@@ -2,12 +2,11 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 import MailEditor from '../mailEditor';
-import SnackBar from "../snackBar";
+import SnackBar from "../snackBars";
 
 export default function Dashboard() {
    const pendingSubscr = useSelector(state => state.subscribers.status);
    const pendingMails = useSelector(state => state.mails.status);
-   // console.log(mailToSend);
    return <div className="dashboard">
       <nav>
          <NavLink to="/subscribers">Subscribers</NavLink>

@@ -1,4 +1,4 @@
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { handleDelSelected, handleSend } from '../../../handlers';
@@ -14,12 +14,15 @@ export default function MenuSubscribers({ selSubscr }) {
       handleSend(null, selSubscr);
    }
    return <>
-      <IconButton onClick={handleMenu}>
-         <MenuIcon fontSize='large' />
-      </IconButton>
+      <Tooltip title="Menu">
+         <IconButton onClick={handleMenu}>
+            <MenuIcon fontSize='large' />
+         </IconButton>
+      </Tooltip>
       <Menu open={!!open} anchorEl={open} onClose={() => setOpen(null)}>
-         <MenuItem key="delete" children="Delete selected" onClick={handleDelete} />
-         <MenuItem key="send mail" children="Send Mail to selected" onClick={_handleSend} />
+         <MenuItem dense key="delete" children="Delete selected" onClick={handleDelete} />
+         <MenuItem dense key="send mail" children="Send mail to selected" onClick={_handleSend} />
       </Menu>
+
    </>
 }

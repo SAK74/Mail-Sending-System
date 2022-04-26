@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import subscribersReducer from './pages/subscribers/subscribersSlice';
 import mailsReducer from './pages/mails/mailsSlice';
-import snackReducer from './components/snackBar/snackBarSlice';
+import snackReducer from './components/snackBars/snackBarSlice';
 
 export default configureStore({
   reducer: {
