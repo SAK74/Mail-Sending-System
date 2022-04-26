@@ -10,7 +10,7 @@ const mailsURL = "https://enb5zkce5jncfjh.m.pipedream.net";
 const url = type => type === "subscribers" ? subscribersURL : mailsURL;
 
 export const fetchData = type => createAsyncThunk(`fetch${type}`, () =>
-  api.get(type).then((data) => data.records)
+  api.get(url(type)).then((data) => data.records)
 );
 
 export const update = type => (id, data) => {
