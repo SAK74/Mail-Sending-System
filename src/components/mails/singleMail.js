@@ -39,7 +39,13 @@ const SingleMail = ({ subject, content, selected, id, status: mailStatus }) => {
                disabled={status === "pending"}
                onClick={() => handleUpdate("mails")(id, { selected: !selected })}
             />
-            <ListItemText primary={subject} secondary={content} />
+            <ListItemText
+               primary={subject}
+               secondary={content}
+               secondaryTypographyProps={{
+                  noWrap: true
+               }}
+            />
          </ListItemButton>
       </ListItem>
    </>

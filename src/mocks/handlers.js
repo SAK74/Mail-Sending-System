@@ -55,8 +55,8 @@ export const handlers = [
                id: "rec2ZNQon7bWuQIrq",
                createdTime: "2022-03-24T18:02:27.000Z",
                fields: {
-                  subject: "any2thing",
-                  content: "khgcccababagalamaga",
+                  subject: "any2thing with some lonnnnnng title",
+                  content: "khgcccababagalamagakjv\nUJYJTfutf\nSASASASA & very loooooong teeeeeeext",
                   status: "toSend"
                }
             },

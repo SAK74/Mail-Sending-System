@@ -1,4 +1,4 @@
-import { Button, IconButton, Modal, Paper, Stack, Zoom } from "@mui/material";
+import { Button, IconButton, Modal, Paper, Stack, Typography, Zoom } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { connect } from 'react-redux';
 import { TextField } from './subscribers/elements';
@@ -17,7 +17,6 @@ function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
    useEffect(() => reset({ subject, content }), [openModal]);
 
    const onSubmit = async (data, { target: { innerText } }) => {
-      console.log(data, innerText);
       id ? await handleUpdate("mails")(id, { ...data, status: "toSend" }) :
          await handleAdd("mails")({ ...data, status: "toSend" })
             .then(respID => id = respID);
@@ -53,6 +52,10 @@ function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
                >
                   <CloseIcon />
                </IconButton>
+               <Typography sx={{ mb: 2, color: 'darkblue' }}>
+                  Use <b>{"<name>"}</b> to select name of subscriber
+                  (e.t. <i>Hello {"<name>"}! =&gt; Hello Lila</i>)
+               </Typography>
                <TextField
                   name="subject"
                   control={control}

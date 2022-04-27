@@ -1,5 +1,8 @@
 import { Edit, AddCircleOutline } from "@mui/icons-material";
-import { Button, Card, CardActions, CardContent, CardHeader, IconButton, Tooltip } from "@mui/material";
+import {
+   Card, CardActions, CardContent, CardHeader,
+   IconButton, Tooltip, Typography, cardHeaderClasses
+} from "@mui/material";
 import { memo } from "react";
 import { useDispatch } from "react-redux";
 import { setStatusEditor } from '../../pages/mails/mailsSlice';
@@ -11,23 +14,25 @@ function MailToSend({ subject, content, id }) {
          p: 2,
          alignSelf: "start",
          width: 200,
-         // textOverflow: "ellipsis"
-
       }}>
          <CardHeader
+            sx={{
+               [`& .${cardHeaderClasses.content}`]: { overflow: "hidden" }
+            }}
             title="Mail to send"
             titleTypographyProps={{
                variant: "body1"
             }}
             subheader={subject ? subject : "..."}
-            subheaderTypographyProps={{}}
+            subheaderTypographyProps={{
+               noWrap: true
+            }}
          />
-         <CardContent sx={{
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis"
-         }}>
-            {content ? content : "..."}
+         <CardContent >
+            <Typography
+               noWrap
+               children={content ? content : "..."}
+            />
          </CardContent>
          <CardActions>
             <Tooltip
