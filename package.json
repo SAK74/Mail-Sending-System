@@ -1,7 +1,6 @@
 {
   "name": "mail-sending-system",
   "version": "1.0.0",
-  "homepage": "https://SAK74.github.io/Mail-Sending-System/",
   "description": "",
   "keywords": [],
   "main": "src/index.js",
