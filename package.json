@@ -1,7 +1,6 @@
 {
   "name": "mail-sending-system",
   "version": "1.0.0",
-  "homepage": "https://SAK74.github.io/Mail-Sending-System/",
   "description": "",
   "keywords": [],
   "main": "src/index.js",
@@ -32,7 +31,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build -r https://github.com/SAK74/Mail-Sending-System",
+    "predeploy": "npm run build"
   },
   "browserslist": [
     ">0.2%",

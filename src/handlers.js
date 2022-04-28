@@ -68,10 +68,10 @@ export const handleSend = (mailToSend, selectedSubscr) => {
          const dontSentTo = selectedSubscr.filter((_, num) => resSent[num].status === 'rejected')
             .map(subscr => subscr.fields.name).join(", ");
          if (sentTo) {
-            dispatch(showSnack(`E-mail was sent to: ${sentTo}`));
+            dispatch(showSnack({ message: `E-mail was sent to: ${sentTo}`, type: "info" }));
             handleUpdate("mails")(mailToSend.id, { status: "sent" });
          }
-         if (dontSentTo) dispatch(showSnack(`Dont sent to ${dontSentTo}`));
+         if (dontSentTo) dispatch(showSnack({ message: `Dont sent to ${dontSentTo}`, type: "error" }));
       })
       .finally(() => dispatch(setStatusSubscr("iddle")));
 }

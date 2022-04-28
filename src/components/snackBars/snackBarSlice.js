@@ -4,12 +4,14 @@ const snackBarSlice = createSlice({
    name: "snackBar",
    initialState: {
       open: false,
-      message: ""
+      message: "",
+      type: ""
    },
    reducers: {
-      showSnack: (state, { payload }) => {
+      showSnack: (state, { payload: { message, type } }) => {
          state.open = true;
-         state.message = payload;
+         state.message = message;
+         state.type = type;
       },
       hideSnack: state => { state.open = false }
 

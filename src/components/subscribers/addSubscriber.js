@@ -23,7 +23,7 @@ function AddSubscriber() {
     await handleAdd("subscribers")(data)
       .then(() => {
         reset();
-        dispatch(showSnack("Subscriber has been added successfully!"));
+        dispatch(showSnack({ message: "Subscriber has been added successfully!", type: "info" }));
       });
   };
   return (
