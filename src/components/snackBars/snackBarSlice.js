@@ -5,7 +5,7 @@ const snackBarSlice = createSlice({
    initialState: {
       open: false,
       message: "",
-      type: ""
+      type: "info"
    },
    reducers: {
       showSnack: (state, { payload: { message, type } }) => {

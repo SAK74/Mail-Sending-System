@@ -21,7 +21,7 @@ export const update = type => (id, data) => {
     },
     data: JSON.stringify({ ...{ fields: data }, id })
   };
-  return api.patch(defaultConfig).then((data) => data);
+  return api.patch(defaultConfig);
 }
 
 export const addItem = type => data => {

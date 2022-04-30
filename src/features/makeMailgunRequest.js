@@ -15,11 +15,11 @@ export const sendMail = (subscribers, mail) => {
       const data = {
          from: "exitedUser@sandbox9a593161d9ef4be5b0bb14cf2696733a.mailgun.org",
          to: subscr.email,
-         subject: mail.subject,
-         text: mail.content.replace("<name>", subscr.name)
+         subject: mail.subject.replace(/<name>/gi, subscr.name),
+         text: mail.content.replace(/<name>/g, subscr.name)
       };
       defaultConfig.data = data;
-      return api.post(defaultConfig).then((data) => data);
+      return api.post(defaultConfig);
    });
    return Promise.allSettled(sendTo)
       .then(res => {
