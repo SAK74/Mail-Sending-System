@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const MailsList = ({ title, mails }) => {
    const { status } = useSelector(state => state.mails);
    return (
-      <Paper sx={{ width: "100%", maxWidth: 500 }}>
+      <Paper sx={{ width: 9 / 10, maxWidth: 400 }}>
          <List dense>
             <ListSubheader sx={{ display: "flex" }}>
                <CheckAll name="mails" ids={mails.map(mail => mail.id)} />

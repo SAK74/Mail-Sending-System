@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectAllMails } from "./mailsSlice";
 import MailsList from '../../components/mails/mailsList';
@@ -6,7 +6,12 @@ import MailsList from '../../components/mails/mailsList';
 const Mails = () => {
    const mails = useSelector(selectAllMails);
    return (
-      <Stack direction="row" spacing={5} paddingX={5}>
+      <Box sx={{
+         display: "flex",
+         flexWrap: "wrap",
+         justifyContent: "center",
+         gap: 2
+      }}>
          <MailsList
             title="Working direktory"
             mails={mails.filter(mail => mail.fields.status !== "sent")}
@@ -15,7 +20,7 @@ const Mails = () => {
             title="Sent mails"
             mails={mails.filter(mail => mail.fields.status === "sent")}
          />
-      </Stack>
+      </Box>
    )
 }
 

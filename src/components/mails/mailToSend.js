@@ -13,19 +13,20 @@ function MailToSend({ subject, content, id }) {
       <Card sx={{
          p: 2,
          alignSelf: "start",
-         width: 200,
+         width: 200
       }}>
          <CardHeader
             sx={{
                [`& .${cardHeaderClasses.content}`]: { overflow: "hidden" }
             }}
-            title="Mail to send"
+            title="Mail to send:"
             titleTypographyProps={{
-               variant: "body1"
+               variant: "body2"
             }}
             subheader={subject ? subject : "..."}
             subheaderTypographyProps={{
-               noWrap: true
+               noWrap: true,
+               variant: "body1"
             }}
          />
          <CardContent >

@@ -17,7 +17,9 @@ const SubscribersList = () => {
    }, []); //eslint-disable-line
    const subscribers = useSelector(selectAll);
    return (
-      <Paper sx={{ maxWidth: 500, width: "100%" }}>
+      <Paper sx={{
+         width: { md: 400, xs: 1 / 1, sm: 8 / 10 }
+      }}>
          <List dense>
             <ListSubheader sx={{ display: "flex" }}>
                <MenuSubscribers selSubscr={subscribers.filter(subscr => subscr.fields.selected)} />

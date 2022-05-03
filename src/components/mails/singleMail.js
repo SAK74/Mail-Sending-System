@@ -16,6 +16,7 @@ const SingleMail = ({ subject, content, selected, id, status: mailStatus }) => {
    }
    return <>
       <ListItem
+         disableGutters
          secondaryAction={<Box>
             {(mailStatus !== "sent") && <Tooltip
                title="Edit mail"
