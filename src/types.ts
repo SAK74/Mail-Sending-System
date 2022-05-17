@@ -4,16 +4,21 @@ export type Subscriber = {
    fields: {
       email: string,
       name: string,
-      selected: boolean,
+      selected?: boolean,
    }
 }
 export type Mail = {
    id: string,
    createdTime: string,
    fields: {
-      subject: string,
+      subject?: string,
       content: string,
-      selected: boolean,
+      selected?: boolean,
       status: "sent" | "toSend" | "work"
    }
+}
+export type OpenModal = false | {
+   subject?: string,
+   content: string,
+   id: string
 }

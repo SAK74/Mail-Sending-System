@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import subscribersReducer from './pages/subscribers/subscribersSlice';
 import mailsReducer from './pages/mails/mailsSlice';
 import snackReducer from './components/snackBars/snackBarSlice';
+import { useDispatch } from "react-redux";
 
 const store = configureStore({
   reducer: {
@@ -13,4 +14,4 @@ const store = configureStore({
 
 export default store;
 export type ReduxState = ReturnType<typeof store.getState>;
-export type ReduxDispatch = typeof store.dispatch;
+export const useReduxDispatch = () => useDispatch<typeof store.dispatch>();

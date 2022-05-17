@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchData } from "../../features/makeAirtableRequest";
 import { ReduxState } from "../../store";
 import { Subscriber } from "../../types";
@@ -19,18 +19,18 @@ const subscribersSlice = createSlice({
   name: "subscribers",
   initialState,
   reducers: {
-    updateSubscriber: (state, { payload: { id, ...rest } }) => {
+    updateSubscriber: (state, { payload: { id, ...rest } }: PayloadAction<Subscriber>) => {
       subscribersAdapter.updateOne(state, {
         id,
         changes: { ...rest }
       });
     },
-    _addSubscriber: (state, { payload }) =>
+    _addSubscriber: (state, { payload }: PayloadAction<Subscriber>) =>
       subscribersAdapter.addOne(state, payload),
-    _deleteSubscribers: (state, { payload }) =>
+    _deleteSubscribers: (state, { payload }: PayloadAction<number[]>) =>
       subscribersAdapter.removeMany(state, payload),
-    setStatusSubscr: (state, { payload }) => { state.status = payload },
-    setError: (state, { payload }) => { state.error = payload }
+    setStatusSubscr: (state, { payload }: PayloadAction<typeof state['status']>) => { state.status = payload },
+    setError: (state, { payload }: PayloadAction<string>) => { state.error = payload }
   },
   extraReducers: builder => {
     builder.addCase(fetchSubscribers.pending, state => { state.status = "loading" }),
