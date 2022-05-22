@@ -3,13 +3,13 @@ import { fetchData } from "../../features/makeAirtableRequest";
 import { ReduxState } from "../../store";
 import { Mail, OpenModal } from "../../types";
 
-const fetchMails = fetchData("mails");
+const fetchMails = fetchData<Mail>("mails");
 
 const mailsAdapter = createEntityAdapter<Mail>({
    sortComparer: (a, b) => a.createdTime.localeCompare(b.createdTime)
 });
 const initialState = mailsAdapter.getInitialState<{
-   status: "iddle" | "loading" | "complete" | "failed",
+   status: "iddle" | "pending" | "complete" | "failed",
    error: null | string | undefined,
    openModal: OpenModal
 }>({
@@ -26,14 +26,14 @@ const mailsSlice = createSlice({
             id,
             changes: { ...rest }
          }),
-      deleteMails: (state, { payload }: PayloadAction<number[]>) =>
+      deleteMails: (state, { payload }: PayloadAction<string[]>) =>
          mailsAdapter.removeMany(state, payload),
       addMail: (state, { payload }: PayloadAction<Mail>) => mailsAdapter.addOne(state, payload),
       setStatusMails: (state, { payload }: PayloadAction<typeof state['status']>) => { state.status = payload },
       setStatusEditor: (state, { payload }: PayloadAction<OpenModal>) => { state.openModal = payload }
    },
    extraReducers: builder => {
-      builder.addCase(fetchMails.pending, state => { state.status = "loading" }),
+      builder.addCase(fetchMails.pending, state => { state.status = "pending" }),
          builder.addCase(fetchMails.fulfilled, (state, { payload }) => {
             state.status = "iddle";
             mailsAdapter.setAll(state, payload);

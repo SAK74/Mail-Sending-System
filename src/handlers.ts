@@ -4,20 +4,22 @@ import { addMail, deleteMails, setStatusMails, updateMail } from './pages/mails/
 import { setStatusSubscr, updateSubscriber, _addSubscriber, _deleteSubscribers } from './pages/subscribers/subscribersSlice';
 import { sendMail } from './features/makeMailgunRequest';
 import { showSnack } from './components/snackBars/snackBarSlice';
+import { RequestType, Subscriber, Mail } from './types';
 const dispatch = store.dispatch;
 
-export const handleUpdate = (type) => (id, data) => {
-   dispatch(type === "subscribers" ? setStatusSubscr("pending") : setStatusMails("pending"));
-   return update(type)(id, data)
-      .then((data) => {
-         console.log(data);
-         dispatch(type === "subscribers" ? updateSubscriber(data) : updateMail(data));
-      })
-      .finally(() => dispatch(type === "subscribers" ? setStatusSubscr("iddle") : setStatusMails("iddle"))
-      );
-};
+export const handleUpdate = <T extends (Subscriber | Mail)>(type: RequestType) =>
+   (id: string, data: Partial<T['fields']>) => {
+      dispatch(type === "subscribers" ? setStatusSubscr("pending") : setStatusMails("pending"));
+      return update<T>(type)(id, data)
+         .then((data) => {
+            console.log(data);
+            dispatch(type === "subscribers" ? updateSubscriber(data as Subscriber) : updateMail(data as Mail));
+         })
+         .finally(() => dispatch(type === "subscribers" ? setStatusSubscr("iddle") : setStatusMails("iddle"))
+         );
+   };
 
-export const handleDelSelected = (type) => itemsID => {
+export const handleDelSelected = (type: RequestType) => (itemsID: string[]) => {
    if (!itemsID.length) {
       alert("Neither item is't selected");
       return undefined;
@@ -33,20 +35,20 @@ export const handleDelSelected = (type) => itemsID => {
       .finally(() => dispatch(type === "subscribers" ? setStatusSubscr("iddle") : setStatusMails("iddle")));
 };
 
-export const handleAdd = type => data => {
+export const handleAdd = (type: RequestType) => (data: Subscriber['fields'] | Mail['fields']) => {
    dispatch(setStatusSubscr("pending"));
    return addItem(type)(data)
       .then(data => {
-         dispatch(type === "subscribers" ? _addSubscriber(data) : addMail(data));
+         dispatch(type === "subscribers" ? _addSubscriber(data as Subscriber) : addMail(data as Mail));
          return data.id;
       })
       .finally(() => dispatch(setStatusSubscr("iddle")));
 }
 
-export const handleSend = (mailToSend, selectedSubscr) => {
+export const handleSend = (mailToSend?: Mail, selectedSubscr?: Subscriber[]) => {
    if (!mailToSend) {
       const { mails } = store.getState();
-      mailToSend = Object.values(mails.entities).find(subscr => subscr.fields.status === "toSend");
+      mailToSend = Object.values(mails.entities).find(mail => mail?.fields.status === "toSend");
       if (!mailToSend) {
          alert("Neither mail is't selected");
          return undefined;
@@ -54,7 +56,7 @@ export const handleSend = (mailToSend, selectedSubscr) => {
    }
    if (!selectedSubscr?.length) {
       const { subscribers } = store.getState();
-      selectedSubscr = Object.values(subscribers.entities).filter(subscr => subscr.fields.selected);
+      selectedSubscr = Object.values(subscribers.entities).filter(subscr => subscr?.fields.selected) as Subscriber[];
       if (!selectedSubscr?.length) {
          alert("Neither subscriber is't selected");
          return undefined;
@@ -63,13 +65,13 @@ export const handleSend = (mailToSend, selectedSubscr) => {
    dispatch(setStatusSubscr("pending"));
    sendMail(selectedSubscr.map(subscr => subscr.fields), mailToSend.fields)
       .then(resSent => {
-         const sentTo = selectedSubscr.filter((_, num) => resSent[num].status === 'fulfilled')
+         const sentTo = selectedSubscr!.filter((_, num) => resSent[num].status === 'fulfilled')
             .map(subscr => subscr.fields.name).join(", ");
-         const dontSentTo = selectedSubscr.filter((_, num) => resSent[num].status === 'rejected')
+         const dontSentTo = selectedSubscr!.filter((_, num) => resSent[num].status === 'rejected')
             .map(subscr => subscr.fields.name).join(", ");
          if (sentTo) {
             dispatch(showSnack({ message: `E-mail was sent to: ${sentTo}`, type: "info" }));
-            handleUpdate("mails")(mailToSend.id, { status: "sent" });
+            handleUpdate<Mail>("mails")(mailToSend!.id, { status: "sent" });
          }
          if (dontSentTo) dispatch(showSnack({ message: `Dont sent to ${dontSentTo}`, type: "error" }));
       })

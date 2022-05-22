@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { setError } from "./pages/subscribers/subscribersSlice";
 // import qs from "qs";
 import store from './store';
+import { Mail, Subscriber } from "./types";
 
 const defaultConfig = {
   headers: {
@@ -33,24 +34,24 @@ function request<T>(config: T) {
       throw Error(message);
     });
 }
-function get(config: string) {
+function get<T>(config: string): Promise<{ records: T[] }> {
   return request(config);
 }
-function patch(config: AxiosRequestConfig) {
+function patch<T>(config: AxiosRequestConfig): Promise<T> {
   config.headers = { ...config?.headers, ...defaultConfig?.headers };
   return request({
     ...config,
     method: "PATCH",
   });
 }
-function post(config: AxiosRequestConfig) {
+function post(config: AxiosRequestConfig): Promise<Subscriber | Mail | { message: string, id: string }> {
   config.headers = { ...config?.headers, ...defaultConfig?.headers };
   return request({
     ...config,
     method: "POST",
   });
 }
-function _delete(config: AxiosRequestConfig) {
+function _delete(config: AxiosRequestConfig): Promise<{ records: { id: string, deleted: boolean }[] }> {
   // config.paramsSerializer = (params) =>
   //   qs.stringify({ records: params }, { arrayFormat: "brackets" });
   return request({

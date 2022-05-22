@@ -3,13 +3,13 @@ import { fetchData } from "../../features/makeAirtableRequest";
 import { ReduxState } from "../../store";
 import { Subscriber } from "../../types";
 
-const fetchSubscribers = fetchData("subscribers");
+const fetchSubscribers = fetchData<Subscriber>("subscribers");
 
 const subscribersAdapter = createEntityAdapter<Subscriber>({
   sortComparer: (a, b) => a.createdTime.localeCompare(b.createdTime)
 });
 const initialState = subscribersAdapter.getInitialState<{
-  status: "iddle" | 'loading' | 'complete' | "failed",
+  status: "iddle" | 'pending' | 'complete' | "failed",
   error: null | string | undefined
 }>({
   status: "iddle",
@@ -27,13 +27,13 @@ const subscribersSlice = createSlice({
     },
     _addSubscriber: (state, { payload }: PayloadAction<Subscriber>) =>
       subscribersAdapter.addOne(state, payload),
-    _deleteSubscribers: (state, { payload }: PayloadAction<number[]>) =>
+    _deleteSubscribers: (state, { payload }: PayloadAction<string[]>) =>
       subscribersAdapter.removeMany(state, payload),
     setStatusSubscr: (state, { payload }: PayloadAction<typeof state['status']>) => { state.status = payload },
     setError: (state, { payload }: PayloadAction<string>) => { state.error = payload }
   },
   extraReducers: builder => {
-    builder.addCase(fetchSubscribers.pending, state => { state.status = "loading" }),
+    builder.addCase(fetchSubscribers.pending, state => { state.status = "pending" }),
       builder.addCase(fetchSubscribers.fulfilled, (state, { payload }) => {
         state.status = "iddle";
         subscribersAdapter.setAll(state, payload);

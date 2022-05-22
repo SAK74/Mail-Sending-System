@@ -5,8 +5,9 @@ import {
 import { useSelector } from "react-redux";
 import { handleUpdate } from "../../../handlers";
 import { memo } from 'react';
+// import { Subscriber } from "../../../types";
 
-function Subscriber({
+function SingleSubscriber({
   id,
   num,
   arr,
@@ -41,4 +42,4 @@ function Subscriber({
   );
 }
 
-export default memo(Subscriber);
+export default memo(SingleSubscriber);

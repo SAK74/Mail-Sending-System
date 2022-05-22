@@ -6,16 +6,18 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../features/makeAirtableRequest';
 import { selectAll } from "../../pages/subscribers/subscribersSlice";
+// import { Subscriber as SubscriberType } from '../../types';
+import { useReduxSelector } from '../../store';
 
 const SubscribersList = () => {
-   const { status } = useSelector(state => state.subscribers);
+   const { status } = useReduxSelector(state => state.subscribers);
    const dispatch = useDispatch();
    useEffect(() => {
       if (status === "iddle") {
          dispatch(fetchData("subscribers")());
       }
    }, []); //eslint-disable-line
-   const subscribers = useSelector(selectAll);
+   const subscribers = useReduxSelector(selectAll);
    return (
       <Paper sx={{
          width: { md: 400, xs: 1 / 1, sm: 8 / 10 }

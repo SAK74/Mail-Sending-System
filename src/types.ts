@@ -22,3 +22,4 @@ export type OpenModal = false | {
    content: string,
    id: string
 }
+export type RequestType = "subscribers" | "mails";
