@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { useSelector } from "react-redux";
 import { AddSubscriber, SubscribersList } from "../../components/subscribers";
 import { selectAllMails } from "../mails/mailsSlice";
 import { Box, IconButton, Collapse } from "@mui/material";
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import MailToSend from '../../components/mails/mailToSend';
+import { useReduxSelector } from '../../store';
 
 function Subscribers() {
-  const mailToSend = useSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
+  const mailToSend = useReduxSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
   const [openCollapse, setOpenCollapse] = useState(false);
 
   return (
@@ -28,7 +28,7 @@ function Subscribers() {
         gap: 2
       }}>
         <SubscribersList />
-        {mailToSend ? <MailToSend {...{ ...mailToSend.fields, id: mailToSend.id }} /> :
+        {mailToSend ? <MailToSend {...{ ...mailToSend }} /> :
           <MailToSend />
         }
       </Box>

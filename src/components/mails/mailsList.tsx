@@ -1,10 +1,17 @@
 import { Paper, List, ListSubheader, Box } from '@mui/material';
 import { Trash, MailsSkeleton, CheckAll } from './elements';
 import SingleMail from './singleMail';
-import { useSelector } from 'react-redux';
+import { useReduxSelector } from '../../store';
+import { Mail } from '../../types';
+import { FC } from 'react';
 
-const MailsList = ({ title, mails }) => {
-   const { status } = useSelector(state => state.mails);
+interface MailsLIstProps {
+   title: string;
+   mails: Mail[];
+}
+
+const MailsList: FC<MailsLIstProps> = ({ title, mails }) => {
+   const { status } = useReduxSelector(state => state.mails);
    return (
       <Paper sx={{ width: 9 / 10, maxWidth: 400 }}>
          <List dense>
@@ -16,8 +23,8 @@ const MailsList = ({ title, mails }) => {
                </Box>
             </ListSubheader>
             {(!mails.length && status === "pending") ? <MailsSkeleton /> :
-               mails.map(({ id, fields }) =>
-                  <SingleMail key={id} {...{ ...fields, id }} />)
+               mails.map((mail) =>
+                  <SingleMail key={mail.id} {...{ ...mail }} />)
             }
          </List>
       </Paper>

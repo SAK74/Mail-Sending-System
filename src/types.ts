@@ -17,9 +17,5 @@ export type Mail = {
       status: "sent" | "toSend" | "work"
    }
 }
-export type OpenModal = false | {
-   subject?: string,
-   content: string,
-   id: string
-}
+
 export type RequestType = "subscribers" | "mails";

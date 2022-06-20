@@ -1,9 +1,18 @@
 import { Checkbox, Tooltip } from "@mui/material";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { handleUpdate } from "../../../handlers";
+import { RequestType } from "../../../types";
 
-const CheckAll = ({ name, ids }) => {
-   const [status, setStatus] = useState("indeterminate");
+interface CheckProps {
+   name: RequestType;
+   ids: string[];
+}
+type StateType = "indeterminate" | "checked" | "unchecked";
+
+const CheckAll: FC<CheckProps> = ({ name, ids }) => {
+
+   const [status, setStatus] = useState<StateType>("indeterminate");
+
    const handleChange = () => {
       const checked = status !== "checked";
       const promises = ids.map(itemId => handleUpdate(name)(itemId, { selected: checked }));

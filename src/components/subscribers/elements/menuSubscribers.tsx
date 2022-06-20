@@ -1,17 +1,22 @@
 import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { handleDelSelected, handleSend } from '../../../handlers';
-export default function MenuSubscribers({ selSubscr }) {
-   const [open, setOpen] = useState(null);
-   const handleMenu = ({ currentTarget }) => setOpen(currentTarget);
+import { Subscriber } from '../../../types';
+
+export default function MenuSubscribers({ selSubscr }: { selSubscr: Subscriber[] }) {
+
+   const [open, setOpen] = useState<Element | null>(null);
+
+   const handleMenu: MouseEventHandler<HTMLButtonElement> = ({ currentTarget }) => setOpen(currentTarget);
+
    const handleDelete = () => {
       setOpen(null);
       handleDelSelected("subscribers")(selSubscr.map(subscr => subscr.id));
    }
    const _handleSend = () => {
       setOpen(null);
-      handleSend(null, selSubscr);
+      handleSend(undefined, selSubscr);
    }
    return <>
       <Tooltip title="Menu">

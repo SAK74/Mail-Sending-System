@@ -6,6 +6,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { handleAdd, handleSend, handleUpdate } from '../handlers';
 import { setStatusEditor } from "../pages/mails/mailsSlice";
 import { useEffect } from "react";
+import { Mail } from '../types';
+
+// export type MailFormValues = Pick<Mail['fields'], "subject" | "content">;
 
 function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
    const { control, handleSubmit, reset } = useForm({

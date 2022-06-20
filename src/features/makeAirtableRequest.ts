@@ -14,7 +14,7 @@ export const fetchData = <T>(type: RequestType) => createAsyncThunk(`${type}/fet
   api.get<T>(url(type)).then((data) => data.records)
 );
 
-export const update = <T extends (Subscriber | Mail)>(type: RequestType) =>
+export const update = <T extends Subscriber | Mail>(type: RequestType) =>
   (id: string, data: Partial<T['fields']>): Promise<T> => {
     const defaultConfig = {
       baseURL: url(type),

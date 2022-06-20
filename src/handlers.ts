@@ -7,7 +7,7 @@ import { showSnack } from './components/snackBars/snackBarSlice';
 import { RequestType, Subscriber, Mail } from './types';
 const dispatch = store.dispatch;
 
-export const handleUpdate = <T extends (Subscriber | Mail)>(type: RequestType) =>
+export const handleUpdate = <T extends Subscriber | Mail>(type: RequestType) =>
    (id: string, data: Partial<T['fields']>) => {
       dispatch(type === "subscribers" ? setStatusSubscr("pending") : setStatusMails("pending"));
       return update<T>(type)(id, data)
@@ -19,7 +19,7 @@ export const handleUpdate = <T extends (Subscriber | Mail)>(type: RequestType) =
          );
    };
 
-export const handleDelSelected = (type: RequestType) => (itemsID: string[]) => {
+export const handleDelSelected = (type: RequestType) => (itemsID: string[]): undefined | void => {
    if (!itemsID.length) {
       alert("Neither item is't selected");
       return undefined;
@@ -45,7 +45,7 @@ export const handleAdd = (type: RequestType) => (data: Subscriber['fields'] | Ma
       .finally(() => dispatch(setStatusSubscr("iddle")));
 }
 
-export const handleSend = (mailToSend?: Mail, selectedSubscr?: Subscriber[]) => {
+export const handleSend = (mailToSend?: Omit<Mail, "createdTime">, selectedSubscr?: Subscriber[]): void | undefined => {
    if (!mailToSend) {
       const { mails } = store.getState();
       mailToSend = Object.values(mails.entities).find(mail => mail?.fields.status === "toSend");

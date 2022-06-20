@@ -3,15 +3,13 @@ import { MenuSubscribers, SubscribersSkeleton } from './elements';
 import { CheckAll } from '../mails/elements';
 import Subscriber from './singleSubscriber';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../features/makeAirtableRequest';
 import { selectAll } from "../../pages/subscribers/subscribersSlice";
-// import { Subscriber as SubscriberType } from '../../types';
-import { useReduxSelector } from '../../store';
+import { useReduxDispatch, useReduxSelector } from '../../store';
 
 const SubscribersList = () => {
    const { status } = useReduxSelector(state => state.subscribers);
-   const dispatch = useDispatch();
+   const dispatch = useReduxDispatch();
    useEffect(() => {
       if (status === "iddle") {
          dispatch(fetchData("subscribers")());
@@ -24,13 +22,13 @@ const SubscribersList = () => {
       }}>
          <List dense>
             <ListSubheader sx={{ display: "flex" }}>
-               <MenuSubscribers selSubscr={subscribers.filter(subscr => subscr.fields.selected)} />
+               <MenuSubscribers selSubscr={subscribers.filter(subscr => subscr.fields?.selected)} />
                <Box children="Subscribers" component="span" sx={{ flexGrow: 1 }} />
                <CheckAll name="subscribers" ids={subscribers.map(subscr => subscr.id)} />
             </ListSubheader>
             {!subscribers.length && status === "pending" ? <SubscribersSkeleton /> :
-               subscribers.map(({ id, fields }, num, arr) =>
-                  <Subscriber key={id} {...{ ...fields, num, arr, id }} />)
+               subscribers.map((subscriber, num, arr) =>
+                  <Subscriber key={subscriber.id} {...{ subscriber, num, arr }} />)
             }
          </List>
       </Paper>

@@ -1,7 +1,9 @@
 import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchData } from "../../features/makeAirtableRequest";
 import { ReduxState } from "../../store";
-import { Mail, OpenModal } from "../../types";
+import { Mail } from "../../types";
+
+type OpenModal = boolean | Omit<Mail, "createdTime">
 
 const fetchMails = fetchData<Mail>("mails");
 
@@ -10,11 +12,11 @@ const mailsAdapter = createEntityAdapter<Mail>({
 });
 const initialState = mailsAdapter.getInitialState<{
    status: "iddle" | "pending" | "complete" | "failed",
-   error: null | string | undefined,
+   error: string | undefined,
    openModal: OpenModal
 }>({
    status: "iddle",
-   error: null,
+   error: undefined,
    openModal: false
 })
 const mailsSlice = createSlice({

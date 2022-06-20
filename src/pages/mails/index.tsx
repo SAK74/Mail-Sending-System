@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
 import { selectAllMails } from "./mailsSlice";
 import MailsList from '../../components/mails/mailsList';
+import { useReduxSelector } from "../../store";
 
 const Mails = () => {
-   const mails = useSelector(selectAllMails);
+   const mails = useReduxSelector(selectAllMails);
    return (
       <Box sx={{
          display: "flex",

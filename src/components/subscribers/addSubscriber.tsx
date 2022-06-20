@@ -1,34 +1,38 @@
 import { Button, CircularProgress, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Send";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import validator from "validator";
 import { _addSubscriber } from "../../pages/subscribers/subscribersSlice";
 import { memo } from 'react';
 import { TextField } from './elements';
 import { handleAdd } from "../../handlers";
-import { useDispatch } from "react-redux";
 import { showSnack } from "../snackBars/snackBarSlice";
+import { Subscriber } from "../../types";
+import { useReduxDispatch } from "../../store";
+
+export type SubscriberFormValues = Omit<Subscriber['fields'], "selected">
 
 function AddSubscriber() {
-  const dispatch = useDispatch();
+  const dispatch = useReduxDispatch();
   const {
     handleSubmit,
     formState: { isSubmitting },
     reset,
     control
-  } = useForm({
+  } = useForm<SubscriberFormValues>({
     mode: "all"
   });
-  const onSubmit = async (data) => {
+  const onValid: SubmitHandler<SubscriberFormValues> = async (data) => {
     await handleAdd("subscribers")(data)
       .then(() => {
         reset();
         dispatch(showSnack({ message: "Subscriber has been added successfully!", type: "info" }));
       });
   };
+
   return (
     <Paper sx={{ p: 2 }}>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onValid)} noValidate>
         <TextField
           name="name"
           required

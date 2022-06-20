@@ -1,17 +1,19 @@
 import { ForwardToInboxOutlined, Edit } from "@mui/icons-material";
 import { Box, Checkbox, IconButton, ListItem, ListItemButton, ListItemText, Tooltip } from "@mui/material";
-import { memo } from 'react';
+import { FC, memo } from 'react';
 import { handleUpdate, handleSend } from '../../handlers';
-import { useDispatch, useSelector } from 'react-redux';
 import { setStatusEditor } from "../../pages/mails/mailsSlice";
 import { useNavigate } from "react-router-dom";
+import { useReduxDispatch, useReduxSelector } from "../../store";
+import { Mail } from "../../types";
 
-const SingleMail = ({ subject, content, selected, id, status: mailStatus }) => {
-   const { status } = useSelector(state => state.mails);
-   const dispatch = useDispatch();
+const SingleMail: FC<Omit<Mail, "createdTime">> = (mail) => {
+   const { id, fields: { subject, content, status: mailStatus, selected } } = mail;
+   const { status } = useReduxSelector(state => state.mails);
+   const dispatch = useReduxDispatch();
    const navigate = useNavigate();
    const handleClickSend = () => {
-      handleSend({ id, fields: { subject, content } });
+      handleSend(mail);
       navigate("/subscribers", { replace: true });
    }
    return <>
@@ -22,7 +24,7 @@ const SingleMail = ({ subject, content, selected, id, status: mailStatus }) => {
                title="Edit mail"
                children={<IconButton
                   children={<Edit />}
-                  onClick={() => dispatch(setStatusEditor({ subject, content, id }))}
+                  onClick={() => dispatch(setStatusEditor(mail))}
                />}
             />}
             <Tooltip

@@ -2,20 +2,23 @@ import {
   ListItem, ListItemButton, ListItemAvatar,
   ListItemText, Checkbox, Avatar
 } from "@mui/material";
-import { useSelector } from "react-redux";
-import { handleUpdate } from "../../../handlers";
-import { memo } from 'react';
-// import { Subscriber } from "../../../types";
+import { handleUpdate } from "../../handlers";
+import { FC, memo } from 'react';
+import { useReduxSelector } from "../../store";
+import { Subscriber } from '../../types';
 
-function SingleSubscriber({
-  id,
+interface SubscriberProps {
+  subscriber: Omit<Subscriber, "createdTime">;
+  num: number;
+  arr: Subscriber[]
+}
+
+const SingleSubscriber: FC<SubscriberProps> = ({
+  subscriber: { id, fields: { name, email, selected } },
   num,
-  arr,
-  email,
-  name,
-  selected,
-}) {
-  const { status } = useSelector(state => state.subscribers);
+  arr
+}) => {
+  const { status } = useReduxSelector(state => state.subscribers);
 
   return (
     <>
@@ -34,7 +37,7 @@ function SingleSubscriber({
       >
         <ListItemButton onClick={() => handleUpdate("subscribers")(id, { selected: !selected })}>
           <ListItemText sx={{ maxWidth: 25 }} children={<h3>{num + 1}. </h3>} />
-          <ListItemAvatar children={<Avatar>{name.at(0).toUpperCase()}</Avatar>} />
+          <ListItemAvatar children={<Avatar>{name[0].toUpperCase()}</Avatar>} />
           <ListItemText primary={name} secondary={email} />
         </ListItemButton>
       </ListItem>

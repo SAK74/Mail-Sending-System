@@ -4,11 +4,15 @@ import {
    IconButton, Tooltip, Typography, cardHeaderClasses
 } from "@mui/material";
 import { memo } from "react";
-import { useDispatch } from "react-redux";
 import { setStatusEditor } from '../../pages/mails/mailsSlice';
+import { useReduxDispatch } from "../../store";
+import { Mail } from '../../types';
 
-function MailToSend({ subject, content, id }) {
-   const dispatch = useDispatch();
+function MailToSend({ fields, id }: Partial<Mail>) {
+
+   const { subject, content } = fields ? fields : { subject: "...", content: "..." };
+
+   const dispatch = useReduxDispatch();
    return (
       <Card sx={{
          p: 2,
@@ -23,7 +27,7 @@ function MailToSend({ subject, content, id }) {
             titleTypographyProps={{
                variant: "body2"
             }}
-            subheader={subject ? subject : "..."}
+            subheader={subject}
             subheaderTypographyProps={{
                noWrap: true,
                variant: "body1"
@@ -32,7 +36,7 @@ function MailToSend({ subject, content, id }) {
          <CardContent >
             <Typography
                noWrap
-               children={content ? content : "..."}
+               children={content}
             />
          </CardContent>
          <CardActions>
@@ -40,9 +44,11 @@ function MailToSend({ subject, content, id }) {
                title="Show / edit"
                children={<span>
                   <IconButton
-                     children={<Edit color={id ? "primary" : "default"} />}
+                     children={<Edit color={id ? "primary" : "disabled"} />}
                      disabled={!id}
-                     onClick={() => dispatch(setStatusEditor({ subject, content, id }))}
+                     onClick={id ?
+                        () => dispatch(setStatusEditor({ fields: { subject, content, status: "work" }, id }))
+                        : undefined}
                   />
                </span>}
             />
