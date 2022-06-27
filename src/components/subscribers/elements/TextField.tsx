@@ -1,14 +1,11 @@
 import { BaseTextFieldProps, styled, TextField as MuiTextField } from '@mui/material';
-import { Control, Path, useController, RegisterOptions } from 'react-hook-form';
-// import { MailFormValues } from '../../mailEditor';
+import { useController, UseControllerProps } from 'react-hook-form';
+import { MailFormValues } from '../../mailEditor';
 import { SubscriberFormValues } from '../addSubscriber';
 
-type FormValues = SubscriberFormValues;
-interface UserTextFieldProps extends Omit<BaseTextFieldProps, 'name'> {
-   control: Control<FormValues>;
-   name: Path<FormValues>;
-   rules: Exclude<RegisterOptions<FormValues>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs'>;
-}
+type FormValues = SubscriberFormValues | MailFormValues;
+interface UserTextFieldProps extends Omit<BaseTextFieldProps, 'name' | "defaultValue">,
+   UseControllerProps<FormValues> { };
 
 export const TextField = styled(({ name, control, rules, ...rest }: UserTextFieldProps) => {
    const { field:
@@ -17,15 +14,14 @@ export const TextField = styled(({ name, control, rules, ...rest }: UserTextFiel
       { invalid, error }
    } = useController<FormValues>({ name, control, rules, defaultValue: "" });
    return <MuiTextField {...rest}
-      name={name}
-      value={value}
+      {...{ name, value }}
       // required
       size="small"
-      label={name}
+      label={name.replace(/^\w/, l => l.toUpperCase())}
       error={invalid}
       helperText={invalid && error?.message}
       inputRef={ref}
-      inputProps={{ ...onBlur, onChange }}
+      inputProps={{ onBlur, onChange }}
    />
 })(({ theme }) => {
    // console.log("theme: ", theme);

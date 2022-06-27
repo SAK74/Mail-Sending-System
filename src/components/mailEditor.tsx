@@ -1,16 +1,18 @@
 import { Button, IconButton, Modal, Paper, Stack, Typography, Zoom } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { connect } from 'react-redux';
+import { SubmitHandler, useForm } from "react-hook-form";
+import { connect, ConnectedProps } from 'react-redux';
 import { TextField } from './subscribers/elements';
 import CloseIcon from '@mui/icons-material/Close';
 import { handleAdd, handleSend, handleUpdate } from '../handlers';
 import { setStatusEditor } from "../pages/mails/mailsSlice";
 import { useEffect } from "react";
-import { Mail } from '../types';
+import { ReduxState } from '../store';
 
-// export type MailFormValues = Pick<Mail['fields'], "subject" | "content">;
+type PropsFromRedux = ConnectedProps<typeof connector>;
+export type MailFormValues = Pick<PropsFromRedux, "subject" | "content">;
 
-function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
+function MailEditor({ openModal, subject, content, id, changeStatus }: PropsFromRedux) {
+
    const { control, handleSubmit, reset } = useForm({
       defaultValues: {
          subject, content
@@ -19,14 +21,15 @@ function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
    });
    useEffect(() => reset({ subject, content }), [openModal]);
 
-   const onSubmit = async (data, { target: { innerText } }) => {
+   const onValid: SubmitHandler<MailFormValues> = async (data, ev) => {
+      const innerText = ev?.target as string;
       id ? await handleUpdate("mails")(id, { ...data, status: "toSend" }) :
          await handleAdd("mails")({ ...data, status: "toSend" })
             .then(respID => id = respID);
       if (innerText !== "SAVE") {
-         handleSend({ id, fields: data });
+         handleSend({ id, fields: { ...data, status: "toSend" } });
       }
-      setStatusEditor(false);
+      changeStatus(false);
    }
 
    return (
@@ -50,7 +53,7 @@ function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
                position: "relative"
             }}>
                <IconButton
-                  onClick={() => setStatusEditor(false)}
+                  onClick={() => changeStatus(false)}
                   sx={{ position: "absolute", top: 0, right: 0 }}
                >
                   <CloseIcon />
@@ -76,8 +79,8 @@ function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
                   }}
                />
                <Stack direction={"row"} spacing={3}>
-                  <Button children="save & send" onClick={handleSubmit(onSubmit)} />
-                  <Button children="save" onClick={handleSubmit(onSubmit)} />
+                  <Button children="save & send" onClick={handleSubmit(onValid)} />
+                  <Button children="save" onClick={handleSubmit(onValid)} />
                </Stack>
             </Paper>
          </Zoom>
@@ -85,14 +88,19 @@ function MailEditor({ openModal, subject, content, id, setStatusEditor }) {
    )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: ReduxState) => {
    const { openModal } = state.mails;
-   const { subject, content } = openModal;
-   return ({
-      subject: openModal ? subject : "",
-      content: openModal ? content : "",
-      id: openModal?.id,
-      openModal: Boolean(openModal)
-   });
+   if (typeof openModal === "boolean") {
+      return {
+         openModal,
+         subject: "",
+         content: "",
+         id: ""
+      }
+   }
+   const { id, fields: { subject, content } } = openModal;
+   return { subject: subject ? subject : "", content, id, openModal: true };
 }
-export default connect(mapStateToProps, { setStatusEditor })(MailEditor);
+
+const connector = connect(mapStateToProps, { changeStatus: setStatusEditor });
+export default connector(MailEditor);

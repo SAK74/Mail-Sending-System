@@ -3,7 +3,7 @@ import { fetchData } from "../../features/makeAirtableRequest";
 import { ReduxState } from "../../store";
 import { Mail } from "../../types";
 
-type OpenModal = boolean | Omit<Mail, "createdTime">
+type OpenModal = boolean | Omit<Mail, "createdTime">;
 
 const fetchMails = fetchData<Mail>("mails");
 
