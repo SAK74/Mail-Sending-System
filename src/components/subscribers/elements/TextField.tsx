@@ -1,31 +1,26 @@
 import { BaseTextFieldProps, styled, TextField as MuiTextField } from '@mui/material';
+import { ReactElement } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import { MailFormValues } from '../../mailEditor';
 import { SubscriberFormValues } from '../addSubscriber';
 
 type FormValues = SubscriberFormValues | MailFormValues;
-interface UserTextFieldProps extends Omit<BaseTextFieldProps, 'name' | "defaultValue">,
-   UseControllerProps<FormValues> { };
+interface UserTextFieldProps<FV> extends Omit<BaseTextFieldProps, 'name' | "defaultValue">,
+   UseControllerProps<FV> { };
 
-export const TextField = styled(({ name, control, rules, ...rest }: UserTextFieldProps) => {
-   const { field:
-      { ref, onChange, onBlur, value },
-      fieldState:
-      { invalid, error }
-   } = useController<FormValues>({ name, control, rules, defaultValue: "" });
-   return <MuiTextField {...rest}
-      {...{ name, value }}
-      // required
-      size="small"
-      label={name.replace(/^\w/, l => l.toUpperCase())}
-      error={invalid}
-      helperText={invalid && error?.message}
-      inputRef={ref}
-      inputProps={{ onBlur, onChange }}
-   />
-})(({ theme }) => {
-   // console.log("theme: ", theme);
-   return {
-      margin: theme.spacing(1)
+const StyledField = styled(MuiTextField)(({ theme }) => ({
+   margin: theme.spacing(1)
+}));
+
+export const CustomTextField: <FV extends FormValues>(props: UserTextFieldProps<FV>) => ReactElement =
+   ({ name, control, rules, ...otherParams }) => {
+      const { field: { ref, ...otherFieldParams }, fieldState: { error, invalid } } = useController({ name, control, rules });
+      return <StyledField
+         {...{ ...otherFieldParams, ...otherParams, name }}
+         label={name.replace(/^\w/, l => l.toUpperCase())}
+         error={invalid}
+         helperText={error?.message}
+         inputRef={ref}
+         size='small'
+      />
    }
-});

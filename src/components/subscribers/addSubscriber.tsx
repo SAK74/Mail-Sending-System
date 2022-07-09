@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import validator from "validator";
 import { _addSubscriber } from "../../pages/subscribers/subscribersSlice";
 import { memo } from 'react';
-import { TextField } from './elements';
+import { CustomTextField } from './elements';
 import { handleAdd } from "../../handlers";
 import { showSnack } from "../snackBars/snackBarSlice";
 import { Subscriber } from "../../types";
@@ -20,7 +20,11 @@ function AddSubscriber() {
     reset,
     control
   } = useForm<SubscriberFormValues>({
-    mode: "all"
+    mode: "all",
+    defaultValues: {
+      name: "",
+      email: ""
+    }
   });
   const onValid: SubmitHandler<SubscriberFormValues> = async (data) => {
     await handleAdd("subscribers")(data)
@@ -33,12 +37,12 @@ function AddSubscriber() {
   return (
     <Paper sx={{ p: 2 }}>
       <form onSubmit={handleSubmit(onValid)} noValidate>
-        <TextField
+        <CustomTextField
           name="name"
           required
           control={control}
           rules={{ required: "Name is required!" }} />
-        <TextField
+        <CustomTextField
           name="email"
           required
           control={control}

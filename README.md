@@ -1,4 +1,5 @@
 # Mail-Sending-System
 In progress...
 
->Practically work, to visual fixes...
+>Sumarry finished typing
+>To do restructurization App

@@ -1,12 +1,12 @@
 import { Button, IconButton, Modal, Paper, Stack, Typography, Zoom } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { connect, ConnectedProps } from 'react-redux';
-import { TextField } from './subscribers/elements';
-import CloseIcon from '@mui/icons-material/Close';
+import { CustomTextField } from './subscribers/elements';
 import { handleAdd, handleSend, handleUpdate } from '../handlers';
-import { setStatusEditor } from "../pages/mails/mailsSlice";
+import { selectAllMails, setStatusEditor } from "../pages/mails/mailsSlice";
 import { useEffect } from "react";
-import { ReduxState } from '../store';
+import { ReduxState, useReduxSelector } from '../store';
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 export type MailFormValues = Pick<PropsFromRedux, "subject" | "content">;
@@ -21,19 +21,27 @@ function MailEditor({ openModal, subject, content, id, changeStatus }: PropsFrom
    });
    useEffect(() => reset({ subject, content }), [openModal]);
 
+   const mailToSend = useReduxSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
    const onValid: SubmitHandler<MailFormValues> = async (data, ev) => {
-      const innerText = ev?.target as string;
+      // clear status 'toSend' in other 
+      if (mailToSend) {
+         await handleUpdate('mails')(mailToSend.id, { status: 'work' });
+      }
+      // save mail with status 'to send'
       id ? await handleUpdate("mails")(id, { ...data, status: "toSend" }) :
          await handleAdd("mails")({ ...data, status: "toSend" })
             .then(respID => id = respID);
+      const innerText = ev?.target.innerText;
       if (innerText !== "SAVE") {
+         // send mail
          handleSend({ id, fields: { ...data, status: "toSend" } });
       }
+      // close editor
       changeStatus(false);
    }
 
    return (
-      <Modal open={!!openModal}
+      <Modal open={openModal}
          hideBackdrop
          sx={{
             display: "flex",
@@ -42,7 +50,7 @@ function MailEditor({ openModal, subject, content, id, changeStatus }: PropsFrom
             backdropFilter: "blur(2px)"
          }}
       >
-         <Zoom in={!!openModal} timeout={800}>
+         <Zoom in={openModal} timeout={700}>
             <Paper sx={{
                p: 2,
                pt: 5,
@@ -62,11 +70,11 @@ function MailEditor({ openModal, subject, content, id, changeStatus }: PropsFrom
                   Use <b>{"<name>"}</b> to select name of subscriber
                   (e.t. <i>Hello {"<name>"}! =&gt; Hello Lila</i>)
                </Typography>
-               <TextField
+               <CustomTextField
                   name="subject"
                   control={control}
                />
-               <TextField
+               <CustomTextField
                   name="content"
                   multiline
                   minRows={3}
@@ -74,7 +82,7 @@ function MailEditor({ openModal, subject, content, id, changeStatus }: PropsFrom
                   required
                   control={control}
                   rules={{
-                     required: "This field must be filled",
+                     // required: "This field must be filled",
                      validate: val => Boolean(val.replace(/\n/g, "")) || "This field must be filled"
                   }}
                />

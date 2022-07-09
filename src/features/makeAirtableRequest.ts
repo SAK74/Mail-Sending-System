@@ -11,7 +11,7 @@ const mailsURL = "https://enb5zkce5jncfjh.m.pipedream.net";
 const url = (type: RequestType) => type === "subscribers" ? subscribersURL : mailsURL;
 
 export const fetchData = <T>(type: RequestType) => createAsyncThunk(`${type}/fetch`, () =>
-  api.get<T>(url(type)).then((data) => data.records)
+  api.get<T>(url(type)).then((data) => data.records)  // or api.get(type) to mocked fetch
 );
 
 export const update = <T extends Subscriber | Mail>(type: RequestType) =>
