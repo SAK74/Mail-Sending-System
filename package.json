@@ -44,5 +44,10 @@
   ],
   "msw": {
     "workerDirectory": "public"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
   }
 }

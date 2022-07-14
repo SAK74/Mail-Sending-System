@@ -59,5 +59,5 @@ function _delete(config: AxiosRequestConfig): Promise<{ records: { id: string, d
     method: "DELETE"
   });
 }
-
-export default { get, patch, post, _delete };
+const api = { get, patch, post, _delete }
+export default api;

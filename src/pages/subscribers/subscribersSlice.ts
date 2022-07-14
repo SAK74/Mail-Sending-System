@@ -32,28 +32,33 @@ const subscribersSlice = createSlice({
     setStatusSubscr: (state, { payload }: PayloadAction<typeof state['status']>) => { state.status = payload },
     setError: (state, { payload }: PayloadAction<string>) => { state.error = payload }
   },
-  extraReducers: builder => {
-    builder.addCase(fetchSubscribers.pending, state => { state.status = "pending" }),
-      builder.addCase(fetchSubscribers.fulfilled, (state, { payload }) => {
-        state.status = "iddle";
-        subscribersAdapter.setAll(state, payload);
-      }),
-      builder.addCase(fetchSubscribers.rejected, (state, { error, payload }) => {
-        console.log("type error: ", typeof error.message);
-        state.status = "failed";
-        state.error = error.message;
-      })
-    // [fetchSubscribers.pending]: (state) => {
-    //   state.status = "pending";
-    // },
-    // [fetchSubscribers.fulfilled]: (state, { payload }) => {
-    //   state.status = "iddle";
-    //   subscribersAdapter.setAll(state, payload);
-    // },
-    // [fetchSubscribers.rejected]: (state, { error, payload }) => {
-    //   state.status = "failed";
-    //   state.error = error.message;
-    // }
+  // extraReducers: builder => {
+  //   builder
+  //     .addCase(fetchSubscribers.pending, state => { state.status = "pending" })
+  //     .addCase(fetchSubscribers.fulfilled, (state, { payload }) => {
+  //       state.status = "iddle";
+  //       subscribersAdapter.setAll(state, payload);
+  //     })
+  //     .addCase(fetchSubscribers.rejected, (state, { error, payload }) => {
+  //       console.log("type error: ", typeof error.message);
+  //       state.status = "failed";
+  //       state.error = error.message;
+  //     });
+  // }
+
+  // or
+  extraReducers: {
+    [fetchSubscribers.pending.type]: (state) => {
+      state.status = "pending";
+    },
+    [fetchSubscribers.fulfilled.type]: (state, { payload }) => {
+      state.status = "iddle";
+      subscribersAdapter.setAll(state, payload);
+    },
+    [fetchSubscribers.rejected.type]: (state, { error, payload }) => {
+      state.status = "failed";
+      state.error = error.message;
+    }
   }
 });
 

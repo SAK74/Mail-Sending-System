@@ -2,7 +2,6 @@ import { Button, CircularProgress, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Send";
 import { SubmitHandler, useForm } from "react-hook-form";
 import validator from "validator";
-import { _addSubscriber } from "../../pages/subscribers/subscribersSlice";
 import { memo } from 'react';
 import { CustomTextField } from './elements';
 import { handleAdd } from "../../handlers";

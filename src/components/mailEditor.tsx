@@ -19,7 +19,7 @@ function MailEditor({ openModal, subject, content, id, changeStatus }: PropsFrom
       },
       mode: "all"
    });
-   useEffect(() => reset({ subject, content }), [openModal]);
+   useEffect(() => reset({ subject, content }), [openModal, subject, content, reset]);
 
    const mailToSend = useReduxSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
    const onValid: SubmitHandler<MailFormValues> = async (data, ev) => {

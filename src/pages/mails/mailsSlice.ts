@@ -35,25 +35,28 @@ const mailsSlice = createSlice({
       setStatusEditor: (state, { payload }: PayloadAction<OpenModal>) => { state.openModal = payload }
    },
    extraReducers: builder => {
-      builder.addCase(fetchMails.pending, state => { state.status = "pending" }),
-         builder.addCase(fetchMails.fulfilled, (state, { payload }) => {
+      builder
+         .addCase(fetchMails.pending, state => { state.status = "pending" })
+         .addCase(fetchMails.fulfilled, (state, { payload }) => {
             state.status = "iddle";
             mailsAdapter.setAll(state, payload);
-         }),
-         builder.addCase(fetchMails.rejected, (state, { error }) => {
+         })
+         .addCase(fetchMails.rejected, (state, { error }) => {
             state.status = "failed";
             state.error = error.message;
-         })
-      // [fetchMails.pending]: state => { state.status = "pending" },
-      // [fetchMails.fulfilled]: (state, { payload }) => {
-      //    state.status = "iddle";
-      //    mailsAdapter.setAll(state, payload);
-      // },
-      // [fetchMails.rejected]: (state, { error }) => {
-      //    state.status = "failed";
-      //    state.error = error.message;
-      // }
+         });
    }
+   // extraReducers:{
+   //    [fetchMails.pending.type]: state => { state.status = "pending" },
+   //    [fetchMails.fulfilled.type]: (state, { payload }) => {
+   //       state.status = "iddle";
+   //       mailsAdapter.setAll(state, payload);
+   //    },
+   //    [fetchMails.rejected.type]: (state, { error }) => {
+   //       state.status = "failed";
+   //       state.error = error.message;
+   //    }
+   // }
 });
 
 export default mailsSlice.reducer;

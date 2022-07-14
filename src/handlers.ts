@@ -24,7 +24,7 @@ export const handleDelSelected = (type: RequestType) => (itemsID: string[]): und
       alert("Neither item is't selected");
       return undefined;
    }
-   if (!confirm("Are You sure to delete selected items?!.")) { return undefined }
+   if (!window.confirm("Are You sure to delete selected items?!.")) { return undefined }
    dispatch(type === "subscribers" ? setStatusSubscr("pending") : setStatusMails("pending"));
    deleteItems(type)(itemsID)
       .then((data) =>
