@@ -4,7 +4,7 @@ In progress...
 - Optionaly editing & sort mails and managing subscribers 
 
 
-> - Be going to in TypeScript ✓
+> - Be going to in TypeScript   ✔
 > - Should be add logging
 
 >To do restructurization App
