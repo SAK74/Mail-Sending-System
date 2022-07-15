@@ -1,9 +1,14 @@
-/* nav a {
+/* nav  {
    color: red
 } */
-
-a.active {
-   color: rgb(216, 98, 240);
-   font-size: large;
+a {
+   margin-inline: 20px;
    text-decoration: none;
+   color:aliceblue;
+}
+a.active {
+   color: black;
+   font-size: large;
+   background-color: aliceblue;
+   padding: 5px;
 }
