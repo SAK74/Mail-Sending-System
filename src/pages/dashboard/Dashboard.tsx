@@ -1,6 +1,6 @@
 import { Backdrop, CircularProgress } from "@mui/material";
 import { useReduxSelector } from "../../store";
-import MailEditor from '../../components/MailEditor';
+import MailEditor from '../../components/mailEditor';
 import SnackBar from "../snackBars/SnackBar";
 import { Dispatch, SetStateAction } from 'react';
 import { Outlet } from "react-router-dom";
