@@ -1,5 +1,5 @@
-export  { default as AddSubscriber } from './AddSubscriber';
-export { default as Subscriber } from './SingleSubscriber';
-export * from './SubscribersList';
+export {default as AddSubscriber} from './AddSubscr';
 export * from './MenuSubscribers';
-export { default as SubscribersSkeleton } from './SubscribersSkeleton';
+export {default as Subscriber} from './SingleSubscr';
+export * from './SubscrList';
+export {default as SubscribersSkeleton} from './SubscribersSkeleton';
