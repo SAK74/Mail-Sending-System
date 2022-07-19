@@ -23,7 +23,6 @@ export default function App() {
           </Route>
         </Routes>
       </ThemeProvider>
-
     </div>
   );
 }

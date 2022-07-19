@@ -1,5 +1,5 @@
 import { Paper, List, ListSubheader, Box } from '@mui/material';
-import { Trash, MailsSkeleton, SingleMail } from './';
+import { Trash, MailsSkeleton, SingleMail } from '.';
 import { CheckAll } from '../CheckAll';
 import { useReduxSelector } from '../../store';
 import { Mail } from '../../types';
