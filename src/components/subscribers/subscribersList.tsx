@@ -1,13 +1,12 @@
 import { Paper, List, ListSubheader, Box } from '@mui/material';
-import { MenuSubscribers, SubscribersSkeleton } from './elements';
-import { CheckAll } from '../mails/elements';
-import Subscriber from './singleSubscriber';
+import { CheckAll } from '../CheckAll';
+import { Subscriber, MenuSubscribers, SubscribersSkeleton } from './';
 import { useEffect } from 'react';
-import { fetchData } from '../../features/makeAirtableRequest';
+import { fetchData } from '../../services/makeAirtableRequest';
 import { selectAll } from "../../pages/subscribers/subscribersSlice";
 import { useReduxDispatch, useReduxSelector } from '../../store';
 
-const SubscribersList = () => {
+export const SubscribersList = () => {
    const { status } = useReduxSelector(state => state.subscribers);
    const dispatch = useReduxDispatch();
    useEffect(() => {
@@ -34,5 +33,3 @@ const SubscribersList = () => {
       </Paper>
    )
 }
-
-export default SubscribersList;

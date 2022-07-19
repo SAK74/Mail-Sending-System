@@ -1,6 +1,6 @@
 import { Paper, List, ListSubheader, Box } from '@mui/material';
-import { Trash, MailsSkeleton, CheckAll } from './elements';
-import SingleMail from './singleMail';
+import { Trash, MailsSkeleton, SingleMail } from './';
+import { CheckAll } from '../CheckAll';
 import { useReduxSelector } from '../../store';
 import { Mail } from '../../types';
 import { FC } from 'react';
@@ -10,7 +10,7 @@ interface MailsLIstProps {
    mails: Mail[];
 }
 
-const MailsList: FC<MailsLIstProps> = ({ title, mails }) => {
+export const MailsList: FC<MailsLIstProps> = ({ title, mails }) => {
    const { status } = useReduxSelector(state => state.mails);
    return (
       <Paper sx={{ width: 9 / 10, maxWidth: 400 }}>
@@ -30,5 +30,3 @@ const MailsList: FC<MailsLIstProps> = ({ title, mails }) => {
       </Paper>
    )
 }
-
-export default MailsList;

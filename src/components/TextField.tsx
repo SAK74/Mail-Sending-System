@@ -1,8 +1,8 @@
 import { BaseTextFieldProps, styled, TextField as MuiTextField } from '@mui/material';
 import { ReactElement } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
-import { MailFormValues } from '../../mailEditor';
-import { SubscriberFormValues } from '../addSubscriber';
+import { MailFormValues } from './MailEditor';
+import { SubscriberFormValues } from './subscribers/AddSubscriber';
 
 type FormValues = SubscriberFormValues | MailFormValues;
 interface UserTextFieldProps<FV> extends Omit<BaseTextFieldProps, 'name' | "defaultValue">,

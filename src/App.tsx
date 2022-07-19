@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Dashboard from "./components/dashboard";
-import { Subscribers, Mails } from './pages';
+import { Subscribers, Mails, Dashboard } from './pages';
 import "./styles.css";
 
 export default function App() {

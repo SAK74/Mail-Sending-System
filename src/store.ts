@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import subscribersReducer from './pages/subscribers/subscribersSlice';
 import mailsReducer from './pages/mails/mailsSlice';
-import snackReducer from './components/snackBars/snackBarSlice';
+import snackReducer from './pages/snackBars/snackBarSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const store = configureStore({

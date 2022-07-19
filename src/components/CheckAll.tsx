@@ -1,7 +1,7 @@
 import { Checkbox, Tooltip } from "@mui/material";
 import { FC, useState } from "react";
-import { handleUpdate } from "../../../handlers";
-import { RequestType } from "../../../types";
+import { handleUpdate } from "../handlers";
+import { RequestType } from "../types";
 
 interface CheckProps {
    name: RequestType;
@@ -9,10 +9,8 @@ interface CheckProps {
 }
 type StateType = "indeterminate" | "checked" | "unchecked";
 
-const CheckAll: FC<CheckProps> = ({ name, ids }) => {
-
+export const CheckAll: FC<CheckProps> = ({ name, ids }) => {
    const [status, setStatus] = useState<StateType>("indeterminate");
-
    const handleChange = () => {
       const checked = status !== "checked";
       const promises = ids.map(itemId => handleUpdate(name)(itemId, { selected: checked }));
@@ -30,5 +28,3 @@ const CheckAll: FC<CheckProps> = ({ name, ids }) => {
       />
    </Tooltip>
 }
-
-export default CheckAll;

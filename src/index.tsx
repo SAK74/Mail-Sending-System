@@ -4,11 +4,11 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter } from 'react-router-dom';
 import App from "./App";
-import { fetchData } from "./features/makeAirtableRequest";
+import { fetchData } from "./services/makeAirtableRequest";
 import { Mail } from "./types";
 
 if (process.env.NODE_ENV === "development") {
-  const { worker } = require("./mocks/browser");
+  const { worker } = require("./mockAPI/browser");
   worker.start();
 }
 store.dispatch(fetchData<Mail>("mails")());

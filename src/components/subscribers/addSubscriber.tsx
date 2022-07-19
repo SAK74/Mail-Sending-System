@@ -3,9 +3,9 @@ import AddIcon from "@mui/icons-material/Send";
 import { SubmitHandler, useForm } from "react-hook-form";
 import validator from "validator";
 import { memo } from 'react';
-import { CustomTextField } from './elements';
+import { CustomTextField } from '../TextField';
 import { handleAdd } from "../../handlers";
-import { showSnack } from "../snackBars/snackBarSlice";
+import { showSnack } from "../../pages/snackBars/snackBarSlice";
 import { Subscriber } from "../../types";
 import { useReduxDispatch } from "../../store";
 

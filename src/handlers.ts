@@ -1,9 +1,9 @@
 import store from './store';
-import { addItem, deleteItems, update } from './features/makeAirtableRequest';
+import { addItem, deleteItems, update } from './services/makeAirtableRequest';
 import { addMail, deleteMails, setStatusMails, updateMail } from './pages/mails/mailsSlice';
 import { setStatusSubscr, updateSubscriber, _addSubscriber, _deleteSubscribers } from './pages/subscribers/subscribersSlice';
-import { sendMail } from './features/makeMailgunRequest';
-import { showSnack } from './components/snackBars/snackBarSlice';
+import { sendMail } from './services/makeMailgunRequest';
+import { showSnack } from './pages/snackBars/snackBarSlice';
 import { RequestType, Subscriber, Mail } from './types';
 const dispatch = store.dispatch;
 

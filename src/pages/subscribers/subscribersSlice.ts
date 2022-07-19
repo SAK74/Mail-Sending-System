@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchData } from "../../features/makeAirtableRequest";
+import { fetchData } from "../../services/makeAirtableRequest";
 import { ReduxState } from "../../store";
 import { Subscriber } from "../../types";
 

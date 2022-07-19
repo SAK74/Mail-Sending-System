@@ -2,7 +2,7 @@ import { Button, IconButton, Modal, Paper, Stack, Typography, Zoom } from "@mui/
 import CloseIcon from '@mui/icons-material/Close';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { connect, ConnectedProps } from 'react-redux';
-import { CustomTextField } from './subscribers/elements';
+import { CustomTextField } from './TextField';
 import { handleAdd, handleSend, handleUpdate } from '../handlers';
 import { selectAllMails, setStatusEditor } from "../pages/mails/mailsSlice";
 import { useEffect } from "react";

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { selectAllMails } from "./mailsSlice";
-import MailsList from '../../components/mails/mailsList';
+import { MailsList } from '../../components/mails';
 import { useReduxSelector } from "../../store";
 
 const Mails = () => {
