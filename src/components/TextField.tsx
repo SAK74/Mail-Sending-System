@@ -1,7 +1,7 @@
 import { BaseTextFieldProps, styled, TextField as MuiTextField } from '@mui/material';
 import { ReactElement } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
-import { MailFormValues } from './MailEditor';
+import { MailFormValues } from './mailEditor';
 import { SubscriberFormValues } from './subscribers/AddSubscr';
 
 type FormValues = SubscriberFormValues | MailFormValues;

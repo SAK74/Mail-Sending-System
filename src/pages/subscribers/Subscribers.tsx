@@ -3,7 +3,7 @@ import { AddSubscriber, SubscribersList } from "../../components/subscribers";
 import { selectAllMails } from "../mails/mailsSlice";
 import { Box, IconButton, Collapse } from "@mui/material";
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
-import MailToSend from '../../components/mails/mailTosend';
+import { MailToSend } from '../../components/mails/';
 import { useReduxSelector } from '../../store';
 
 function Subscribers() {
