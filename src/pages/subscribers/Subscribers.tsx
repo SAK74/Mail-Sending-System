@@ -14,7 +14,7 @@ function Subscribers() {
     <Box sx={{ display: 'flex', flexDirection: "column", alignItems: "center" }}>
       <Box sx={{ width: { xs: 8 / 10, md: 6 / 10 }, my: 2 }}>
         <span>Enter a new subscriber</span>
-        <IconButton onClick={() => setOpenCollapse(!openCollapse)}>
+        <IconButton color='primary' onClick={() => setOpenCollapse(!openCollapse)}>
           {!openCollapse ? <ExpandMore /> : <ExpandLess />}
         </IconButton>
         <Collapse in={openCollapse}>

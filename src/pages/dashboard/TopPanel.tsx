@@ -25,7 +25,7 @@ const StyledLink = styled(NavLink)(({ theme }) => ({
 );
 export const TopPanel: FC<{ changeMode: Dispatch<SetStateAction<boolean>> }> = ({ changeMode }) => {
     const theme = useTheme();
-    console.log(theme);
+    // console.log(theme);
     return <>
         <AppBar>
             <Toolbar sx={{ justifyContent: "space-between" }}>

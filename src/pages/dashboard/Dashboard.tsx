@@ -12,8 +12,8 @@ export function Dashboard({ changeMode }: { changeMode: Dispatch<SetStateAction<
    return <div className="dashboard">
       <TopPanel changeMode={changeMode} />
       <hr />
-      <SnackBar />
       <Outlet />
+      <SnackBar />
       <Backdrop
          children={<CircularProgress />}
          open={pendingSubscr === "pending" || pendingMails === "pending"}
