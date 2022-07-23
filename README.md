@@ -7,6 +7,6 @@ In progress...
 > - Be going to in TypeScript   ✔
 > - Should be add logging
 
->To do restructurization App
+>To do restructurization App  ✔
 
 >To visual fixes...
