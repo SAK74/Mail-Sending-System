@@ -1,6 +1,7 @@
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material";
 import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { TopPanel } from "./components/TopPanel";
 import { Subscribers, Mails, Dashboard, Loggin } from './pages';
 import { setUnlogged } from "./pages/loggin/logginSlice";
 import { useReduxDispatch, useReduxSelector } from "./store";
@@ -19,11 +20,12 @@ export default function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
+        <TopPanel changeMode={setDarkMode} />
         <Routes>
-          <Route path="/" element={<Dashboard changeMode={setDarkMode} />}>
-            <Route index element={<Loggin />} />
-            <Route path="subscribers" element={<Subscribers />} />
-            <Route path="mails" element={<Mails />} />
+          <Route path="/" element={<Dashboard />}>
+            <Route index element={!isLogged ? <Loggin /> : <Navigate to="subscribers" />} />
+            <Route path="subscribers" element={isLogged ? <Subscribers /> : <Loggin />} />
+            <Route path="mails" element={isLogged ? <Mails /> : <Loggin />} />
           </Route>
         </Routes>
       </ThemeProvider>
