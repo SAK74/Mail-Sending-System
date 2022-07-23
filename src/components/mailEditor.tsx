@@ -13,7 +13,7 @@ export type MailFormValues = Pick<PropsFromRedux, "subject" | "content">;
 
 function MailEditor({ openModal, subject, content, id, changeStatus }: PropsFromRedux) {
 
-   const { control, handleSubmit, reset } = useForm({
+   const { control, handleSubmit, reset } = useForm<MailFormValues>({
       defaultValues: {
          subject, content
       },
@@ -22,6 +22,7 @@ function MailEditor({ openModal, subject, content, id, changeStatus }: PropsFrom
    useEffect(() => reset({ subject, content }), [openModal, subject, content, reset]);
 
    const mailToSend = useReduxSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
+
    const onValid: SubmitHandler<MailFormValues> = async (data, ev) => {
       // clear status 'toSend' in other 
       if (mailToSend) {

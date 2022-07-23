@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { AppBar, FormControlLabel, styled, Switch, Toolbar, Typography, useTheme } from "@mui/material";
+import { AppBar, FormControlLabel, styled, Switch, Toolbar, Typography } from "@mui/material";
 import { Brightness6 as LightIcon } from '@mui/icons-material'
 import { NavLink } from "react-router-dom";
 
@@ -24,7 +24,7 @@ const StyledLink = styled(NavLink)(({ theme }) => ({
 })
 );
 export const TopPanel: FC<{ changeMode: Dispatch<SetStateAction<boolean>> }> = ({ changeMode }) => {
-    const theme = useTheme();
+    // const theme = useTheme();
     // console.log(theme);
     return <>
         <AppBar>
