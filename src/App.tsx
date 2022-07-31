@@ -15,8 +15,11 @@ const darkTheme: ThemeOptions = {
 export default function App() {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const theme = createTheme(darkMode ? darkTheme : {});
-  const { isLogged } = useReduxSelector(state => state.loggin);
+  const { isLogged, token } = useReduxSelector(state => state.loggin);
   const dispatch = useReduxDispatch();
+  const storage = localStorage.getItem('persist:login');
+  console.log("storage: ", storage && JSON.parse(storage));
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -30,6 +33,7 @@ export default function App() {
         </Routes>
       </ThemeProvider>
       <p>{isLogged ? "zalogowany" : "wylogowany"}</p>
+      <p>{`Token: ${token ? token : 'niema'}`}</p>
       <button onClick={() => dispatch(setUnlogged())}>wyloguj</button>
     </div>
   );

@@ -1,15 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AddSubscriber, SubscribersList } from "../../components/subscribers";
 import { selectAllMails } from "../mails/mailsSlice";
 import { Box, IconButton, Collapse } from "@mui/material";
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import { MailToSend } from '../../components/mails/';
-import { useReduxSelector } from '../../store';
+import { useReduxDispatch, useReduxSelector } from '../../store';
+import { fetchData } from '../../services/makeAirtableRequest';
+import { Mail } from '../../types';
 
 function Subscribers() {
-  const mailToSend = useReduxSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
   const [openCollapse, setOpenCollapse] = useState(false);
+  const dispatch = useReduxDispatch();
+  useEffect(() => {
+    dispatch(fetchData<Mail>('mails')());
+  }, []); // eslint-disable-line
 
+  const mailToSend = useReduxSelector(selectAllMails).find(mail => mail.fields.status === "toSend");
   return (
     <Box sx={{ display: 'flex', flexDirection: "column", alignItems: "center" }}>
       <Box sx={{ width: { xs: 8 / 10, md: 6 / 10 }, my: 2 }}>

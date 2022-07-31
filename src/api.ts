@@ -4,15 +4,24 @@ import { setError } from "./pages/subscribers/subscribersSlice";
 import store from './store';
 import { Mail, Subscriber } from "./types";
 
-const defaultConfig = {
-  headers: {
-    // "Content-Type": "application/json"
+// const defaultConfig = {
+//   headers: {
+//     // "Content-Type": "application/json"
+//   }
+// };
+
+// axios.defaults.auth.password = 'asd';
+console.log('store in API: ', store);
+const axiosInstance = axios.create({
+  auth:{
+    username: '',
+    password: ''
   }
-};
+});
 
 function request<T>(config: T) {
   console.log("config: ", config);
-  return axios(config)
+  return axiosInstance(config)
     .then((resp) => resp.data)
     .catch((err) => {
       let message;
@@ -38,14 +47,14 @@ function get<T>(config: string): Promise<{ records: T[] }> {
   return request(config);
 }
 function patch<T>(config: AxiosRequestConfig): Promise<T> {
-  config.headers = { ...config?.headers, ...defaultConfig?.headers };
+  config.headers = { ...config?.headers};
   return request({
     ...config,
     method: "PATCH",
   });
 }
 function post(config: AxiosRequestConfig): Promise<Subscriber | Mail | { message: string, id: string }> {
-  config.headers = { ...config?.headers, ...defaultConfig?.headers };
+  config.headers = { ...config?.headers };
   return request({
     ...config,
     method: "POST",

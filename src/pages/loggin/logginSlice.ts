@@ -3,11 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: {
     isLogged: boolean;
     userName: string ;
-    token: string | undefined;
+    token?: string;
 } = {
     isLogged: true,
     userName: "",
-    token: undefined
+    // token: undefined
 }
 
 
