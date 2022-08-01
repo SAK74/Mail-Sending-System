@@ -10,7 +10,7 @@ const subscribersAdapter = createEntityAdapter<Subscriber>({
 });
 const initialState = subscribersAdapter.getInitialState<{
   status: "iddle" | 'pending' | 'complete' | "failed",
-  error: null | string | undefined
+  error: null | string 
 }>({
   status: "iddle",
   error: null
@@ -57,7 +57,7 @@ const subscribersSlice = createSlice({
     },
     [fetchSubscribers.rejected.type]: (state, { error, payload }) => {
       state.status = "failed";
-      state.error = error.message;
+      state.error = `Subscribers: ${error.message}`;
     }
   }
 });

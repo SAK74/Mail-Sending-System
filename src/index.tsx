@@ -10,7 +10,6 @@ if (process.env.NODE_ENV === "development") {
   const { worker } = require("./mockAPI/browser");
   worker.start();
 }
-console.log('store in index: ', store);
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(

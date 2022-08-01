@@ -1,27 +1,23 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { setError } from "./pages/subscribers/subscribersSlice";
 // import qs from "qs";
-import store from './store';
 import { Mail, Subscriber } from "./types";
 
-// const defaultConfig = {
-//   headers: {
-//     // "Content-Type": "application/json"
-//   }
-// };
 
-// axios.defaults.auth.password = 'asd';
-console.log('store in API: ', store);
-const axiosInstance = axios.create({
-  auth:{
-    username: '',
-    password: ''
+const storage = localStorage.getItem('persist:login');
+const token = storage && JSON.parse(storage, (key, value) => {
+  if (typeof value === 'string'){
+    console.log('json: ',key, value);
+    return value;
   }
 });
+console.log('json main: ', storage);
+console.log('request: ', token);
+
+// axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
 function request<T>(config: T) {
   console.log("config: ", config);
-  return axiosInstance(config)
+  return axios(config)
     .then((resp) => resp.data)
     .catch((err) => {
       let message;
@@ -29,17 +25,14 @@ function request<T>(config: T) {
         console.error("err.response: ", err.response);
         if (err.response.data.error) {
           message = err.response.data.error.message;
-          // throw Error(err.response.data.error.message)
         } else {
-          message = err.response.data?.message;
-          // throw Error(err.response.data?.message);
+          message = err.response.data;
         }
       } else {
         console.error(err);
         message = err.message;
       }
       console.log(message);
-      store.dispatch(setError(message));
       throw Error(message);
     });
 }

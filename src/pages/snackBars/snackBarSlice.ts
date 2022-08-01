@@ -1,11 +1,11 @@
+import { AlertColor } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: {
    open: boolean,
-   message: string,
-   type: "info" | "error"
+   message?: string,
+   type?: AlertColor
 } = {
    open: false,
-   message: "",
    type: "info"
 }
 const snackBarSlice = createSlice({

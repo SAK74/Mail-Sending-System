@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: {
     isLogged: boolean;
-    userName: string ;
+    userName?: string ;
     token?: string;
 } = {
-    isLogged: true,
-    userName: "",
+    isLogged: false,
+    // userName: "",
     // token: undefined
 }
 
@@ -20,7 +20,7 @@ const logginSlice = createSlice({
             state.token = token;
         },
         setUser: (state, {payload}: PayloadAction<string>) => {state.userName = payload},
-        setToken: (state, {payload}: PayloadAction<string>) => {state.userName = payload},
+        // setToken: (state, {payload}: PayloadAction<string>) => {state.userName = payload},
         setUnlogged: (state) => {
             state.isLogged = false;
             state.token = undefined;

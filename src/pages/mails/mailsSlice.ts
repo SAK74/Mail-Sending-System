@@ -43,7 +43,7 @@ const mailsSlice = createSlice({
          })
          .addCase(fetchMails.rejected, (state, { error }) => {
             state.status = "failed";
-            state.error = error.message;
+            state.error = `Mails: ${error.message}` ;
          });
    }
    // extraReducers:{
