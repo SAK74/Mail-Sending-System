@@ -17,8 +17,8 @@ export default function App() {
   const theme = createTheme(darkMode ? darkTheme : {});
   const { isLogged, token } = useReduxSelector(state => state.loggin);
   const dispatch = useReduxDispatch();
-  const storage = localStorage.getItem('persist:login');
-  console.log("storage: ", storage && JSON.parse(storage));
+  // const storage = localStorage.getItem('persist:login');
+  // console.log("storage: ", storage && JSON.parse(storage));
 
   return (
     <div className="App">
