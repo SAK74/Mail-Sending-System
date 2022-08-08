@@ -28,7 +28,7 @@ export const Loggin: FC = () => {
                 username,
                 password
             },
-            withCredentials: true
+            // withCredentials: true,
         })
             .then(resp => {
                 console.log(resp);

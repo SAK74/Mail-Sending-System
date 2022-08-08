@@ -1,7 +1,12 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { AppBar, FormControlLabel, styled, Switch, Toolbar, Typography } from "@mui/material";
+import {
+    AppBar, Avatar, Badge, FormControlLabel, IconButton, styled,
+    Switch, Toolbar, Typography
+} from "@mui/material";
 import { Brightness6 as LightIcon } from '@mui/icons-material'
 import { NavLink } from "react-router-dom";
+import { Timer } from "./Timer";
+import { useReduxSelector } from "../store";
 
 const StyledLink = styled(NavLink)(({ theme }) => ({
     color: 'inherit',
@@ -24,21 +29,18 @@ const StyledLink = styled(NavLink)(({ theme }) => ({
 })
 );
 export const TopPanel: FC<{ changeMode: Dispatch<SetStateAction<boolean>> }> = ({ changeMode }) => {
-    // const theme = useTheme();
-    // console.log(theme);
+    const { isLogged } = useReduxSelector(state => state.loggin);
     return <>
         <AppBar>
-            <Toolbar sx={{ justifyContent: "space-between" }}>
+            <Toolbar >
                 <Typography
                     sx={{
                         fontStyle: 'italic'
                     }}
                     children="Mail-Sending-System"
                 />
-                <nav>
+                <nav style={{ flexGrow: 1 }}>
                     <StyledLink to='subscribers' children="Subscribers" />
-                    {/* <NavLink to='subscribers' children="Subscribers" /> */}
-                    {/* <NavLink to='mails' children='Mails' /> */}
                     <StyledLink to='mails' children="Mails" />
                 </nav>
                 <FormControlLabel
@@ -47,7 +49,13 @@ export const TopPanel: FC<{ changeMode: Dispatch<SetStateAction<boolean>> }> = (
                     />}
                     label={<LightIcon />}
                 />
+                <IconButton
+                    children={<Badge
+                        children={<Avatar />}
+                    />}
+                />
             </Toolbar>
+            {isLogged && <Timer timeToEnd={1} />}
         </AppBar>
         <Toolbar />
     </>
