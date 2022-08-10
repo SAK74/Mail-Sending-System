@@ -1,4 +1,4 @@
-import { BaseTextFieldProps, styled, TextField as MuiTextField } from '@mui/material';
+import { styled, TextField as MuiTextField, TextFieldProps } from '@mui/material';
 import { ReactElement } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import { LogginFormValues } from '../pages/loggin/Loggin';
@@ -6,7 +6,7 @@ import { MailFormValues } from './mailEditor';
 import { SubscriberFormValues } from './subscribers/AddSubscr';
 
 type FormValues = SubscriberFormValues | MailFormValues | LogginFormValues;
-interface UserTextFieldProps<FV> extends Omit<BaseTextFieldProps, 'name' | "defaultValue">,
+interface UserTextFieldProps<FV> extends Omit<TextFieldProps, 'name' | "defaultValue">,
    UseControllerProps<FV> { };
 
 const StyledField = styled(MuiTextField)(({ theme }) => ({
