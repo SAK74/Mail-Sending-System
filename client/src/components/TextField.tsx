@@ -6,8 +6,9 @@ import { MailFormValues } from './mailEditor';
 import { SubscriberFormValues } from './subscribers/AddSubscr';
 
 type FormValues = SubscriberFormValues | MailFormValues | LogginFormValues;
-interface UserTextFieldProps<FV> extends Omit<TextFieldProps, 'name' | "defaultValue">,
-   UseControllerProps<FV> { };
+
+type UserTextFieldProps<FV extends FormValues> = Omit<TextFieldProps, 'name' | "defaultValue"> &
+   UseControllerProps<FV>;
 
 const StyledField = styled(MuiTextField)(({ theme }) => ({
    margin: theme.spacing(1)
