@@ -15,7 +15,7 @@ export const setupInterceptors = (getState: () => ReduxState) => {
   });
 };
 
-function request<T>(config: T) {
+function request(config: AxiosRequestConfig) {
   console.log("config: ", config);
   return axios(config)
     .then((resp) => resp.data)
@@ -36,8 +36,8 @@ function request<T>(config: T) {
       throw Error(message);
     });
 }
-function get<T>(config: string): Promise<{ records: T[] }> {
-  return request(config);
+function get<T>(url: string): Promise<{ records: T[] }> {
+  return request({baseURL:url});
 }
 function patch<T>(config: AxiosRequestConfig): Promise<T> {
   config.headers = { ...config?.headers };

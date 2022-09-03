@@ -4,7 +4,10 @@
   "description": "",
   "main": "server/src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-all": "npm i && npm i --prefix server && npm i --prefix client",
+    "server": "nodemon server/src/index.js",
+    "client": "npm --prefix client start",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "repository": {
     "type": "git",
