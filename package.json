@@ -4,11 +4,13 @@
   "description": "",
   "main": "server/src/index.js",
   "scripts": {
-    "install-all": "npm i && npm i --prefix server && npm i --prefix client",
+    "i-server": "cd server && npm i",
+    "i-client": "cd client && npm i",
+    "install-all": "npm i && npm run i-server && run i-client",
     "server": "nodemon server/src/index.js",
     "client": "npm --prefix client start",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
-    "vercel-build": "npm i --prefix ./client --only=production && npm run build --prefix ./client"
+    "vercel-build": "cd client && npm i --only=production && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
