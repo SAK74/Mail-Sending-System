@@ -1,5 +1,5 @@
 {
-  "name": "mail-sending-system",
+  "name": "client",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
@@ -23,11 +23,10 @@
     "react-scripts": "^5.0.1",
     "redux-persist": "^6.0.0",
     "typescript": "^4.7.2",
-    "validator": "13.7.0"
-  },
-  "devDependencies": {
+    "validator": "13.7.0",
     "msw": "^0.39.2"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
