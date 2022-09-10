@@ -12,6 +12,7 @@ export interface LogginFormValues {
     username: string;
     password: string;
 }
+const BASE = "http://192.168.0.56:4000";
 
 export const Loggin: FC = () => {
     const dispatch = useReduxDispatch();
@@ -25,12 +26,13 @@ export const Loggin: FC = () => {
     });
     const onValid: SubmitHandler<LogginFormValues> = ({ username, password }) => {
         dispatch(setStatusMails('pending'));
-        axios("https://eov92bojdx6pbz5.m.pipedream.net", {
+        axios("/login", {
+            baseURL: BASE,
             auth: {
                 username,
                 password
             },
-            // withCredentials: true,
+            withCredentials: true,
         })
             .then(resp => {
                 console.log(resp);
@@ -38,8 +40,12 @@ export const Loggin: FC = () => {
                     dispatch(setLogged({ token: resp.data }));
                     setOpenError(false);
                 } else {
-                    setOpenError(true);
+                    // setOpenError(true);
                 }
+            })
+            .catch(err => {
+                console.error(err?.response);
+                setOpenError(true);
             })
             .finally(() => dispatch(setStatusMails('iddle')));
     }
