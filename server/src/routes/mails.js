@@ -1,10 +1,10 @@
 const { default: axios } = require("axios");
 const router = require("express").Router();
 const baseURL =
-  "https://api.airtable.com/v0/appF2X0Cfc7mAqbqX/tblViQAq6IJtOqql2/";
+  "https://api.airtable.com/v0/appF2X0Cfc7mAqbqX/tblvsDlpknazy2OFl/";
 
 router.get("/", (req, resp) => {
-  console.log("subscribers");
+  console.log("mails!");
   axios(baseURL, {
     headers: {
       Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,

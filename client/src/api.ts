@@ -15,6 +15,11 @@ export const setupInterceptors = (getState: () => ReduxState) => {
   });
 };
 
+export const baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://192.168.0.56:4000"
+    : process.env.VERCEL_URL;
+
 function request(config: AxiosRequestConfig) {
   console.log("config: ", config);
   return axios(config)
@@ -37,8 +42,9 @@ function request(config: AxiosRequestConfig) {
     });
 }
 function get<T>(url: string): Promise<{ records: T[] }> {
-  return request({baseURL:url});
+  return request({ baseURL, url });
 }
+
 function patch<T>(config: AxiosRequestConfig): Promise<T> {
   config.headers = { ...config?.headers };
   return request({

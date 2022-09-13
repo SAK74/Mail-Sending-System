@@ -10,7 +10,7 @@ const url = (type: RequestType) =>
 export const fetchData = <T>(type: RequestType) =>
   createAsyncThunk(
     `${type}/fetch`,
-    () => api.get<T>(url(type)).then((data) => data.records) // or api.get(type) to mocked fetch
+    () => api.get<T>(type).then((data) => data.records) // or api.get(type) to mocked fetch
   );
 
 export const update =

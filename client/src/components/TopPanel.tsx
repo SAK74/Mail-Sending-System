@@ -5,7 +5,7 @@ import {
 } from "@mui/material";
 import { Brightness6 as LightIcon } from '@mui/icons-material'
 import { NavLink } from "react-router-dom";
-import { Timer } from "./Timer";
+// import { Timer } from "./Timer";
 import { useReduxSelector } from "../store";
 
 const StyledLink = styled(NavLink)(({ theme }) => ({
@@ -29,7 +29,7 @@ const StyledLink = styled(NavLink)(({ theme }) => ({
 })
 );
 export const TopPanel: FC<{ changeMode: Dispatch<SetStateAction<boolean>> }> = ({ changeMode }) => {
-    const { isLogged } = useReduxSelector(state => state.loggin);
+    // const { isLogged } = useReduxSelector(state => state.loggin);
     return <>
         <AppBar>
             <Toolbar >
@@ -55,7 +55,7 @@ export const TopPanel: FC<{ changeMode: Dispatch<SetStateAction<boolean>> }> = (
                     />}
                 />
             </Toolbar>
-            {isLogged && <Timer timeToEnd={1} />}
+            {/* {isLogged && <Timer timeToEnd={1} />} */}
         </AppBar>
         <Toolbar />
     </>

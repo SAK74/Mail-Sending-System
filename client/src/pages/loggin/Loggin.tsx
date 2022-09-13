@@ -2,17 +2,19 @@ import { Button, IconButton, Typography } from "@mui/material";
 import axios from "axios";
 import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { CustomTextField } from '../../components/TextField';
-import { useReduxDispatch } from "../../store";
+import { CustomTextField } from 'components/TextField';
+import { useReduxDispatch } from "store";
 import { setStatusMails } from "../mails/mailsSlice";
 import { setLogged } from "./logginSlice";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { baseURL } from "api";
 
 export interface LogginFormValues {
     username: string;
     password: string;
 }
-const BASE = "http://192.168.0.56:4000";
+// export const baseURL = process.env.NODE_ENV === "development" ? "http://192.168.0.56:4000" :
+//     process.env.VERCEL_URL;
 
 export const Loggin: FC = () => {
     const dispatch = useReduxDispatch();
@@ -27,7 +29,7 @@ export const Loggin: FC = () => {
     const onValid: SubmitHandler<LogginFormValues> = ({ username, password }) => {
         dispatch(setStatusMails('pending'));
         axios("/login", {
-            baseURL: BASE,
+            baseURL,
             auth: {
                 username,
                 password

@@ -5,10 +5,11 @@
   "main": "server/src/index.js",
   "scripts": {
     "install-all": "npm i && npm i --prefix server && npm i --prefix client",
+    "install": "npm i && npm i --prefix client",
     "server": "nodemon server/src/index.js",
     "client": "npm --prefix client start",
-    "dev": "concurrently \"npm run client\" \"npm run server\"",
-    "vercel-build": "npm i --prefix client --only=production && npm run build --prefix client"
+    "dev": "concurrently -k \"npm run client\" \"npm run server\"",
+    "vercel-build": "npm run build --prefix client"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,8 @@
   "devDependencies": {
     "concurrently": "^7.3.0",
     "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
   }
 }
