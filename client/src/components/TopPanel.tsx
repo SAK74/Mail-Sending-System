@@ -6,7 +6,7 @@ import {
 import { Brightness6 as LightIcon } from '@mui/icons-material'
 import { NavLink } from "react-router-dom";
 // import { Timer } from "./Timer";
-import { useReduxSelector } from "../store";
+// import { useReduxSelector } from "../store";
 
 const StyledLink = styled(NavLink)(({ theme }) => ({
     color: 'inherit',
