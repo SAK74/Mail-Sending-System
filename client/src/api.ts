@@ -17,9 +17,7 @@ export const setupInterceptors = (getState: () => ReduxState) => {
 };
 
 export const BASE =
-  process.env.NODE_ENV === "development"
-    ? "http://192.168.0.56:4000"
-    : process.env.VERCEL_URL;
+  process.env.NODE_ENV === "development" ? "http://192.168.0.56:4000" : "";
 
 function request(config: AxiosRequestConfig) {
   console.log("config: ", config);
