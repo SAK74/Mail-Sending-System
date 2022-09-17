@@ -56,6 +56,8 @@ export const Loggin: FC = () => {
                 <CustomTextField
                     name="username"
                     control={control}
+                    required
+                    rules={{ required: "Username is required" }}
                 />
                 <CustomTextField
                     name="password"
@@ -67,6 +69,8 @@ export const Loggin: FC = () => {
                             onClick={() => setVisible(prev => !prev)}
                         />
                     }}
+                    required
+                    rules={{ required: "Password is required" }}
                 />
                 <Button type="submit">accept</Button>
                 {openError && <Typography
