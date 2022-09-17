@@ -2,16 +2,19 @@ import { Button, IconButton, Typography } from "@mui/material";
 import axios from "axios";
 import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { CustomTextField } from '../../components/TextField';
-import { useReduxDispatch } from "../../store";
+import { CustomTextField } from 'components/TextField';
+import { useReduxDispatch } from "store";
 import { setStatusMails } from "../mails/mailsSlice";
 import { setLogged } from "./logginSlice";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { BASE } from "api";
 
 export interface LogginFormValues {
     username: string;
     password: string;
 }
+// export const baseURL = process.env.NODE_ENV === "development" ? "http://192.168.0.56:4000" :
+//     process.env.VERCEL_URL;
 
 export const Loggin: FC = () => {
     const dispatch = useReduxDispatch();
@@ -25,21 +28,22 @@ export const Loggin: FC = () => {
     });
     const onValid: SubmitHandler<LogginFormValues> = ({ username, password }) => {
         dispatch(setStatusMails('pending'));
-        axios("https://eov92bojdx6pbz5.m.pipedream.net", {
+        axios("/login", {
+            baseURL: BASE,
             auth: {
                 username,
                 password
             },
-            // withCredentials: true,
+            withCredentials: true,
         })
             .then(resp => {
                 console.log(resp);
-                if (resp.data) {
-                    dispatch(setLogged({ token: resp.data }));
-                    setOpenError(false);
-                } else {
-                    setOpenError(true);
-                }
+                dispatch(setLogged({ token: resp.data }));
+                setOpenError(false);
+            })
+            .catch(err => {
+                console.error(err?.response);
+                setOpenError(true);
             })
             .finally(() => dispatch(setStatusMails('iddle')));
     }
@@ -52,6 +56,8 @@ export const Loggin: FC = () => {
                 <CustomTextField
                     name="username"
                     control={control}
+                    required
+                    rules={{ required: "Username is required" }}
                 />
                 <CustomTextField
                     name="password"
@@ -63,6 +69,8 @@ export const Loggin: FC = () => {
                             onClick={() => setVisible(prev => !prev)}
                         />
                     }}
+                    required
+                    rules={{ required: "Password is required" }}
                 />
                 <Button type="submit">accept</Button>
                 {openError && <Typography
