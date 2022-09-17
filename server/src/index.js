@@ -20,5 +20,5 @@ app.use(express.json());
 app.use(require("cookie-parser")());
 app.use("/login", require("./routes/login"));
 app.use("/api", require("./routes/api"));
-app.use("/mails", require("./routes/mails"));
+// app.use("/mails", require("./routes/mails"));
 app.listen(PORT, () => console.log(`Server started in port ${PORT}`));
