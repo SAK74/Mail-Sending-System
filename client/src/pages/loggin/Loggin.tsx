@@ -7,7 +7,7 @@ import { useReduxDispatch } from "store";
 import { setStatusMails } from "../mails/mailsSlice";
 import { setLogged } from "./logginSlice";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { baseURL } from "api";
+import { BASE } from "api";
 
 export interface LogginFormValues {
     username: string;
@@ -29,7 +29,7 @@ export const Loggin: FC = () => {
     const onValid: SubmitHandler<LogginFormValues> = ({ username, password }) => {
         dispatch(setStatusMails('pending'));
         axios("/login", {
-            baseURL,
+            baseURL: BASE,
             auth: {
                 username,
                 password
@@ -38,12 +38,8 @@ export const Loggin: FC = () => {
         })
             .then(resp => {
                 console.log(resp);
-                if (resp.data) {
-                    dispatch(setLogged({ token: resp.data }));
-                    setOpenError(false);
-                } else {
-                    // setOpenError(true);
-                }
+                dispatch(setLogged({ token: resp.data }));
+                setOpenError(false);
             })
             .catch(err => {
                 console.error(err?.response);

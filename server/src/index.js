@@ -16,7 +16,9 @@ const corsOptions = {
 };
 
 app.use(require("cors")(corsOptions));
+app.use(express.json());
+app.use(require("cookie-parser")());
 app.use("/login", require("./routes/login"));
-app.use("/subscribers", require("./routes/subscribers"));
+app.use("/api", require("./routes/api"));
 app.use("/mails", require("./routes/mails"));
 app.listen(PORT, () => console.log(`Server started in port ${PORT}`));

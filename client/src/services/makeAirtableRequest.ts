@@ -2,10 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../api";
 import { Mail, RequestType, Subscriber } from "../types";
 
-const subscribersURL = "https://enuxp5t0vvqu400.m.pipedream.net";
-const mailsURL = "https://enb5zkce5jncfjh.m.pipedream.net";
-const url = (type: RequestType) =>
-  type === "subscribers" ? subscribersURL : mailsURL;
+// const subscribersURL = "https://enuxp5t0vvqu400.m.pipedream.net";
+// const mailsURL = "https://enb5zkce5jncfjh.m.pipedream.net";
+// const url = (type: RequestType) =>
+//   type === "subscribers" ? subscribersURL : mailsURL;
 
 export const fetchData = <T>(type: RequestType) =>
   createAsyncThunk(
@@ -17,7 +17,7 @@ export const update =
   <T extends Subscriber | Mail>(type: RequestType) =>
   (id: string, data: Partial<T["fields"]>): Promise<T> => {
     const defaultConfig = {
-      baseURL: url(type),
+      url: type,
       headers: {
         "Content-type": "application/json",
       },
@@ -29,7 +29,7 @@ export const update =
 export const addItem =
   (type: RequestType) => (data: Subscriber["fields"] | Mail["fields"]) => {
     const defaultConfig = {
-      baseURL: url(type),
+      url: type,
       headers: {
         "Content-type": "application/json",
       },
@@ -40,7 +40,7 @@ export const addItem =
 
 export const deleteItems = (type: RequestType) => (data: string[]) => {
   const defaultConfig = {
-    baseURL: url(type),
+    url: type,
     headers: {
       "Content-type": "application/json",
     },

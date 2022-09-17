@@ -4,7 +4,6 @@ require("dotenv").config();
 const decode64 = require("../features/base64decode");
 const jwt = require("jsonwebtoken");
 
-router.use(require("cookie-parser")());
 router.get("/", (req, resp) => {
   console.log("cookies: ", req.cookies);
   const auth = req.headers?.authorization?.split(" ");

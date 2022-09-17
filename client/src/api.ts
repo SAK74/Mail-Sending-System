@@ -11,27 +11,32 @@ export const setupInterceptors = (getState: () => ReduxState) => {
     return {
       ...config,
       headers: { ...config.headers, Authorization: `Bearer ${token}` },
+      withCredentials: true,
     };
   });
 };
 
-export const baseURL =
+export const BASE =
   process.env.NODE_ENV === "development"
     ? "http://192.168.0.56:4000"
     : process.env.VERCEL_URL;
 
 function request(config: AxiosRequestConfig) {
   console.log("config: ", config);
-  return axios(config)
+  return axios({
+    ...config,
+    baseURL: BASE + "/api",
+  })
     .then((resp) => resp.data)
     .catch((err) => {
-      let message;
+      let message = "";
       if (err.response) {
         console.error("err.response: ", err.response);
+        message += err.response.status + ": ";
         if (err.response.data.error) {
-          message = err.response.data.error.message;
+          message += err.response.data.error.message;
         } else {
-          message = err.response.data;
+          message += err.response.data;
         }
       } else {
         console.error(err);
@@ -42,7 +47,7 @@ function request(config: AxiosRequestConfig) {
     });
 }
 function get<T>(url: string): Promise<{ records: T[] }> {
-  return request({ baseURL, url });
+  return request({ url });
 }
 
 function patch<T>(config: AxiosRequestConfig): Promise<T> {
